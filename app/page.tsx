@@ -1,4 +1,6 @@
+import HomePageAllProjects from "@/componants/HomePageAllProjects";
 import ToAllProjectsPage from "./../componants/ToAllProjectsPage";
+
 
 export default async function Home() {
 
@@ -6,6 +8,7 @@ export default async function Home() {
     <main>
       Motto Interior Design
       <ToAllProjectsPage />
+      <HomePageAllProjects />
     </main>
   );
 }
