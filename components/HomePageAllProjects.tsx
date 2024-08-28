@@ -7,7 +7,6 @@ const importAll = (context: any) => context.keys().map((key: any) => context(key
 const imageList = importAll(require.context('./../public/hardCodeImages/Project Chronology/', false, /\.(?:jpg|jpeg|png|gif|webp)$/));
 
 export default async function HomePageAllProjects() {
-    console.log(imageList)
 
     return (
         <RowsPhotoAlbum photos={imageList} />
