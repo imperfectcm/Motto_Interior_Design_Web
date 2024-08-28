@@ -8,9 +8,9 @@ export default async function Home() {
   return (
     <main>
       <MainPageHeadContainer />
+      <HomePageAllProjects />
       Motto Interior Design
       <ToAllProjectsPage />
-      <HomePageAllProjects />
     </main>
   );
 }
