@@ -6,6 +6,8 @@ const importAll = (context: any) => context.keys().map((key: any) => context(key
 
 const imageListByRPA = importAll(require.context('./../public/hardCodeImages/Project Chronology/', false, /\.(?:jpg|jpeg|png|gif|webp)$/));
 
+<RowsPhotoAlbum photos={imageListByRPA} />
+
 import { promises as fs } from 'fs';
 
 const imageList = async () => {
@@ -15,23 +17,16 @@ const imageList = async () => {
 
 
 export default async function HomePageAllProjects() {
+
     const imgFolder = "/hardCodeImages/Project Chronology/"
 
-    imageList().then((files) => {
-        const displayImages = files.map((image: string) => `<img className="object-cover w-2/5" src={\`${imgFolder}${image}\`} alt="Main Page Cover Image" />`);
-
-        console.log(displayImages);
-    }).catch((error) => {
-        console.error('Error: ', error);
-    });
-
     return (
-        <>
-            {imageList().then((images) => {
-                return images.map((image: string) => <img className="object-cover" src={`${imgFolder}${image}`} alt="Main Page Cover Image" />);
-            })}
-            <img className="object-cover w-2/5" src={`${imgFolder}00 cover.jpg`} alt="Main Page Cover Image" />
-            <RowsPhotoAlbum photos={imageListByRPA} />
-        </>
+        <section className="h-screen w-full grid grid-cols-8 grid-rows-5 ">\
+            <div className="col-start-2 col-span-6 row-start-2 row-span-3 gap-x-6 flex overflow-auto snap-x snap-mandatory">
+                {imageList().then((images) => {
+                    return images.map((image: string) => <img className="homepage-cover-img object-container snap-always snap-center" src={`${imgFolder}${image}`} alt="Main Page All Project Cover Images" />);
+                })}
+            </div>
+        </section>
     )
 }
