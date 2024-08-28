@@ -3,7 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-export default async function ToAllProjectsPage() {
+export default function ToAllProjectsPage() {
     const router = useRouter();
 
     const toProjectsPage = () => {
