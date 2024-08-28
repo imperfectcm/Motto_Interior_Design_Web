@@ -1,4 +1,4 @@
-import { ScrollEffect } from "@/componants/ScrollEffect";
+import { ScrollEffect } from "@/components/ScrollEffect";
 import React from "react";
 
 interface ProjectDetailProps {
