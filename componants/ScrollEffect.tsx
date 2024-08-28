@@ -2,6 +2,8 @@ import style from "@/componants/CSS/ScrollEffect.module.css"
 import Image from 'next/image'
 
 export function ScrollEffect() {
+    
+    
     return (
         <div className={style.container}>
             <div className={style.pre}></div>

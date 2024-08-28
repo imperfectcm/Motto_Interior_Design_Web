@@ -12,11 +12,11 @@
 
 
 .container {
-    width: 100vh;
+    width: 500px;
     height: 100vw;
     overflow-x: hidden;
     overflow-y: auto;
-    transform: rotate(-90deg) translateY(-100vh);
+    transform: rotate(-90deg) translateY(-500px);
     transform-origin: top right;
 
 }
@@ -27,7 +27,7 @@
   }
 
 .div {
-    width: 100vh;
+    width: 100%;
     margin-bottom: 1rem;
     /* transform: rotate(90deg); */
     animation: scrollEffect linear;
