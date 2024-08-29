@@ -21,10 +21,10 @@ export default async function HomePageAllProjects() {
     const imgFolder = "/hardCodeImages/Project Chronology/"
 
     return (
-        <section className="h-screen w-full grid grid-cols-8 grid-rows-5 ">\
-            <div className="col-start-2 col-span-6 row-start-2 row-span-3 gap-x-6 flex overflow-auto snap-x snap-mandatory">
+        <section className="homepage-cover-img h-screen w-full grid grid-cols-8 grid-rows-5 ">\
+            <div className="col-start-2 col-span-6 row-start-2 row-span-3 gap-x-6 flex overflow-auto snap-x snap-mandatory pb-6">
                 {imageList().then((images) => {
-                    return images.map((image: string) => <img className="homepage-cover-img object-container snap-always snap-center" src={`${imgFolder}${image}`} alt="Main Page All Project Cover Images" />);
+                    return images.map((image: string) => <img className="object-container snap-always snap-center" src={`${imgFolder}${image}`} alt="Main Page All Project Cover Images" />);
                 })}
             </div>
         </section>

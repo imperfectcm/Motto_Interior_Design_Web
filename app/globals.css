@@ -5,6 +5,8 @@
 :root {
   --foreground-rgb: 70, 70, 70;
   --off-white-rgb: 248, 240, 227;
+  --shadow-rgb: 216, 207, 196;
+  --light-rgb: 255, 252, 249;
   /* --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255; */
 }
@@ -28,4 +30,25 @@ body {
   }
 }
 
+.homepage-cover-img div {}
 
+.homepage-cover-img div::-webkit-scrollbar {
+  height: 20px;
+}
+
+.homepage-cover-img div::-webkit-scrollbar-track {
+  box-shadow:
+    5px 5px 5px 0px rgba(var(--shadow-rgb), 0.9) inset,
+    -5px -5px 5px 0px rgba(var(--light-rgb), 0.9) inset;
+  border-radius: 10px;
+}
+
+.homepage-cover-img div::-webkit-scrollbar-thumb {
+  /* background: rgb(var(--off-white-rgb)); */
+  border: 2px solid rgba(0,0,0,0);
+  box-shadow:
+    /* 2px 2px 2px 0px rgba(var(--shadow-rgb), 0.7) inset, */
+    3px 3px 3px 0px rgba(var(--light-rgb), 0.9) inset,
+    -2px -2px 2px 0px rgba(var(--shadow-rgb), 0.9) inset;
+  border-radius: 10px;
+}
