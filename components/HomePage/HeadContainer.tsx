@@ -1,6 +1,6 @@
 
 
-export default function MainPageHeadContainer() {
+export default function HeadContainer() {
     return (
         <section className="relative h-screen w-full flex justify-end">
             <div className="absolute bottom-1/2 end-1/2 mr-10 text-9xl font-bold">Motto</div>

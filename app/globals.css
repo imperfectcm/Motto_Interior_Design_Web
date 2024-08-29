@@ -30,25 +30,59 @@ body {
   }
 }
 
-.homepage-cover-img div {}
+.homepage-cover-img-box {
 
-.homepage-cover-img div::-webkit-scrollbar {
-  height: 20px;
+  div::-webkit-scrollbar {
+    height: 20px;
+  }
+
+  div::-webkit-scrollbar-track {
+    box-shadow:
+      5px 5px 5px 0px rgba(var(--shadow-rgb), 0.9) inset,
+      -5px -5px 5px 0px rgba(var(--light-rgb), 0.9) inset;
+    border-radius: 10px;
+  }
+
+  div::-webkit-scrollbar-thumb {
+    /* background: rgb(var(--off-white-rgb)); */
+    cursor: grab;
+    border: 2px solid rgba(0, 0, 0, 0);
+    box-shadow:
+      3px 3px 3px 0px rgba(var(--light-rgb), 0.9) inset,
+      -2px -2px 3px 0px rgba(var(--shadow-rgb), 0.9) inset;
+    border-radius: 10px;
+    height: 10px;
+  }
+
 }
 
-.homepage-cover-img div::-webkit-scrollbar-track {
+.homepage-cover-img-box div::-webkit-scrollbar-thumb:hover {
   box-shadow:
-    5px 5px 5px 0px rgba(var(--shadow-rgb), 0.9) inset,
-    -5px -5px 5px 0px rgba(var(--light-rgb), 0.9) inset;
-  border-radius: 10px;
+    5px 5px 3px 0px rgba(var(--light-rgb), 0.9) inset,
+    -2px -2px 3px 0px rgba(var(--shadow-rgb), 0.9) inset;
 }
 
-.homepage-cover-img div::-webkit-scrollbar-thumb {
-  /* background: rgb(var(--off-white-rgb)); */
-  border: 2px solid rgba(0,0,0,0);
-  box-shadow:
-    /* 2px 2px 2px 0px rgba(var(--shadow-rgb), 0.7) inset, */
-    3px 3px 3px 0px rgba(var(--light-rgb), 0.9) inset,
-    -2px -2px 2px 0px rgba(var(--shadow-rgb), 0.9) inset;
-  border-radius: 10px;
+.neumor-btn {
+  outline: none;
+  cursor: pointer;
+  transition: .15s ease-in-out;
+  box-shadow: -6px -6px 10px rgba(var(--light-rgb), .7),
+    -6px -6px 7px rgba(var(--light-rgb), .5),
+    6px 6px 6px rgba(255, 255, 255, .075),
+    6px 6px 8px rgba(0, 0, 0, .15);
 }
+
+.neumor-btn:hover {
+  box-shadow: -2px -2px 6px rgba(255, 255, 255, .6),
+    -2px -2px 4px rgba(255, 255, 255, .4),
+    2px 2px 2px rgba(255, 255, 255, .05),
+    2px 2px 4px rgba(0, 0, 0, .1);
+}
+
+.neumor-btn:active {
+  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, .7),
+    inset -2px -2px 4px rgba(255, 255, 255, .5),
+    inset 2px 2px 2px rgba(255, 255, 255, .075),
+    inset 2px 2px 4px rgba(0, 0, 0, .15);
+}
+
