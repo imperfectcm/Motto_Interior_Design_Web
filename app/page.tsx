@@ -2,7 +2,7 @@
 import HeadContainer from "@/components/HomePage/HeadContainer";
 import ToAllProjectsPage from "../components/ToAllProjectsPage";
 import AllProjectsContainer from "@/components/HomePage/AllProjectsContainer";
-import FeatureProjects from "@/components/HomePage/FeatureProjects";
+import FeatureProjectsContainer from "@/components/HomePage/FeatureProjectsContainer";
 
 
 export default async function Home() {
@@ -11,9 +11,8 @@ export default async function Home() {
     <main>
       <HeadContainer />
       <AllProjectsContainer />
-      <FeatureProjects />
+      <FeatureProjectsContainer />
       Motto Interior Design
-      <ToAllProjectsPage />
     </main>
   );
 }

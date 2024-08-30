@@ -24,7 +24,7 @@ const images: Promise<JSX.Element[]> = imageList().then((images) => {
             id={`${index}`}
             src={`${imgFolder}${image}`}
             loading="lazy"
-            alt="Main Page All Project Cover Images" />
+            alt="Home Page All Project Cover Images" />
     );
 })
 

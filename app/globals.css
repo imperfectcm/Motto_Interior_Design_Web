@@ -7,6 +7,7 @@
   --off-white-rgb: 248, 240, 227;
   --shadow-rgb: 216, 207, 196;
   --light-rgb: 255, 252, 249;
+  --motto-blue-rgb: 37, 43, 58;
   /* --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255; */
 }
@@ -115,9 +116,6 @@ body {
     inset 2px 2px 2px rgba(255, 255, 255, .075),
     inset 2px 2px 4px rgba(0, 0, 0, .15);
 }
-
-
-
 
 .homepage-feature-project-box {
   height: 70vh;
