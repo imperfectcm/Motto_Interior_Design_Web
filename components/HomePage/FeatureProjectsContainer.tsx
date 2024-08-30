@@ -4,12 +4,11 @@ import FeatureTypeB from "./FeatureTypeB";
 
 export default async function FeatureProjectsContainer() {
 
-    
-
     return (
-        <div>
+        <section>
             <FeatureTypeA />
             <FeatureTypeB />
-        </div>
+            <FeatureTypeA />
+        </section>
     )
 }

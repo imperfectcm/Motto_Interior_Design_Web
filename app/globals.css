@@ -35,6 +35,8 @@ body {
 /* scrollbar */
 
 .homepage-cover-img-box {
+  background-color: rgb(var(--off-white-rgb));
+  height: 150vh;
 
   div::-webkit-scrollbar {
     height: 20px;

@@ -32,7 +32,7 @@ const images: Promise<JSX.Element[]> = imageList().then((images) => {
 export default async function AllProjectsContainer() {
 
     return (
-        <section className="homepage-cover-img-box h-screen w-full grid grid-cols-8 grid-rows-5">
+        <section className="relative homepage-cover-img-box h-screen w-full grid grid-cols-8 grid-rows-7">
             <AllProjects images={images} />
             <ToAllProjectsPageBtn />
         </section>
