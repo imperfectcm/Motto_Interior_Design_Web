@@ -6,12 +6,12 @@ import FeatureProjectsContainer from "@/components/HomePage/FeatureProjectsConta
 
 export default async function Home() {
 
-  return (
-    <main>
-      <HeadContainer />
-      <AllProjectsContainer />
-      <FeatureProjectsContainer />
-      Motto Interior Design
-    </main>
-  );
+   return (
+      <main>
+         <HeadContainer />
+         <AllProjectsContainer />
+         <FeatureProjectsContainer />
+         Motto Interior Design
+      </main>
+   );
 }
