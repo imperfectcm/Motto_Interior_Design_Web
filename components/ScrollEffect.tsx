@@ -1,4 +1,4 @@
-import style from "@/componants/CSS/ScrollEffect.module.css"
+import style from "@/components/CSS/ScrollEffect.module.css"
 import Image from 'next/image'
 
 export function ScrollEffect() {
