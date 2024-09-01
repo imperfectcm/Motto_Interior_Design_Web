@@ -5,7 +5,7 @@ import FeatureTypeB from "./FeatureTypeB";
 
 export default async function FeatureProjectsContainer() {
 
-    // const test = await projectService.apiTest();
+    const test = await projectService.apiTest();
     const pbtest = await projectService.pbTest();
 
     return (

@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase';
 
-const pb = new PocketBase('http://127.0.0.1:8090');
+const pb = new PocketBase(process.env.BACKEND);
 
 export class ProjectService {
 
@@ -14,7 +14,7 @@ export class ProjectService {
     }
 
     async apiTest() {
-        let res = await fetch('http://127.0.0.1:8090/api/collections/posts/records',
+        let res = await fetch(`${process.env.BACKEND}/api/collections/posts/records`,
             {
                 method: 'GET',
                 headers: {
@@ -24,7 +24,7 @@ export class ProjectService {
         )
         if (!res) return { data: "no res" };
         const data = await res.json();
-        console.log(data);
+        console.log(data.items[0].value)
         return data;
     }
 
