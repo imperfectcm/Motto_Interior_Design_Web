@@ -14,7 +14,12 @@ const s3Config = {
 export async function UploadImageToS3(formData: FormData) {
     try {
 
+        console.log(formData)
+        
         const file = formData.get("file") as File;
+
+        console.log(file)
+
         const folderName = formData.get("folderName") as string;
         const s3 = new s3Client({
             ...s3Config,

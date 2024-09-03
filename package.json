@@ -9,19 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.637.0",
-    "@aws-sdk/s3-presigned-post": "^3.637.0",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@mui/material": "^6.0.1",
+    "@types/nodemailer": "^6.4.15",
     "next": "14.2.6",
-    "nodejs-s3-typescript": "^3.1.5",
     "pocketbase": "^0.21.5",
     "react": "^18",
     "react-dom": "^18",
     "react-images-uploading": "^3.1.7",
     "react-indiana-drag-scroll": "^3.0.3-alpha",
-    "react-photo-album": "^3.0.2",
     "yarn": "^1.22.22"
   },
   "devDependencies": {
