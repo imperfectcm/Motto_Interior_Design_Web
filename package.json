@@ -18,11 +18,14 @@
     "@types/nodemailer": "^6.4.15",
     "next": "14.2.6",
     "nodemailer": "^6.9.14",
-    "react": "^18",
-    "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-loader-spinner": "^6.1.6",
-    "react-photo-album": "^3.0.2"
+    "react-photo-album": "^3.0.2",
+    "pocketbase": "^0.21.5",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-indiana-drag-scroll": "^3.0.3-alpha",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@types/node": "^20",
