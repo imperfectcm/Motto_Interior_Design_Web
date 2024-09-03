@@ -10,20 +10,49 @@ import Image from "next/image";
 export default function UploadImageTest() {
 
     //State
-    const [image, setImage] = useState<ImageListType>([]);
+    const [images, setImages] = useState<ImageListType>([]);
 
     const maxNumber = 69;
 
-    //OnImageChange
-    const onImageChange = async (imageList: ImageListType) => {
-        await setImage(imageList);
+    //Upload Immages To S3 Bucket
+    const uploadImagesToS3 = async (imageList: ImageListType) => {
         if (imageList.length > 0 && imageList[0].file as File) {
-            const formData = new FormData();
-            formData.append("file", imageList[0].file as File);
-            formData.append("folderName", "cm-test-upload-action");
-            //Here I am calling the server action function
-            const data = await UploadImageToS3(formData);
-            console.log(data)
+            imageList.map(async (image) => {
+                const formData = new FormData();
+                formData.append("file", image.file as File);
+                formData.append("folderName", "cm-test-upload-action");
+                //Here I am calling the server action function
+                const data = await UploadImageToS3(formData);
+                console.log(data)
+
+            })
+        }
+    }
+
+    const onChange = async (
+        imageList: ImageListType,
+        addUpdateIndex: number[] | undefined
+    ) => {
+        await setImages(imageList);
+        // data for submit
+        console.log("imageList: ", imageList);
+        console.log("addUpdateIndex: ", addUpdateIndex);
+        console.log("images: ", images);
+    };
+
+
+    const uploadImagesToS3Test = async () => {
+        console.log("hi")
+        if (images.length > 0) {
+            images.map(async (image) => {
+                const formData = new FormData();
+                formData.append("file", image.file as File);
+                formData.append("folderName", "cm-test-upload-action");
+                //Here I am calling the server action function
+                const data = await UploadImageToS3(formData);
+                console.log(data)
+
+            })
         }
     }
 
@@ -31,8 +60,8 @@ export default function UploadImageTest() {
     return (
         <div className="off-white-bg relative">
             <ImageUploading
-                value={image}
-                onChange={onImageChange}
+                value={images}
+                onChange={onChange}
                 multiple
                 maxNumber={maxNumber}
             >
@@ -59,21 +88,23 @@ export default function UploadImageTest() {
                                 </div>
                             </button>
                         }
-                        <button onClick={onImageRemoveAll}>Remove all images</button>
                         {imageList.length > 0 &&
                             imageList.map((image, index) => (
                                 <div key={index} className={`relative cursor-pointer group rounded-md overflow-hidden`}>
                                     <img src={image.dataURL} alt="Image" width={400} height={400} className="w-full object-cover object-top" />
                                     <div className="image-item__btn-wrapper">
                                         <button onClick={() => onImageUpdate(index)}>Update</button>
+                                        &nbsp;&nbsp;&nbsp;
                                         <button onClick={() => onImageRemove(index)}>Remove</button>
                                     </div>
                                 </div>
                             ))
                         }
+                        <button onClick={onImageRemoveAll}>Remove all images</button>
                     </div>
                 )}
             </ImageUploading>
+            <button onClick={uploadImagesToS3Test}>Upload all images</button>
         </div>
 
     )

@@ -17,11 +17,16 @@
     "@mui/material": "^6.0.1",
     "@types/nodemailer": "^6.4.15",
     "next": "14.2.6",
+    "nodejs-s3-typescript": "^3.1.5",
+    "nodemailer": "^6.9.14",
     "pocketbase": "^0.21.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.53.0",
     "react-images-uploading": "^3.1.7",
     "react-indiana-drag-scroll": "^3.0.3-alpha",
+    "react-loader-spinner": "^6.1.6",
+    "react-photo-album": "^3.0.2",
     "yarn": "^1.22.22"
   },
   "devDependencies": {
