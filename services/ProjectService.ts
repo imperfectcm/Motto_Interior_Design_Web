@@ -1,8 +1,8 @@
 import PocketBase from 'pocketbase';
 
-const pb = new PocketBase(process.env.BACKEND);
+const pb = new PocketBase('http://127.0.0.1:8090');
 
-export class ProjectService {
+class ProjectService {
 
     async pbTest() {
         // you can also fetch all records at once via getFullList
@@ -29,6 +29,35 @@ export class ProjectService {
     }
 
     async getAllProjectsCover() {
+
+    }
+
+
+
+    async createProject(projectData: any) {
+
+        console.log(process.env.BACKEND);
+
+        console.log(projectData);
+
+        const data = {
+            "name": "aa",
+            "year": 2024,
+            "location": "aa",
+            "apartment_name": "aa",
+            "size": 300,
+            "household_size": 3,
+            "description": ""
+        };
+
+        try {
+            const record = await pb.collection('projects').create(data);
+            console.log(record)
+            return record;
+        } catch (error: any) {
+            console.log(error.message);
+            return { error: error.message };
+        }
 
     }
 

@@ -2,12 +2,11 @@
 
 import { useFormState } from "react-dom";
 import { UploadImageToS3 } from "./UploadImageAction";
-import { SubmitButton } from "./UploadImageButton";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import { useState } from "react";
 import Image from "next/image";
 
-export default function UploadImageTest() {
+export default function ImageUploader() {
 
     //State
     const [images, setImages] = useState<ImageListType>([]);
