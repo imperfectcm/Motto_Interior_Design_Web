@@ -1,6 +1,10 @@
+import { authService } from "@/services/AuthService";
 
 
 export default function HeadContainer() {
+
+    const authTest = authService.authenticate();
+    
     return (
         <section className="relative h-screen w-full flex justify-end">
             <div className="z-10 absolute bottom-1/2 end-1/2 mr-10 text-9xl font-bold">Motto</div>

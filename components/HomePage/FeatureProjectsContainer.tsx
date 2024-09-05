@@ -8,7 +8,7 @@ export default async function FeatureProjectsContainer() {
 
     // const test = await projectService.apiTest();
     // const pbtest = await projectService.pbTest();
-    const controllerPdTest = await projectController.controllerPbTest();
+    // const controllerPdTest = await projectController.controllerPbTest();
 
     return (
         <section>
