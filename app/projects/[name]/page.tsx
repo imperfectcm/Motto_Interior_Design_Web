@@ -12,7 +12,6 @@ export default function ProjectDetail(props: ProjectDetailProps) {
 
     return (
         <div>
-            <h1>Project Name: {projectName}</h1>
             <ScrollEffect/>
         </div>
     );

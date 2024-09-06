@@ -36,3 +36,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 Send email API
 https://medium.com/@abilsavio/email-contact-form-using-nextjs-app-router-60c29fe70644
+
+Google Map API
+https://codelove.tw/@tony/post/NxNXda

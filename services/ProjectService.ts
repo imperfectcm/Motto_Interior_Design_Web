@@ -2,6 +2,11 @@ import PocketBase from 'pocketbase';
 
 const pb = new PocketBase(process.env.BACKEND);
 
+async () => {
+    const authData = await pb.admins.authWithPassword('test@example.com', '1234567890');
+}
+
+
 export class ProjectService {
 
     async pbTest() {

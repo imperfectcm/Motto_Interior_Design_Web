@@ -1,8 +1,9 @@
+'use client'
+
 import style from "@/components/CSS/ScrollEffect.module.css"
 import Image from 'next/image'
 
 export function ScrollEffect() {
-    
     
     return (
         <div className={style.container}>
@@ -10,18 +11,16 @@ export function ScrollEffect() {
             <div className={style.div}>
                 <Image
                     src="/Project Chronology/01.jpg"
-                    width={500}
-                    height={500}
                     alt=""
                     priority
+                    fill
                 />
             </div>
 
             <div className={style.div}>
                 <Image
                     src="/Project Chronology/02.jpg"
-                    width={500}
-                    height={500}
+                    fill
                     alt=""
                 />
             </div>
@@ -29,8 +28,7 @@ export function ScrollEffect() {
             <div className={style.div}>
                 <Image
                     src="/Project Chronology/03.jpg"
-                    width={500}
-                    height={500}
+                    fill
                     alt=""
                 />
             </div>
@@ -38,8 +36,7 @@ export function ScrollEffect() {
             <div className={style.div}>
                 <Image
                     src="/Project Chronology/04.jpg"
-                    width={500}
-                    height={500}
+                    fill
                     alt=""
                 />
             </div>
@@ -47,8 +44,7 @@ export function ScrollEffect() {
             <div className={style.div}>
                 <Image
                     src="/Project Chronology/05.jpg"
-                    width={500}
-                    height={500}
+                    fill
                     alt=""
                 />
             </div>
@@ -56,8 +52,7 @@ export function ScrollEffect() {
             <div className={style.div}>
                 <Image
                     src="/Project Chronology/06.jpg"
-                    width={500}
-                    height={500}
+                    fill
                     alt=""
                 />
             </div>
@@ -65,8 +60,7 @@ export function ScrollEffect() {
             <div className={style.div}>
                 <Image
                     src="/Project Chronology/07.jpg"
-                    width={500}
-                    height={500}
+                    fill
                     alt=""
                 />
             </div>
@@ -74,8 +68,7 @@ export function ScrollEffect() {
             <div className={style.div}>
                 <Image
                     src="/Project Chronology/08.jpg"
-                    width={500}
-                    height={500}
+                    fill
                     alt=""
                 />
             </div>
@@ -83,8 +76,7 @@ export function ScrollEffect() {
             <div className={style.div}>
                 <Image
                     src="/Project Chronology/09.jpg"
-                    width={500}
-                    height={500}
+                    fill
                     alt=""
                 />
             </div>
@@ -92,8 +84,7 @@ export function ScrollEffect() {
             <div className={style.div}>
                 <Image
                     src="/Project Chronology/01.jpg"
-                    width={500}
-                    height={500}
+                    fill
                     alt=""
                 />
             </div>
