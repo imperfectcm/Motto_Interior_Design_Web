@@ -1,13 +1,10 @@
 import PocketBase from 'pocketbase';
+import { authService, pb, POCKET_BASE_URL } from './AuthService';
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
-const pb = new PocketBase(process.env.BACKEND);
+class ProjectService {
 
-async () => {
-    const authData = await pb.admins.authWithPassword('test@example.com', '1234567890');
-}
-
-
-export class ProjectService {
+    constructor() { }
 
     async pbTest() {
         // you can also fetch all records at once via getFullList
@@ -19,7 +16,7 @@ export class ProjectService {
     }
 
     async apiTest() {
-        let res = await fetch(`${process.env.BACKEND}/api/collections/posts/records`,
+        let res = await fetch(`${POCKET_BASE_URL}/api/collections/posts/records`,
             {
                 method: 'GET',
                 headers: {
@@ -34,6 +31,39 @@ export class ProjectService {
     }
 
     async getAllProjectsCover() {
+
+    }
+
+
+    async createProject(projectData: any) {
+
+        console.log(projectData);
+
+        console.log("authStore: ", pb.authStore);
+
+        console.log("is admin? ", pb.authStore.isAdmin);
+        console.log("is valid? ", pb.authStore.isValid);
+        console.log("token? ", pb.authStore.token);
+        console.log("id? ", pb.authStore.model?.id);
+
+        const data = {
+            "name": "aa",
+            "year": 2024,
+            "location": "aa",
+            "apartment_name": "aa",
+            "size": 300,
+            "household_size": 3,
+            "description": ""
+        };
+
+        try {
+            const record = await pb.collection('projects').create(data);
+            console.log(record)
+            return record;
+        } catch (error: any) {
+            console.log(error.message);
+            return { error: error.message };
+        }
 
     }
 
