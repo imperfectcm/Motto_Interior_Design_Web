@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message"
-import { projectController } from "@/controllers/ProjectController";
+// import { projectController } from "@/controllers/ProjectController";
 
 
 export type projectFormData = {
@@ -21,7 +21,28 @@ const CreateProject = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<projectFormData>();
     const [data, setData] = useState("");
 
-    const creatProject = async (data: projectFormData) => await projectController.createProject(data);
+    const creatProject = async (data: projectFormData) => {
+        try {
+            const res = await fetch('/api/create-project', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    data
+                }),
+            });
+            if (!res.ok) return ({ message: "SomeThing Goes Wrong" })
+            
+            const resData = await res.json()
+
+            alert(resData)
+
+        } catch (error) {
+            console.log(error)
+            throw error;
+        }
+    }
 
 
     return (

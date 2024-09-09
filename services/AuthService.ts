@@ -18,7 +18,6 @@ class AuthService {
 
             return result;
         } catch (error) {
-            console.log(error);
             throw new Error("Invalid email or password.")
         }
     }
@@ -29,11 +28,6 @@ class AuthService {
             return false;
         }
         pb.authStore.loadFromCookie(cookie?.value || "");
-        console.log(pb.authStore);
-        console.log("is admin? ", pb.authStore.isAdmin);
-        console.log("is valid? ", pb.authStore.isValid);
-        console.log("token? ", pb.authStore.token);
-        console.log("id? ", pb.authStore.model?.id);
 
         return pb.authStore.isAdmin || false
     }
@@ -44,8 +38,7 @@ class AuthService {
             return false;
         }
         pb.authStore.loadFromCookie(cookie?.value || "");
-        console.log(pb.authStore);
-        return pb.authStore.model;
+        return pb.authStore;
     }
 
 }

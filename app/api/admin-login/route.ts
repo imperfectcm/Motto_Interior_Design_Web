@@ -11,8 +11,6 @@ export async function POST(request: NextRequest) {
         const result = await authService.authenticate(email, password);
         cookies().set("pb_auth", pb.authStore.exportToCookie());
 
-        console.log("cookies: ", cookies());
-
         await authService.isAdminAuthenticated(cookies());
 
         return NextResponse.json(result);

@@ -22,7 +22,6 @@ export default function ImageUploader() {
                 formData.append("folderName", "cm-test-upload-action");
                 //Here I am calling the server action function
                 const data = await UploadImageToS3(formData);
-                console.log(data)
 
             })
         }
@@ -33,10 +32,6 @@ export default function ImageUploader() {
         addUpdateIndex: number[] | undefined
     ) => {
         await setImages(imageList);
-        // data for submit
-        console.log("imageList: ", imageList);
-        console.log("addUpdateIndex: ", addUpdateIndex);
-        console.log("images: ", images);
     };
 
 

@@ -11,7 +11,6 @@ class ProjectService {
         const records = await pb.collection('posts').getFullList({
             sort: '-created',
         });
-        console.log(records);
         return records;
     }
 
@@ -26,7 +25,6 @@ class ProjectService {
         )
         if (!res) return { data: "no res" };
         const data = await res.json();
-        console.log(data.items[0].value)
         return data;
     }
 
@@ -35,16 +33,9 @@ class ProjectService {
     }
 
 
-    async createProject(projectData: any) {
+    async createProject(projectData: any, cookies: ReadonlyRequestCookies) {
+        const pbAuthData = authService.getUser(cookies)
 
-        console.log(projectData);
-
-        console.log("authStore: ", pb.authStore);
-
-        console.log("is admin? ", pb.authStore.isAdmin);
-        console.log("is valid? ", pb.authStore.isValid);
-        console.log("token? ", pb.authStore.token);
-        console.log("id? ", pb.authStore.model?.id);
 
         const data = {
             "name": "aa",
@@ -58,7 +49,6 @@ class ProjectService {
 
         try {
             const record = await pb.collection('projects').create(data);
-            console.log(record)
             return record;
         } catch (error: any) {
             console.log(error.message);
