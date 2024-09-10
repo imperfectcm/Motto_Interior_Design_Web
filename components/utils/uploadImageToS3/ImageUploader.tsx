@@ -6,7 +6,12 @@ import ImageUploading, { ImageListType } from "react-images-uploading";
 import { useState } from "react";
 import Image from "next/image";
 
-export default function ImageUploader() {
+
+interface ImageUploaderProps {
+    projectName: string;
+}
+
+export default function ImageUploader(props: ImageUploaderProps) {
 
     //State
     const [images, setImages] = useState<ImageListType>([]);
@@ -19,7 +24,7 @@ export default function ImageUploader() {
             imageList.map(async (image) => {
                 const formData = new FormData();
                 formData.append("file", image.file as File);
-                formData.append("folderName", "cm-test-upload-action");
+                formData.append("folderName", `${props.projectName}`);
                 //Here I am calling the server action function
                 const data = await UploadImageToS3(formData);
 

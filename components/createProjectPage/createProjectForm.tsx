@@ -6,6 +6,7 @@ import { Flip, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
 import ImageUploader from "@/components/utils/uploadImageToS3/ImageUploader";
+import { useState } from "react";
 
 
 const projectCreateFailedNotify = () => toast.error("😭 Fail to create project.", {
@@ -37,6 +38,7 @@ const CreateProjectForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<projectFormData>();
 
     const creatProject = async (data: projectFormData) => {
+
         try {
             const res = await fetch('/api/create-project', {
                 method: 'POST',
@@ -71,8 +73,10 @@ const CreateProjectForm = () => {
             console.log(error)
             throw error;
         }
+
     }
 
+    const [projectName, setProjectName] = useState("")
 
     return (
         <main className="flex justify-center items-center h-screen">
@@ -81,7 +85,10 @@ const CreateProjectForm = () => {
                 <div className="flex flex-col">
                     <label>Project name (專案名稱)</label>
                     <input className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
-                        {...register("projectName", { required: true })} />
+                        {...register("projectName", {
+                            required: true,
+                            onChange: (e) => setProjectName(e.target.value)
+                        })} />
                     <ErrorMessage errors={errors} name="projectName" />
                     <ErrorMessage
                         errors={errors}
@@ -162,7 +169,7 @@ const CreateProjectForm = () => {
                         {...register("aboutProject")} />
                 </div>
 
-                <ImageUploader />
+                <ImageUploader projectName={projectName} />
 
                 <div className="mt-5 flex justify-center items-center">
                     <input className="beige-neumor-btn rounded-full px-8 py-2" type="submit" value="Create project" />
