@@ -1,4 +1,4 @@
-import { authService, pb } from "@/services/AuthService";
+
 import { cookies } from "next/headers";
 import { NextResponse, type NextRequest } from "next/server";
 import { projectService } from "@/services/ProjectService";
@@ -6,7 +6,9 @@ import { projectService } from "@/services/ProjectService";
 export async function POST(request: NextRequest) {
 
     try {
+
         const reqData = await request.json();
+
         const 
         { 
             aboutProject, 
@@ -29,7 +31,8 @@ export async function POST(request: NextRequest) {
         };
 
         await projectService.createProject(projectData,cookies());
-        return NextResponse.json("success");
+        
+        return NextResponse.json("Project created successfully.");
 
     } catch (error: any) {
         return new Response(

@@ -1,4 +1,4 @@
-import PocketBase from 'pocketbase';
+
 import { authService, pb, POCKET_BASE_URL } from './AuthService';
 import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
@@ -34,17 +34,16 @@ class ProjectService {
 
 
     async createProject(projectData: any, cookies: ReadonlyRequestCookies) {
-        const pbAuthData = authService.getUser(cookies)
-
+        const pbAuthData = authService.getUser(cookies);
 
         const data = {
-            "name": "aa",
-            "year": 2024,
-            "location": "aa",
-            "apartment_name": "aa",
-            "size": 300,
-            "household_size": 3,
-            "description": ""
+            "name": projectData.name,
+            "year": projectData.year,
+            "location": projectData.location,
+            "apartment_name": projectData.apartment_name,
+            "size": projectData.size,
+            "household_size": projectData.household_size,
+            "description": projectData.description
         };
 
         try {
@@ -54,9 +53,8 @@ class ProjectService {
             console.log(error.message);
             return { error: error.message };
         }
-
     }
-
+    
 }
 
 export const projectService = new ProjectService;

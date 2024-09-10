@@ -1,9 +1,25 @@
 'use client';
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message"
+import { Flip, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/navigation";
+import ImageUploader from "@/components/utils/uploadImageToS3/ImageUploader";
 // import { projectController } from "@/controllers/ProjectController";
+
+
+const projectCreateFailedNotify = () => toast.error("😭 Fail to create project.", {
+    position: "top-center",
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+    transition: Flip,
+});
 
 
 export type projectFormData = {
@@ -18,8 +34,9 @@ export type projectFormData = {
 
 const CreateProject = () => {
 
+    const router = useRouter();
+
     const { register, handleSubmit, formState: { errors } } = useForm<projectFormData>();
-    const [data, setData] = useState("");
 
     const creatProject = async (data: projectFormData) => {
         try {
@@ -32,11 +49,25 @@ const CreateProject = () => {
                     data
                 }),
             });
-            if (!res.ok) return ({ message: "SomeThing Goes Wrong" })
-            
-            const resData = await res.json()
 
-            alert(resData)
+            if (!res.ok) {
+                projectCreateFailedNotify();
+                return ({ message: "Something goes wrong." })
+            }
+
+            const resData = await res.json()
+            // alert(resData)
+            toast(resData, {
+                position: "top-center",
+                autoClose: 3000,
+                pauseOnHover: false,
+                transition: Flip,
+            });
+
+            setTimeout(() => {
+                router.push("/admin");
+            }, 3000);
+
 
         } catch (error) {
             console.log(error)
@@ -133,11 +164,15 @@ const CreateProject = () => {
                         {...register("aboutProject")} />
                 </div>
 
-                {data}
+                <ImageUploader />
 
-                <input type="submit" />
+                <div className="mt-5 flex justify-center items-center">
+                    <input className="beige-neumor-btn rounded-full px-8 py-2" type="submit" value="Create project" />
+                </div>
 
             </form>
+
+
         </main>
     );
 }

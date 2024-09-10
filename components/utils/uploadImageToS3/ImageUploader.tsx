@@ -11,7 +11,7 @@ export default function ImageUploader() {
     //State
     const [images, setImages] = useState<ImageListType>([]);
 
-    const maxNumber = 69;
+    const maxNumber = 40;
 
     //Upload Immages To S3 Bucket
     const uploadImagesToS3 = async (imageList: ImageListType) => {

@@ -8,20 +8,18 @@ class AuthService {
 
     constructor() { }
 
-    async authenticate(username: string = "motto.intdesign@gmail.com", password: string = "Otis63730015") {
+    // login
+    async authenticate(email: string, password: string) {
         try {
-            // const email = "motto.intdesign@gmail.com";
-            // const password = "Otis63730015";
-            const result = await pb.admins.authWithPassword(username, password);
-
+            const result = await pb.admins.authWithPassword(email, password);
             if (!result?.token) { throw new Error("Invalid email or password.") }
-
             return result;
         } catch (error) {
             throw new Error("Invalid email or password.")
         }
     }
 
+    // check admin login
     async isAdminAuthenticated(cookieStore: ReadonlyRequestCookies) {
         const cookie = cookieStore.get("pb_auth");
         if (!cookie) {
@@ -32,6 +30,7 @@ class AuthService {
         return pb.authStore.isAdmin || false
     }
 
+    // get user info from cookie
     async getUser(cookieStore: ReadonlyRequestCookies) {
         const cookie = cookieStore.get("pb_auth");
         if (!cookie) {

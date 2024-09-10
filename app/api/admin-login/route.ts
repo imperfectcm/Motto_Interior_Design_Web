@@ -11,20 +11,10 @@ export async function POST(request: NextRequest) {
         const result = await authService.authenticate(email, password);
         cookies().set("pb_auth", pb.authStore.exportToCookie());
 
-        await authService.isAdminAuthenticated(cookies());
-
         return NextResponse.json(result);
 
     } catch (error: any) {
-        return new Response(
-            JSON.stringify({ error: error.message || error.toString() }),
-            {
-                status: 500,
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }
-        )
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }
 
 }
