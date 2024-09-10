@@ -36,7 +36,6 @@ export default function ImageUploader() {
 
 
     const uploadImagesToS3Test = async () => {
-        console.log("hi")
         if (images.length > 0) {
             images.map(async (image) => {
                 const formData = new FormData();
@@ -44,8 +43,6 @@ export default function ImageUploader() {
                 formData.append("folderName", "cm-test-upload-action");
                 //Here I am calling the server action function
                 const data = await UploadImageToS3(formData);
-                console.log(data)
-
             })
         }
     }

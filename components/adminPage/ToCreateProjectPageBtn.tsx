@@ -5,9 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 const CreateProjectBtn = () => {
 
     const router = useRouter()
-
     const pathname = usePathname()
-    console.log("pathname: ", pathname)
 
     const toCreateProjectsPage = () => {
         router.push(`${pathname}/create-project`)
