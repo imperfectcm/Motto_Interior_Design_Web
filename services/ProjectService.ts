@@ -54,7 +54,34 @@ class ProjectService {
             return { error: error.message };
         }
     }
-    
+
+
+    async uploadImagesToDB(projectName: string, imageUrlList: Array<string>, cookies: ReadonlyRequestCookies) {
+        const pbAuthData = authService.getUser(cookies);
+
+        
+        const imagesData = imageUrlList.map((imageUrl) => {
+            let sequence: number = 0
+            sequence += 1;
+            return {
+                "image_url": imageUrl,
+                "name": projectName,
+                "url": imageUrl,
+                "sequence": sequence,
+                "is_cover": false,
+                "cover_id": null
+            }
+        })
+
+        try {
+            const record = await pb.collection('images').create(imagesData);
+            return record;
+        } catch (error: any) {
+            console.log(error.message);
+            return { error: error.message };
+        }
+    }
+
 }
 
 export const projectService = new ProjectService;

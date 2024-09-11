@@ -10,7 +10,6 @@ import Image from "next/image";
 interface ImageUploaderProps {
     images: ImageListType;
     setImages: Dispatch<SetStateAction<ImageListType>>;
-    uploadImagesToS3: () => Promise<void>;
 }
 
 export default function ImageUploader(props: ImageUploaderProps) {
@@ -94,18 +93,21 @@ export default function ImageUploader(props: ImageUploaderProps) {
                                     <div key={index} className={`relative col-span-1 group overflow-hidden flex flex-col`}>
                                         <img src={image.dataURL} alt="Image" className="w-full object-contain object-top grow" />
                                         <div className="image-item__btn-wrapper my-2 flex justify-center gap-4">
-                                            <button className="w-1/3 bg-neutral-700 text-neutral-100 py-1 rounded-full cursor-pointer" onClick={() => onImageUpdate(index)}>Update</button>
-                                            <button className="w-1/3 bg-red-900 text-neutral-100 py-1 rounded-full cursor-pointer" onClick={() => onImageRemove(index)}>Remove</button>
+                                            <button className="w-1/3 bg-neutral-400 hover:bg-teal-700 hover:duration-200 text-neutral-100 py-1 rounded-full cursor-pointer" onClick={() => onImageUpdate(index)}>Update</button>
+                                            <button className="w-1/3 bg-neutral-400 hover:bg-red-800 hover:duration-200 text-neutral-100 py-1 rounded-full cursor-pointer" onClick={() => onImageRemove(index)}>Remove</button>
                                         </div>
                                     </div>
                                 ))
+
                             }
                         </div>
-                        <button onClick={onImageRemoveAll}>Remove all images</button>
+                        {imageList.length > 0 && <span className="flex justify-center mt-5">
+                            <button className="w-1/3 bg-neutral-400 hover:bg-red-800 hover:duration-200 text-neutral-100 py-1 rounded-full cursor-pointer" onClick={onImageRemoveAll}>Remove all images</button>
+                        </span>}
                     </section>
                 )}
             </ImageUploading>
-            <button onClick={props.uploadImagesToS3}>Upload all images</button>
+            {/* <button onClick={props.uploadImagesToS3}>Upload all images</button> */}
         </div>
     )
 }

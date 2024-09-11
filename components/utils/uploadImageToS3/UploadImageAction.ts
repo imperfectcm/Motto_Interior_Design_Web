@@ -23,7 +23,7 @@ export async function UploadImageToS3(formData: FormData) {
         });
 
         const res = await s3.uploadFile(Buffer.from(await file.arrayBuffer()));
-        return res;
+        return res.location;
     } catch (error) {
         return { message: "Image Upload failed." };
     }
