@@ -6,7 +6,9 @@ import { Flip, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
 import ImageUploader from "@/components/utils/uploadImageToS3/ImageUploader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ImageListType } from "react-images-uploading";
+import { UploadImageToS3 } from "../utils/uploadImageToS3/UploadImageAction";
 
 
 const projectCreateFailedNotify = () => toast.error("😭 Fail to create project.", {
@@ -77,9 +79,29 @@ const CreateProjectForm = () => {
     }
 
     const [projectName, setProjectName] = useState("")
+    const [images, setImages] = useState<ImageListType>([]);
+    useEffect(() => {
+        console.log(images)
+    },
+        [images]
+    )
+
+    const uploadImagesToS3 = async () => {
+        console.log("images: ", images)
+        if (images.length > 0 && images[0].file as File) {
+            images.map(async (image) => {
+                const formData = new FormData();
+                formData.append("file", image.file as File);
+                formData.append("folderName", `${projectName}`);
+                //Here I am calling the server action function
+                const data = await UploadImageToS3(formData);
+                console.log(data);
+            })
+        }
+    }
 
     return (
-        <main className="flex justify-center items-center h-screen">
+        <main className="flex justify-center items-center py-10">
             <form className="flex flex-col w-9/12 gap-y-5"
                 onSubmit={handleSubmit((data) => creatProject(data))}>
                 <div className="flex flex-col">
@@ -169,7 +191,10 @@ const CreateProjectForm = () => {
                         {...register("aboutProject")} />
                 </div>
 
-                <ImageUploader projectName={projectName} />
+                <ImageUploader
+                    images={images}
+                    setImages={setImages}
+                    uploadImagesToS3={uploadImagesToS3} />
 
                 <div className="mt-5 flex justify-center items-center">
                     <input className="beige-neumor-btn rounded-full px-8 py-2" type="submit" value="Create project" />
