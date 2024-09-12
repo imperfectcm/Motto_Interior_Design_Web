@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
             "household_size": householdSize,
             "description": aboutProject
         };
-
+        
         await projectService.createProject(projectData,cookies());
         
         return NextResponse.json("Project created successfully.");

@@ -56,9 +56,10 @@ class ProjectService {
     }
 
 
-    async uploadImagesToDB(projectName: string, imageUrlList: Array<string>, cookies: ReadonlyRequestCookies) {
+    async uploadImagesToDB(projectName: string, imageUrlList: string[], cookies: ReadonlyRequestCookies) {
         const pbAuthData = authService.getUser(cookies);
 
+        console.log("projectService imageUrlList: ", imageUrlList)
         
         const imagesData = imageUrlList.map((imageUrl) => {
             let sequence: number = 0

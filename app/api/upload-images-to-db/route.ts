@@ -15,13 +15,14 @@ export async function POST(request: NextRequest) {
         console.log("reqData.imageUrlList: ", reqData.imageUrlList)
 
         const projectName: string = reqData.projectName
-        const imageUrlList: Array<string> = reqData.imageUrlList
+        const imageUrlList: string[] = reqData.imageUrlList
 
         await projectService.uploadImagesToDB(projectName, imageUrlList, cookies());
 
         return NextResponse.json("Images uploaded to DB successfully.");
 
     } catch (error: any) {
+        console.log(error);
         return new Response(
             JSON.stringify({ error: error.message || error.toString() }),
             {

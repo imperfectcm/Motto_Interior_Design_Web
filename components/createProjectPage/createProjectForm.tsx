@@ -53,33 +53,31 @@ const CreateProjectForm = () => {
     const [images, setImages] = useState<ImageListType>([]);
     useEffect(() => {
         console.log("useEffect images: ", images)
-    },
-        [images]
-    )
+    }, [images])
 
-    const [imageUrlList, setImageUrlList] = useState<string[]>([])
-    useEffect(() => {
-        console.log("useEffect imageUrlList: ", imageUrlList)
-    },
-        [imageUrlList]
-    )
 
+    let imageUrlList: string[] = [];
 
     const uploadImagesToS3 = async () => {
-        if (images.length > 0 && images[0].file as File) {
-            images.map(async (image) => {
-                const formData = new FormData();
-                formData.append("file", image.file as File);
-                formData.append("folderName", `${projectName}`);
-                //Here I am calling the server action function
-                const imageurl = await UploadImageToS3(formData);
-                setImageUrlList(imageUrlList => [...imageUrlList, imageurl.toString()]);
-            })
+
+        if (images.length > 0) {
+            await Promise.all(images.map(async (image) => {
+                if (image.file instanceof File) {
+                    const formData = new FormData();
+                    formData.append("file", image.file);
+                    formData.append("folderName", projectName);
+                    const imageUrl = await UploadImageToS3(formData);
+                    imageUrlList.push(imageUrl.toString());
+                }
+            }));
+
+            return imageUrlList;
         }
+
     }
 
-
     const creatProjectToDB = async (data: projectFormData) => {
+
         try {
             const res = await fetch("/api/create-project", {
                 method: "POST",
@@ -103,12 +101,14 @@ const CreateProjectForm = () => {
             console.log(error)
             throw error;
         }
+
     }
+
 
     const uploadImagesToDB = async (data: projectFormData) => {
 
-        console.log("imageUrlList??? ", imageUrlList)
-        if (!imageUrlList) return;
+        console.log("imageUrlList before upload DB: ", imageUrlList)
+        if (!imageUrlList.length) return;
 
         try {
 
@@ -119,8 +119,8 @@ const CreateProjectForm = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    projectName,
-                    imageUrlList
+                    "projectName": projectName,
+                    "imageUrlList": imageUrlList
                 }),
             });
 
@@ -136,6 +136,7 @@ const CreateProjectForm = () => {
             console.log(error)
             throw error;
         }
+
     }
 
 
@@ -147,22 +148,27 @@ const CreateProjectForm = () => {
             await uploadImagesToS3();
             await creatProjectToDB(data);
             await uploadImagesToDB(data);
-
-            toast("Project created successfully", {
-                position: "top-center",
-                autoClose: 3000,
-                pauseOnHover: false,
-                transition: Flip,
-            });
-
-            setTimeout(() => {
-                router.push("/admin");
-            }, 3000);
+            await successfullyUploadHandle();
 
         } catch (error) {
             console.log(error)
-            throw error;
+            console.error("Error: ", error);
         }
+
+    }
+
+
+    const successfullyUploadHandle = async () => {
+        toast("Project created successfully", {
+            position: "top-center",
+            autoClose: 3000,
+            pauseOnHover: false,
+            transition: Flip,
+        });
+
+        setTimeout(() => {
+            router.push("/admin");
+        }, 3000);
     }
 
 
