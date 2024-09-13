@@ -68,7 +68,7 @@ export default function CoverImageUploader(props: CoverImageUploaderProps) {
                             }
                         </div>
                         {imageList.length > 0 && <span className="flex justify-center mt-5">
-                            <button className="w-1/3 bg-neutral-400 hover:bg-red-800 hover:duration-200 text-neutral-100 py-1 rounded-full cursor-pointer" onClick={onImageRemoveAll}>Remove all images</button>
+                            <button className="w-1/3 bg-neutral-400 hover:bg-red-800 hover:duration-200 text-neutral-100 py-1 rounded-full cursor-pointer" onClick={onImageRemoveAll}>Remove all cover images</button>
                         </span>}
                     </section>
                 )}
