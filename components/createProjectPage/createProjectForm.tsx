@@ -9,6 +9,7 @@ import ImageUploader from "@/components/utils/uploadImageToS3/ImageUploader";
 import { useEffect, useState } from "react";
 import { ImageListType } from "react-images-uploading";
 import { UploadImageToS3 } from "../utils/uploadImageToS3/UploadImageAction";
+import CoverImageUploader from "../utils/uploadImageToS3/CoverImageUploader";
 
 
 const projectCreateFailedNotify = () => toast.error("😭 Fail to create project.", {
@@ -50,17 +51,27 @@ const CreateProjectForm = () => {
     const router = useRouter();
 
     const [projectName, setProjectName] = useState("")
+    const [coverImages, setCoverImages] = useState<ImageListType>([]);
     const [images, setImages] = useState<ImageListType>([]);
-    useEffect(() => {
-        console.log("useEffect images: ", images)
-    }, [images])
 
-
+    let projectId: string;
+    let coverImageUrlList: string[] = [];
     let imageUrlList: string[] = [];
 
     const uploadImagesToS3 = async () => {
 
         if (images.length > 0) {
+
+            await Promise.all(coverImages.map(async (image) => {
+                if (image.file instanceof File) {
+                    const formData = new FormData();
+                    formData.append("file", image.file);
+                    formData.append("folderName", projectName);
+                    const coverImageUrl = await UploadImageToS3(formData);
+                    coverImageUrlList.push(coverImageUrl.toString());
+                }
+            }));
+
             await Promise.all(images.map(async (image) => {
                 if (image.file instanceof File) {
                     const formData = new FormData();
@@ -95,6 +106,7 @@ const CreateProjectForm = () => {
             }
 
             const resData = await res.json()
+            projectId = resData.id;
             return resData;
 
         } catch (error) {
@@ -105,21 +117,52 @@ const CreateProjectForm = () => {
     }
 
 
-    const uploadImagesToDB = async (data: projectFormData) => {
+    const uploadCoverImagesToDB = async () => {
 
-        console.log("imageUrlList before upload DB: ", imageUrlList)
+        if (!coverImageUrlList.length) return;
+
+        try {
+
+            const res = await fetch("/api/upload-cover-images-to-db", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "projectId": projectId,
+                    "coverImageUrlList": coverImageUrlList
+                }),
+            });
+
+            if (!res.ok) {
+                uploadImagesToDBFailedNotify();
+                return ({ message: "Upload image to DB failed." })
+            }
+
+            const resData = await res.json()
+            return resData;
+
+        } catch (error) {
+            console.log(error)
+            throw error;
+        }
+
+    }
+
+
+    const uploadImagesToDB = async () => {
+
         if (!imageUrlList.length) return;
 
         try {
 
-            const projectName = data.projectName;
             const res = await fetch("/api/upload-images-to-db", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    "projectName": projectName,
+                    "projectId": projectId,
                     "imageUrlList": imageUrlList
                 }),
             });
@@ -147,7 +190,8 @@ const CreateProjectForm = () => {
         try {
             await uploadImagesToS3();
             await creatProjectToDB(data);
-            await uploadImagesToDB(data);
+            await uploadCoverImagesToDB();
+            await uploadImagesToDB();
             await successfullyUploadHandle();
 
         } catch (error) {
@@ -262,6 +306,10 @@ const CreateProjectForm = () => {
                     <textarea className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
                         {...register("aboutProject")} />
                 </div>
+
+                <CoverImageUploader
+                    coverImages={coverImages}
+                    setCoverImages={setCoverImages} />
 
                 <ImageUploader
                     images={images}

@@ -5,26 +5,26 @@ import { Dispatch, SetStateAction, useState } from "react";
 import Image from "next/image";
 
 
-interface ImageUploaderProps {
-    images: ImageListType;
-    setImages: Dispatch<SetStateAction<ImageListType>>;
+interface CoverImageUploaderProps {
+    coverImages: ImageListType;
+    setCoverImages: Dispatch<SetStateAction<ImageListType>>;
 }
 
-export default function ImageUploader(props: ImageUploaderProps) {
+export default function CoverImageUploader(props: CoverImageUploaderProps) {
 
-    const maxNumber = 40;
+    const maxNumber = 2;
 
     const onChange = async (
         imageList: ImageListType
     ) => {
-        await props.setImages(imageList);
+        await props.setCoverImages(imageList);
     };
 
 
     return (
         <div className="off-white-bg relative">
             <ImageUploading
-                value={props.images}
+                value={props.coverImages}
                 onChange={onChange}
                 multiple
                 maxNumber={maxNumber}
@@ -40,7 +40,7 @@ export default function ImageUploader(props: ImageUploaderProps) {
                 }) => (
                     <section>
                         <div className="grid grid-flow-row-dense grid-cols-3 gap-3">
-                            <div className="col-span-full text-2xl">Project Images :</div>
+                            <div className="col-span-full text-2xl">Project Cover Images :</div>
                             {imageList.length === 0 &&
                                 <button
                                     onClick={onImageUpload}
@@ -50,7 +50,7 @@ export default function ImageUploader(props: ImageUploaderProps) {
                                 >
                                     <div className={`${isDragging ? "pointer-events-none" : ""}`}>
                                         <Image src="/upload.png" width={90} height={90} alt="Upload" className="w-[70px] mx-auto" />
-                                        <h6 className="text-base font-medium text-gray-600">Drop your image here, or <span className="text-main">browse</span></h6>
+                                        <h6 className="text-base font-medium text-gray-600">Drop your cover image here, or <span className="text-main">browse</span></h6>
                                     </div>
                                 </button>
                             }

@@ -56,31 +56,46 @@ class ProjectService {
     }
 
 
-    async uploadImagesToDB(projectName: string, imageUrlList: string[], cookies: ReadonlyRequestCookies) {
+    async uploadCoverImagesToDB(projectId: string, coverImageUrl: string, sequence: number, coverId: number, cookies: ReadonlyRequestCookies) {
         const pbAuthData = authService.getUser(cookies);
 
-        console.log("projectService imageUrlList: ", imageUrlList)
-        
-        const imagesData = imageUrlList.map((imageUrl) => {
-            let sequence: number = 0
-            sequence += 1;
-            return {
-                "image_url": imageUrl,
-                "name": projectName,
-                "url": imageUrl,
-                "sequence": sequence,
-                "is_cover": false,
-                "cover_id": null
-            }
-        })
+        const imageData = {
+            "name": projectId,
+            "url": coverImageUrl,
+            "sequence": sequence,
+            "is_cover": true,
+            "cover_id": coverId
+        }
 
         try {
-            const record = await pb.collection('images').create(imagesData);
+            const record = await pb.collection('images').create(imageData, { requestKey: null });
             return record;
         } catch (error: any) {
-            console.log(error.message);
+            console.log("Error: " + error.message);
             return { error: error.message };
         }
+
+    }
+
+
+    async uploadImagesToDB(projectId: string, imageUrl: string, sequence: number, cookies: ReadonlyRequestCookies) {
+        const pbAuthData = authService.getUser(cookies);
+
+        const imageData = {
+            "name": projectId,
+            "url": imageUrl,
+            "sequence": sequence,
+            "is_cover": false
+        }
+
+        try {
+            const record = await pb.collection('images').create(imageData, { requestKey: null });
+            return record;
+        } catch (error: any) {
+            console.log("Error: " + error.message);
+            return { error: error.message };
+        }
+
     }
 
 }

@@ -10,17 +10,19 @@ export async function POST(request: NextRequest) {
         const reqData = await request.json();
 
         const projectId: string = reqData.projectId
-        const imageUrlList: string[] = reqData.imageUrlList
+        const coverImageUrlList: string[] = reqData.coverImageUrlList
         let sequence: number = 0;
+        let coverId: number = 0;
 
-        const uploadEachImage = async (imageUrlList: string[]) => {
-            imageUrlList.forEach(async (imageUrl) => {
+        const uploadEachImage = async (coverImageUrlList: string[]) => {
+            coverImageUrlList.forEach(async (coverImageUrl) => {
                 sequence += 1;
-                await projectService.uploadImagesToDB(projectId, imageUrl, sequence, cookies());
+                coverId += 1;
+                await projectService.uploadCoverImagesToDB(projectId, coverImageUrl, sequence, coverId, cookies());
             })
         }
 
-        await uploadEachImage(imageUrlList);
+        await uploadEachImage(coverImageUrlList);
 
         return NextResponse.json("Images uploaded to DB successfully.");
 

@@ -30,9 +30,9 @@ export async function POST(request: NextRequest) {
             "description": aboutProject
         };
         
-        await projectService.createProject(projectData,cookies());
+        const res = await projectService.createProject(projectData,cookies());
         
-        return NextResponse.json("Project created successfully.");
+        return NextResponse.json(res);
 
     } catch (error: any) {
         return new Response(
