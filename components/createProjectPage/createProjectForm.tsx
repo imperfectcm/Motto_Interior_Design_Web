@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { ImageListType } from "react-images-uploading";
 import { UploadImageToS3 } from "../utils/uploadImageToS3/UploadImageAction";
 import CoverImageUploader from "../utils/uploadImageToS3/CoverImageUploader";
+import { CreateProjectBtn } from "./createProjectBtn";
 
 
 const projectCreateFailedNotify = () => toast.error("😭 Fail to create project.", {
@@ -50,6 +51,16 @@ const CreateProjectForm = () => {
 
     const router = useRouter();
 
+    const [isUploading, setIsUploading] = useState(false);
+    const [btnContent, setBtnContent] = useState("Create Project");
+
+    useEffect(() => {
+        if (!isUploading) {
+            return;
+        }
+        return setBtnContent("Uploading...")
+    }, [isUploading]);
+
     const [projectName, setProjectName] = useState("")
     const [coverImages, setCoverImages] = useState<ImageListType>([]);
     const [images, setImages] = useState<ImageListType>([]);
@@ -57,6 +68,7 @@ const CreateProjectForm = () => {
     let projectId: string;
     let coverImageUrlList: string[] = [];
     let imageUrlList: string[] = [];
+
 
     const uploadImagesToS3 = async () => {
 
@@ -86,6 +98,7 @@ const CreateProjectForm = () => {
         }
 
     }
+
 
     const creatProjectToDB = async (data: projectFormData) => {
 
@@ -183,6 +196,19 @@ const CreateProjectForm = () => {
     }
 
 
+    const successfullyUploadHandle = async () => {
+
+        toast("Project created successfully", {
+            position: "top-center",
+            autoClose: 3000,
+            pauseOnHover: false,
+            transition: Flip,
+            onClose: () => router.push("/admin")
+        })
+
+    }
+
+
     const { register, handleSubmit, formState: { errors } } = useForm<projectFormData>();
 
     const handleFormSubmit = async (data: projectFormData) => {
@@ -199,20 +225,6 @@ const CreateProjectForm = () => {
             console.error("Error: ", error);
         }
 
-    }
-
-
-    const successfullyUploadHandle = async () => {
-        toast("Project created successfully", {
-            position: "top-center",
-            autoClose: 3000,
-            pauseOnHover: false,
-            transition: Flip,
-        });
-
-        setTimeout(() => {
-            router.push("/admin");
-        }, 3000);
     }
 
 
@@ -315,9 +327,12 @@ const CreateProjectForm = () => {
                     images={images}
                     setImages={setImages} />
 
-                <div className="mt-5 flex justify-center items-center">
+                <CreateProjectBtn
+                    btnContent={btnContent}
+                    setIsUploading={setIsUploading} />
+                {/* <div className="mt-5 flex justify-center items-center">
                     <input className="beige-neumor-btn rounded-full px-8 py-2" type="submit" value="Create project" />
-                </div>
+                </div> */}
 
             </form>
 

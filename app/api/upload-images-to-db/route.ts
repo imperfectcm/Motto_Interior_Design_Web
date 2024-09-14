@@ -16,7 +16,12 @@ export async function POST(request: NextRequest) {
         const uploadEachImage = async (imageUrlList: string[]) => {
             imageUrlList.forEach(async (imageUrl) => {
                 sequence += 1;
-                await projectService.uploadImagesToDB(projectId, imageUrl, sequence, cookies());
+                if (imageUrl.includes(" ")) {
+                    const replacedUrl = imageUrl.replaceAll(" ", "%20");
+                    await projectService.uploadImagesToDB(projectId, replacedUrl, sequence, cookies());
+                } else {
+                    await projectService.uploadImagesToDB(projectId, imageUrl, sequence, cookies());
+                }
             })
         }
 

@@ -18,7 +18,12 @@ export async function POST(request: NextRequest) {
             coverImageUrlList.forEach(async (coverImageUrl) => {
                 sequence += 1;
                 coverId += 1;
-                await projectService.uploadCoverImagesToDB(projectId, coverImageUrl, sequence, coverId, cookies());
+                if (coverImageUrl.includes(" ")) {
+                    const replacedUrl = coverImageUrl.replaceAll(" ", "%20");
+                    await projectService.uploadCoverImagesToDB(projectId, replacedUrl, sequence, coverId, cookies());
+                } else {
+                    await projectService.uploadCoverImagesToDB(projectId, coverImageUrl, sequence, coverId, cookies());
+                }
             })
         }
 

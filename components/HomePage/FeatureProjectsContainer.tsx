@@ -1,15 +1,14 @@
-import { projectService } from "@/services/ProjectService";
+
 import FeatureTypeA from "./FeatureTypeA";
 import FeatureTypeB from "./FeatureTypeB";
-
 
 export default async function FeatureProjectsContainer() {
 
     return (
         <section>
-            <FeatureTypeA />
-            <FeatureTypeB />
-            <FeatureTypeA />
+                <FeatureTypeA />
+                <FeatureTypeB />
+                <FeatureTypeA />
         </section>
     )
 }

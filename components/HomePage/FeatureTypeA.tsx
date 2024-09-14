@@ -1,6 +1,6 @@
+
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Image from 'next/image'
 
 
 export default async function FeatureTypeA() {
@@ -19,11 +19,11 @@ export default async function FeatureTypeA() {
                     EXPLORER<FontAwesomeIcon icon={faArrowRight} />
                 </div>
             </div>
-            <div className="absolute inset-y-10 right-1/2 w-2/5 flex justify-end pr-32">
-                <Image className="object-cover aspect-[3/4]" src={`${imgFolder}00 cover.jpg`} alt="Home Page Feature Projects Cover Image" />
+            <div className="absolute inset-y-10 right-1/2 w-2/5 flex justify-end pr-32 img-shadow">
+                <img className="object-cover aspect-[3/4]" src={`${imgFolder}00 cover.jpg`} alt="Home Page Feature Projects Cover Image" loading="lazy" />
             </div>
-            <div className="absolute bottom-1/4 right-1/2 w-1/5 h-1/3 flex justify-end">
-                <Image className="object-cover aspect-[1/1]" src={`${imgFolder}03.jpg`} alt="Home Page Feature Projects Cover Image" />
+            <div className="absolute bottom-1/4 right-1/2 w-1/5 h-1/3 flex justify-end img-shadow">
+                <img className="object-cover aspect-[1/1]" src={`${imgFolder}03.jpg`} alt="Home Page Feature Projects Cover Image" loading="lazy" />
             </div>
         </section>
     );

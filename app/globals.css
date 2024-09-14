@@ -71,6 +71,20 @@ body {
     -2px -2px 3px 0px rgba(var(--shadow-rgb), 0.9) inset;
 }
 
+.homepage-cover-img-box div {
+  animation-duration: 0.15s;
+  transition: 0.15s;
+}
+
+.homepage-cover-img:hover> :not(:hover) {
+  filter: brightness(70%) blur(1px);
+}
+
+
+.img-shadow {
+  filter: drop-shadow(0 0 0.35rem rgb(175, 175, 175));
+}
+
 
 /* btn */
 

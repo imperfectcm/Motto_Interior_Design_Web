@@ -2,7 +2,6 @@
 import { RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";
 import AllProjects from "./AllProjects";
-import Image from 'next/image'
 
 const importAll = (context: any) => context.keys().map((key: any) => context(key).default);
 const imageListByRPA = importAll(require.context('./../../public/hardCodeImages/Project Chronology/', false, /\.(?:jpg|jpeg|png|gif|webp)$/));
@@ -22,7 +21,7 @@ const imageList = async () => {
 const images: Promise<JSX.Element[]> = imageList().then((images) => {
     return images.map((image: string, index: number) =>
         <div key={index} className="col-span-2 aspect-[3/4] snap-always snap-center">
-            <Image className="object-cover aspect-[3/4] scale-90 hover:scale-100 duration-100 cursor-pointer"
+            <img className="object-cover aspect-[3/4] scale-90 hover:scale-100 duration-200 cursor-pointer"
                 id={`${index}`}
                 src={`${imgFolder}${image}`}
                 loading="lazy"
