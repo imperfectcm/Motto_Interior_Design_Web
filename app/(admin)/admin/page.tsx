@@ -3,6 +3,7 @@ import { authService } from "@/services/AuthService";
 import { cookies } from "next/headers"
 import CreateProjectBtn from "@/components/adminPage/ToCreateProjectPageBtn";
 import CheckAuth from "@/components/auth/CheckAuth";
+import AllProjectCoversContainer from "@/components/adminPage/AllProjectCoversContainer";
 
 
 const admin = async () => {
@@ -15,6 +16,7 @@ const admin = async () => {
 
     return (
         <main>
+            <AllProjectCoversContainer />
             <CreateProjectBtn />
         </main>
     )

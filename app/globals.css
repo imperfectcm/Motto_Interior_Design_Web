@@ -77,7 +77,7 @@ body {
 }
 
 .homepage-cover-img:hover> :not(:hover) {
-  filter: brightness(70%) blur(1px);
+  filter: brightness(80%) blur(1px);
 }
 
 

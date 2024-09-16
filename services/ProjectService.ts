@@ -6,29 +6,70 @@ class ProjectService {
 
     constructor() { }
 
-    async pbTest() {
-        // you can also fetch all records at once via getFullList
-        const records = await pb.collection('posts').getFullList({
-            sort: '-created',
-        });
-        return records;
+
+    async getAllProjectsInfo() {
+
+        try {
+            const resultList = await pb.collection('projects').getFullList({
+                filter: 'is_feature_project = false',
+                sort: '+created',
+            });
+            
+            return resultList;
+        } catch (error: any) {
+            console.log(error.message);
+            return { error: error.message };
+        }
+
     }
 
-    async apiTest() {
-        let res = await fetch(`${POCKET_BASE_URL}/api/collections/posts/records`,
-            {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }
-        )
-        if (!res) return { data: "no res" };
-        const data = await res.json();
-        return data;
+
+    async getFeatureProjectsInfo() {
+
+        try {
+            const resultList = await pb.collection('projects').getFullList({
+                filter: 'is_feature_project = true',
+                sort: '+feature_id',
+            });
+            
+            return resultList;
+        } catch (error: any) {
+            console.log(error.message);
+            return { error: error.message };
+        }
+
     }
 
-    async getAllProjectsCover() {
+
+    async getProjectInfoByName(projectName: string) {
+
+        try {
+            const resultList = await pb.collection('projects').getFullList({
+                filter: `name = ${projectName}`,
+                sort: '+feature_id',
+            });
+            
+            return resultList;
+        } catch (error: any) {
+            console.log(error.message);
+            return { error: error.message };
+        }
+
+    }
+
+
+    async getProjectCover(projectId: string) {
+
+        try {
+            const resultList = await pb.collection('images').getFullList({
+                filter: `name = "${projectId}" && is_cover = true`,
+                sort: '+sequence',
+            });
+            return resultList;
+        } catch (error: any) {
+            console.log(error.message);
+            return { error: error.message };
+        }
 
     }
 

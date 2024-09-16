@@ -103,7 +103,7 @@ const CreateProjectForm = () => {
     const creatProjectToDB = async (data: projectFormData) => {
 
         try {
-            const res = await fetch("/api/create-project", {
+            const res = await fetch("/api/project", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -136,7 +136,7 @@ const CreateProjectForm = () => {
 
         try {
 
-            const res = await fetch("/api/upload-cover-images-to-db", {
+            const res = await fetch("/api/cover-images", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -169,7 +169,7 @@ const CreateProjectForm = () => {
 
         try {
 
-            const res = await fetch("/api/upload-images-to-db", {
+            const res = await fetch("/api/project-images", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -330,9 +330,6 @@ const CreateProjectForm = () => {
                 <CreateProjectBtn
                     btnContent={btnContent}
                     setIsUploading={setIsUploading} />
-                {/* <div className="mt-5 flex justify-center items-center">
-                    <input className="beige-neumor-btn rounded-full px-8 py-2" type="submit" value="Create project" />
-                </div> */}
 
             </form>
 

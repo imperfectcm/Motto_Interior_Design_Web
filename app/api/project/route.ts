@@ -3,6 +3,37 @@ import { cookies } from "next/headers";
 import { NextResponse, type NextRequest } from "next/server";
 import { projectService } from "@/services/ProjectService";
 
+
+export async function GET(request: NextRequest) {
+
+    try {
+        const reqData = await request.json();
+
+        const projectName = reqData.projectName;
+
+        const res = await projectService.getProjectInfoByName(projectName);
+
+        if (!res) {
+            return NextResponse.json({ message: "Failed to get project by name." });
+        }
+
+        return NextResponse.json({ data: res });
+
+    } catch (error: any) {
+        return new Response(
+            JSON.stringify({ error: error.message || error.toString() }),
+            {
+                status: 500,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+    }
+
+}
+
+
 export async function POST(request: NextRequest) {
 
     try {
