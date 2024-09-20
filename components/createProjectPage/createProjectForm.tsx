@@ -52,14 +52,6 @@ const CreateProjectForm = () => {
     const router = useRouter();
 
     const [isUploading, setIsUploading] = useState(false);
-    const [btnContent, setBtnContent] = useState("Create Project");
-
-    useEffect(() => {
-        if (!isUploading) {
-            return;
-        }
-        return setBtnContent("Uploading...")
-    }, [isUploading]);
 
     const [projectName, setProjectName] = useState("")
     const [coverImages, setCoverImages] = useState<ImageListType>([]);
@@ -328,7 +320,7 @@ const CreateProjectForm = () => {
                     setImages={setImages} />
 
                 <CreateProjectBtn
-                    btnContent={btnContent}
+                    isUploading={isUploading}
                     setIsUploading={setIsUploading} />
 
             </form>
