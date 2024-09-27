@@ -27,19 +27,11 @@ export async function POST(request: NextRequest) {
 
         await uploadEachImage(imageUrlList);
 
-        return NextResponse.json("Images uploaded to DB successfully.");
+        return NextResponse.json({ message: "Images uploaded to DB successfully." }, { status: 200 });
 
     } catch (error: any) {
         console.log(error);
-        return new Response(
-            JSON.stringify({ error: error.message || error.toString() }),
-            {
-                status: 500,
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }
-        )
+        return NextResponse.json({ error: error.message || error.toString() }, { status: 500 })
     }
 
 }

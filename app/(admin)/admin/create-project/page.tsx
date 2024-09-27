@@ -1,7 +1,7 @@
 
 import { cookies } from "next/headers";
 import { authService } from "@/services/AuthService";
-import CheckAuth from "@/components/auth/CheckAuth";
+import CheckAuth from "@/components/auth/checkAuth";
 import CreateProjectForm from "@/components/createProjectPage/createProjectForm";
 
 

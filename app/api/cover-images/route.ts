@@ -9,6 +9,8 @@ export async function POST(request: NextRequest) {
 
         const reqData = await request.json();
 
+        if (!reqData) return;
+
         const projectId: string = reqData.projectId
         const coverImageUrlList: string[] = reqData.coverImageUrlList
         let sequence: number = 0;
@@ -29,18 +31,12 @@ export async function POST(request: NextRequest) {
 
         await uploadEachImage(coverImageUrlList);
 
-        return NextResponse.json("Images uploaded to DB successfully.");
+        return NextResponse.json({ message: "Images uploaded to DB successfully." }, { status: 200 });
 
     } catch (error: any) {
         console.log(error);
-        return new Response(
-            JSON.stringify({ error: error.message || error.toString() }),
-            {
-                status: 500,
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }
+        return NextResponse.json(
+            { error: error.message || error.toString() }, { status: 500 }
         )
     }
 

@@ -1,4 +1,4 @@
-import AllProjectCovers from "./AllProjectCovers";
+import AllProjectCovers from "./allProjectCovers";
 
 
 const AllProjectCoversContainer = () => {

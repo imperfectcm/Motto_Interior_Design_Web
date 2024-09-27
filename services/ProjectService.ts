@@ -12,7 +12,7 @@ class ProjectService {
         try {
             const resultList = await pb.collection('projects').getFullList({
                 filter: 'is_feature_project = false',
-                sort: '+created',
+                sort: '-created',
             });
             
             return resultList;

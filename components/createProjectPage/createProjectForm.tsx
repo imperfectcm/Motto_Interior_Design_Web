@@ -6,11 +6,12 @@ import { Flip, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
 import ImageUploader from "@/components/utils/uploadImageToS3/ImageUploader";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ImageListType } from "react-images-uploading";
 import { UploadImageToS3 } from "../utils/uploadImageToS3/UploadImageAction";
 import CoverImageUploader from "../utils/uploadImageToS3/CoverImageUploader";
 import { CreateProjectBtn } from "./createProjectBtn";
+import React from "react";
 
 
 const projectCreateFailedNotify = () => toast.error("😭 Fail to create project.", {
@@ -51,8 +52,6 @@ const CreateProjectForm = () => {
 
     const router = useRouter();
 
-    const [isUploading, setIsUploading] = useState(false);
-
     const [projectName, setProjectName] = useState("")
     const [coverImages, setCoverImages] = useState<ImageListType>([]);
     const [images, setImages] = useState<ImageListType>([]);
@@ -64,31 +63,43 @@ const CreateProjectForm = () => {
 
     const uploadImagesToS3 = async () => {
 
+        if (coverImages.length > 0) {
+            try {
+                await Promise.all(coverImages.map(async (image) => {
+                    if (image.file instanceof File) {
+                        const formData = new FormData();
+                        formData.append("file", image.file);
+                        formData.append("folderName", projectName);
+                        const coverImageUrl = await UploadImageToS3(formData);
+                        if (typeof (coverImageUrl) === "string") coverImageUrlList.push(coverImageUrl);
+                        else return coverImageUrl.message;
+                    }
+                }))
+            } catch (error: any) {
+                uploadImagesToDBFailedNotify();
+                throw new Error(error.message);
+            }
+        };
+
         if (images.length > 0) {
+            try {
+                await Promise.all(images.map(async (image) => {
+                    if (image.file instanceof File) {
+                        const formData = new FormData();
+                        formData.append("file", image.file);
+                        formData.append("folderName", projectName);
+                        const imageUrl = await UploadImageToS3(formData);
+                        if (typeof (imageUrl) === "string") imageUrlList.push(imageUrl);
+                        else return imageUrl.message;
+                    }
+                }))
+            } catch (error: any) {
+                uploadImagesToDBFailedNotify();
+                throw new Error(error.message);
+            }
+        };
 
-            await Promise.all(coverImages.map(async (image) => {
-                if (image.file instanceof File) {
-                    const formData = new FormData();
-                    formData.append("file", image.file);
-                    formData.append("folderName", projectName);
-                    const coverImageUrl = await UploadImageToS3(formData);
-                    coverImageUrlList.push(coverImageUrl.toString());
-                }
-            }));
-
-            await Promise.all(images.map(async (image) => {
-                if (image.file instanceof File) {
-                    const formData = new FormData();
-                    formData.append("file", image.file);
-                    formData.append("folderName", projectName);
-                    const imageUrl = await UploadImageToS3(formData);
-                    imageUrlList.push(imageUrl.toString());
-                }
-            }));
-
-            return imageUrlList;
-        }
-
+        return { "Cover image url list": coverImageUrlList, "image url list": imageUrlList };
     }
 
 
@@ -106,13 +117,14 @@ const CreateProjectForm = () => {
             });
 
             if (!res.ok) {
+                const errorData = await res.json();
                 projectCreateFailedNotify();
-                return ({ message: "Project create failed." })
+                throw new Error(errorData.error || "Project create failed.");
             }
 
             const resData = await res.json()
-            projectId = resData.id;
-            return resData;
+            projectId = resData.data.id;
+            return projectId;
 
         } catch (error) {
             console.log(error)
@@ -140,12 +152,13 @@ const CreateProjectForm = () => {
             });
 
             if (!res.ok) {
+                const errorData = await res.json();
                 uploadImagesToDBFailedNotify();
-                return ({ message: "Upload image to DB failed." })
+                throw new Error(errorData.error || "Upload cover image to DB failed.")
             }
 
             const resData = await res.json()
-            return resData;
+            return resData.message;
 
         } catch (error) {
             console.log(error)
@@ -173,12 +186,13 @@ const CreateProjectForm = () => {
             });
 
             if (!res.ok) {
+                const errorData = await res.json();
                 uploadImagesToDBFailedNotify();
-                return ({ message: "Upload image to DB failed." })
+                throw new Error(errorData.error || "Upload image to DB failed.")
             }
 
             const resData = await res.json()
-            return resData;
+            return resData.message;
 
         } catch (error) {
             console.log(error)
@@ -201,9 +215,19 @@ const CreateProjectForm = () => {
     }
 
 
-    const { register, handleSubmit, formState: { errors } } = useForm<projectFormData>();
+    const {
+        register,
+        handleSubmit,
+        formState: {
+            errors,
+            isValid,
+            isSubmitting
+        } } = useForm<projectFormData>();
+
 
     const handleFormSubmit = async (data: projectFormData) => {
+
+        if (!isValid) return;
 
         try {
             await uploadImagesToS3();
@@ -211,22 +235,23 @@ const CreateProjectForm = () => {
             await uploadCoverImagesToDB();
             await uploadImagesToDB();
             await successfullyUploadHandle();
-
         } catch (error) {
             console.log(error)
             console.error("Error: ", error);
         }
-
     }
+
+    console.log("isSubmitting: ", isSubmitting)
 
 
     return (
         <main className="flex justify-center items-center py-10">
             <form className="flex flex-col w-9/12 gap-y-5"
-                onSubmit={handleSubmit((data) => handleFormSubmit(data))}>
+                onSubmit={handleSubmit(handleFormSubmit)}>
                 <div className="flex flex-col">
                     <label>Project name (專案名稱)</label>
-                    <input className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
+                    <input
+                        className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
                         {...register("projectName", {
                             required: true,
                             onChange: (e) => setProjectName(e.target.value)
@@ -320,8 +345,7 @@ const CreateProjectForm = () => {
                     setImages={setImages} />
 
                 <CreateProjectBtn
-                    isUploading={isUploading}
-                    setIsUploading={setIsUploading} />
+                    isSubmitting={isSubmitting} />
 
             </form>
 

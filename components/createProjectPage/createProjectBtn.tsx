@@ -1,21 +1,24 @@
 "use client";
 
-import { Dispatch, SetStateAction } from "react";
-
-
 interface CreateProjectBtnProps {
-    isUploading: boolean;
-    setIsUploading: Dispatch<SetStateAction<boolean>>
+    isSubmitting: boolean;
 }
 
 
 export function CreateProjectBtn(props: CreateProjectBtnProps) {
 
+    let isSubmitting = props.isSubmitting
+
     return (
-        <div className="mt-5 flex justify-center items-center">
-            <button className="beige-neumor-btn rounded-full px-8 py-2" disabled={props.isUploading} type="submit" onClick={() => props.setIsUploading(true)}>
-                {props.isUploading ? "Uploading..." : "Create Project"}
-            </button>
-        </div >
+        isSubmitting ?
+            <div className="z-40 loading-bg">
+                <div className="create-form-loader"></div>
+            </div >
+            :
+            <div className="mt-5 flex justify-center items-center">
+                <button className="beige-neumor-btn rounded-full px-8 py-2" disabled={isSubmitting} type="submit">
+                    Create Project
+                </button>
+            </div >
     )
 }

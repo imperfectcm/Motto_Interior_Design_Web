@@ -59,7 +59,7 @@ export default function CoverImageUploader(props: CoverImageUploaderProps) {
                                     <div key={index} className={`relative col-span-1 group overflow-hidden flex flex-col`}>
                                         <img src={image.dataURL} alt="Image" className="w-full object-contain object-top grow" />
                                         <div className="image-item__btn-wrapper my-2 flex justify-center gap-4">
-                                            <button className="w-1/3 bg-neutral-400 hover:bg-teal-700 hover:duration-200 text-neutral-100 py-1 rounded-full cursor-pointer" onClick={() => onImageUpdate(index)}>Update</button>
+                                            <button className="w-1/3 bg-neutral-400 hover:bg-sky-900 hover:duration-200 text-neutral-100 py-1 rounded-full cursor-pointer" onClick={() => onImageUpdate(index)}>Update</button>
                                             <button className="w-1/3 bg-neutral-400 hover:bg-red-800 hover:duration-200 text-neutral-100 py-1 rounded-full cursor-pointer" onClick={() => onImageRemove(index)}>Remove</button>
                                         </div>
                                     </div>
