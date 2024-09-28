@@ -28,6 +28,7 @@
     "react-indiana-drag-scroll": "^3.0.3-alpha",
     "react-loader-spinner": "^6.1.6",
     "react-photo-album": "^3.0.2",
+    "react-toastify": "^10.0.5",
     "yarn": "^1.22.22"
   },
   "devDependencies": {

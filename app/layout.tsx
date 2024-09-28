@@ -4,6 +4,9 @@ import "./globals.css";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { ToastContainer } from "react-toastify";
+
+
 config.autoAddCss = false;
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,7 +27,10 @@ export default function RootLayout(props: RootLayoutProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Motto Interior Design</title>
       </head>
-      <body>{props.children}</body>
+      <body>
+      <ToastContainer />
+          {props.children}
+      </body>
     </html>
   );
 }

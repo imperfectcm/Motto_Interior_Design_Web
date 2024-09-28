@@ -20,11 +20,13 @@ const imageList = async () => {
 
 const images: Promise<JSX.Element[]> = imageList().then((images) => {
     return images.map((image: string, index: number) =>
-        <img className="object-cover w-1/3 aspect-[3/4] snap-always snap-center"
-            id={`${index}`}
-            src={`${imgFolder}${image}`}
-            loading="lazy"
-            alt="Home Page All Project Cover Images" />
+        <div key={index} className="col-span-2 aspect-[3/4] snap-always snap-center">
+            <img className="object-cover aspect-[3/4] scale-90 hover:scale-100 duration-200 cursor-pointer"
+                id={`${index}`}
+                src={`${imgFolder}${image}`}
+                loading="lazy"
+                alt="Home Page All Project Cover Images" />
+        </div>
     );
 })
 

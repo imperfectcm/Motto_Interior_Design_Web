@@ -12,10 +12,19 @@ const s3Config = {
 
 
 export async function UploadImageToS3(formData: FormData) {
+
     try {
 
         const file = formData.get("file") as File;
         const folderName = formData.get("folderName") as string;
+
+        if (!file) {
+            return ({ message: "No image to upload." })
+        }
+
+        if (!folderName) {
+            return ({ message: "No project name." })
+        }
 
         const s3 = new s3Client({
             ...s3Config,
@@ -23,8 +32,8 @@ export async function UploadImageToS3(formData: FormData) {
         });
 
         const res = await s3.uploadFile(Buffer.from(await file.arrayBuffer()));
-        return res;
-    } catch (error) {
-        return { message: "Image Upload failed." };
+        return res.location;
+    } catch (error: any) {
+        return { message: error.message };
     }
 }
