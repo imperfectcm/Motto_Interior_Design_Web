@@ -2,8 +2,6 @@ import { authService } from "@/services/AuthService";
 
 
 export default function HeadContainer() {
-
-    const authTest = authService.authenticate();
     
     return (
         <section className="relative h-screen w-full flex justify-end">

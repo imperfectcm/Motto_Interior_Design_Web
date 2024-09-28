@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
         console.log("cookies: ", cookies());
 
-        await authService.isAdminAuthenticated(cookies());
+        // await authService.isAdminAuthenticated(cookies());
 
         return NextResponse.json(result);
 

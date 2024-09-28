@@ -1,7 +1,7 @@
 
-import HeadContainer from "@/components/homePage/HeadContainer";
-import AllProjectsContainer from "@/components/homePage/AllProjectsContainer";
-import FeatureProjectsContainer from "@/components/homePage/FeatureProjectsContainer";
+import HeadContainer from "@/components/HomePage/HeadContainer";
+import AllProjectsContainer from "@/components/HomePage/AllProjectsContainer";
+import FeatureProjectsContainer from "@/components/HomePage/FeatureProjectsContainer";
 import ImageUploader from "@/components/utils/uploadImageToS3/ImageUploader";
 
 
