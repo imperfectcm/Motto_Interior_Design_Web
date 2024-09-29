@@ -1,30 +1,9 @@
+import getAllProjectCovers from "../utils/GetAllProjectCover";
 
 
-const getAllProjectCovers = async () => {
-
-    try {
-        const res = await fetch(`${process.env.WEB_URL}/api/all-cover-images`, { cache: 'no-store' })
-
-        if (!res.ok) {
-            return ({ message: "Failed to get project cover images." })
-        }
-
-        const data = await res.json();
-
-        console.log("Project List: " + data)
-        return data.data || [];
-
-    } catch (error: any) {
-        console.log(error)
-        return [];
-    }
-
-}
 const AllProjectCovers = async () => {
 
     const coverList = await getAllProjectCovers();
-
-    console.log("coverList: ", coverList)
 
     return (
         <section className="grid grid-flow-row-dense grid-cols-3 gap-3 mb-10">

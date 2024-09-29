@@ -5,20 +5,20 @@ import { NextResponse } from "next/server";
 export async function GET() {
 
     try {
-        const projectList = await projectService.getAllProjectsInfo();
+        const featureProjectList = await projectService.getFeatureProjectsInfo();
 
-        if (!projectList) {
-            return NextResponse.json({ message: "Failed to get projects." });
+        if (!featureProjectList) {
+            return NextResponse.json({ message: "Failed to get feature projects." });
         }
 
-        if (Array.isArray(projectList)) {
-            for await (const project of projectList) {
+        if (Array.isArray(featureProjectList)) {
+            for await (const project of featureProjectList) {
                 const cover = await projectService.getProjectCover(project.id);
                 project.cover = cover;
             }
         }
 
-        return NextResponse.json({ data: projectList }, { status: 200 });
+        return NextResponse.json({ data: featureProjectList }, { status: 200 });
 
     } catch (error: any) {
         return NextResponse.json({ message: error.message || error.toString() }, { status: 500 })

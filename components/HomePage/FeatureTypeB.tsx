@@ -3,7 +3,12 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-export default async function FeatureTypeB() {
+interface FeatureTypeBProps {
+    project: any;
+}
+
+
+export default async function FeatureTypeB(props: FeatureTypeBProps) {
 
     const imgFolder = "/hardCodeImages/Project Chronology/"
 

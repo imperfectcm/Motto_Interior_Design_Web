@@ -127,7 +127,6 @@ const CreateProjectForm = () => {
             return projectId;
 
         } catch (error) {
-            console.log(error)
             throw error;
         }
 
@@ -161,7 +160,6 @@ const CreateProjectForm = () => {
             return resData.message;
 
         } catch (error) {
-            console.log(error)
             throw error;
         }
 
@@ -195,7 +193,6 @@ const CreateProjectForm = () => {
             return resData.message;
 
         } catch (error) {
-            console.log(error)
             throw error;
         }
 
@@ -236,12 +233,9 @@ const CreateProjectForm = () => {
             await uploadImagesToDB();
             await successfullyUploadHandle();
         } catch (error) {
-            console.log(error)
-            console.error("Error: ", error);
+            throw error;
         }
     }
-
-    console.log("isSubmitting: ", isSubmitting)
 
 
     return (

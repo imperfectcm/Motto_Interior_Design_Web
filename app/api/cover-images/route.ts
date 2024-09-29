@@ -34,10 +34,11 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ message: "Images uploaded to DB successfully." }, { status: 200 });
 
     } catch (error: any) {
-        console.log(error);
         return NextResponse.json(
-            { error: error.message || error.toString() }, { status: 500 }
+            { message: error.message || error.toString() }, { status: 500 }
         )
     }
 
 }
+
+

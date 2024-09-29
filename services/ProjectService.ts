@@ -11,6 +11,22 @@ class ProjectService {
 
         try {
             const resultList = await pb.collection('projects').getFullList({
+                sort: '-created',
+            });
+            
+            return resultList;
+        } catch (error: any) {
+            console.log(error.message);
+            return { error: error.message };
+        }
+
+    }
+
+
+    async getNonFeatureProjectsInfo() {
+
+        try {
+            const resultList = await pb.collection('projects').getFullList({
                 filter: 'is_feature_project = false',
                 sort: '-created',
             });
@@ -44,10 +60,7 @@ class ProjectService {
     async getProjectInfoByName(projectName: string) {
 
         try {
-            const resultList = await pb.collection('projects').getFullList({
-                filter: `name = ${projectName}`,
-                sort: '+feature_id',
-            });
+            const resultList = await pb.collection('projects').getFirstListItem(`name="${projectName}"`);
             
             return resultList;
         } catch (error: any) {
@@ -63,6 +76,22 @@ class ProjectService {
         try {
             const resultList = await pb.collection('images').getFullList({
                 filter: `name = "${projectId}" && is_cover = true`,
+                sort: '+sequence',
+            });
+            return resultList;
+        } catch (error: any) {
+            console.log(error.message);
+            return { error: error.message };
+        }
+
+    }
+
+
+    async getProjectImages(projectId: string) {
+
+        try {
+            const resultList = await pb.collection('images').getFullList({
+                filter: `name = "${projectId}" && is_cover = false`,
                 sort: '+sequence',
             });
             return resultList;

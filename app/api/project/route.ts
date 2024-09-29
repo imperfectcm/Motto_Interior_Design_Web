@@ -7,28 +7,19 @@ import { projectService } from "@/services/ProjectService";
 export async function GET(request: NextRequest) {
 
     try {
-        const reqData = await request.json();
 
-        const projectName = reqData.projectName;
+        const projectName = request.nextUrl.searchParams.get("projectName");
+
+        if (!projectName) return NextResponse.json({ message: "No project name is provided." }, { status: 404 });
 
         const res = await projectService.getProjectInfoByName(projectName);
 
-        if (!res) {
-            return NextResponse.json({ message: "Failed to get project by name." });
-        }
+        if (!res) return NextResponse.json({ message: "Failed to get project by name." }, { status: 404 });
 
-        return NextResponse.json({ data: res });
+        return NextResponse.json({ data: res }, { status: 200 });
 
     } catch (error: any) {
-        return new Response(
-            JSON.stringify({ error: error.message || error.toString() }),
-            {
-                status: 500,
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }
-        )
+        return NextResponse.json({ message: error.message || error.toString() }, { status: 500 })
     }
 
 }
