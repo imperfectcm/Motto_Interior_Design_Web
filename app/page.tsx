@@ -22,9 +22,8 @@ export default async function Home() {
    return (
       <main>
          <HeadContainer />
-         <AllProjectsContainer projectList={projectList} />
          <FeatureProjectsContainer featureProjects={featureProjects} />
-         Motto Interior Design
+         <AllProjectsContainer projectList={projectList} />
       </main>
    );
 }

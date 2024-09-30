@@ -22,9 +22,6 @@ export default async function FeatureProjectsContainer(props: FeatureProjectsCon
             {featureProjects.map((project: any) => (
                 isOdd(project.feature_id) ? <FeatureTypeA project={project} /> : <FeatureTypeB project={project} />
             ))}
-            {/* <FeatureTypeA /> */}
-            {/* <FeatureTypeB /> */}
-            {/* <FeatureTypeA /> */}
         </section>
     )
 }

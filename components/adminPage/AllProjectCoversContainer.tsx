@@ -1,11 +1,16 @@
-import AllProjectCovers from "./allProjectCovers";
+import AllProjectCovers from "./AllProjectCovers";
 
+interface AllProjectCoverContainerProps {
+    projectList: any;
+}
 
-const AllProjectCoversContainer = () => {
+const AllProjectCoversContainer = (props: AllProjectCoverContainerProps) => {
+
+    const projectList = props.projectList;
 
     return (
         <main>
-            <AllProjectCovers />
+            <AllProjectCovers projectList={projectList}/>
         </main>
     )
 };

@@ -4,6 +4,7 @@ import { cookies, headers } from "next/headers"
 import CreateProjectBtn from "@/components/adminPage/toCreateProjectPageBtn";
 import CheckAuth from "@/components/auth/checkAuth";
 import AllProjectCoversContainer from "@/components/adminPage/allProjectCoversContainer";
+import getAllProjectCovers from "@/components/utils/GetAllProjectCover";
 
 
 const admin = async () => {
@@ -15,9 +16,11 @@ const admin = async () => {
     // auth guard
     await CheckAuth(isAdmin);
 
+    const projectList = await getAllProjectCovers();
+
     return (
         <main className="py-10">
-            <AllProjectCoversContainer />
+            <AllProjectCoversContainer projectList={projectList} />
             <CreateProjectBtn />
         </main>
     )
