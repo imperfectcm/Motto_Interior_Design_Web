@@ -58,7 +58,9 @@ const CreateProjectForm = () => {
 
     let projectId: string;
     let coverImageUrlList: string[] = [];
+    let coverKeyList: string[] = [];
     let imageUrlList: string[] = [];
+    let imageKeyList: string[] = [];
 
 
     const uploadImagesToS3 = async () => {
@@ -70,14 +72,22 @@ const CreateProjectForm = () => {
                         const formData = new FormData();
                         formData.append("file", image.file);
                         formData.append("folderName", projectName);
-                        const coverImageUrl = await UploadImageToS3(formData);
-                        if (typeof (coverImageUrl) === "string") coverImageUrlList.push(coverImageUrl);
-                        else return coverImageUrl.message;
+                        const data = await UploadImageToS3(formData);
+
+                        if ('location' in data && 'key' in data) {
+                            const coverImageUrl = data.location;
+                            const coverKey = data.key;
+                            coverImageUrlList.push(coverImageUrl);
+                            coverKeyList.push(coverKey);
+                            return data;
+                        } else {
+                            return data.message;
+                        }
                     }
                 }))
             } catch (error: any) {
                 uploadImagesToDBFailedNotify();
-                throw new Error(error.message);
+                throw error;
             }
         };
 
@@ -88,9 +98,17 @@ const CreateProjectForm = () => {
                         const formData = new FormData();
                         formData.append("file", image.file);
                         formData.append("folderName", projectName);
-                        const imageUrl = await UploadImageToS3(formData);
-                        if (typeof (imageUrl) === "string") imageUrlList.push(imageUrl);
-                        else return imageUrl.message;
+                        const data = await UploadImageToS3(formData);
+
+                        if ('location' in data && 'key' in data) {
+                            const imageUrl = data.location;
+                            const imageKey = data.key;
+                            imageUrlList.push(imageUrl);
+                            imageKeyList.push(imageKey);
+                            return data;
+                        } else {
+                            return data.message;
+                        }
                     }
                 }))
             } catch (error: any) {
@@ -146,7 +164,8 @@ const CreateProjectForm = () => {
                 },
                 body: JSON.stringify({
                     "projectId": projectId,
-                    "coverImageUrlList": coverImageUrlList
+                    "coverImageUrlList": coverImageUrlList,
+                    "coverKeyList": coverKeyList
                 }),
             });
 
@@ -179,7 +198,8 @@ const CreateProjectForm = () => {
                 },
                 body: JSON.stringify({
                     "projectId": projectId,
-                    "imageUrlList": imageUrlList
+                    "imageUrlList": imageUrlList,
+                    "imageKeyList": imageKeyList
                 }),
             });
 

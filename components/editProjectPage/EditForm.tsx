@@ -8,6 +8,10 @@ import { ImageListType } from "react-images-uploading";
 import ImageUploader from "../utils/uploadImageToS3/ImageUploader";
 import EditCoverContainer from "./EditCoverContainer";
 import EditImageContainer from "./EditImageContainer";
+import { deleteImageFromS3 } from "../utils/deleteImageFromS3/DeleteImageAction";
+import { UploadImageToS3 } from "../utils/uploadImageToS3/UploadImageAction";
+import { Flip, toast } from "react-toastify";
+import { UpdateProjectBtn } from "./UpdateProjectBtn";
 
 interface EditFormProps {
     projectInfo: any;
@@ -19,14 +23,175 @@ const EditForm = (props: EditFormProps) => {
     const projectInfo = props.projectInfo;
     const relatedImages = props.relatedImages;
 
+    console.log("Related Images: ", relatedImages);
+
     const [coverImages, setCoverImages] = useState<ImageListType>(relatedImages.covers);
-    const [deleteCoverImages, setDeleteCoverImages] = useState<ImageListType>([]);
-    const [newCoverImages, setNewCoverImages] = useState<ImageListType>([]);
     const [images, setImages] = useState<ImageListType>(relatedImages.images);
-    const [deleteImages, setDeleteImages] = useState<ImageListType>([]);
-    const [newImages, setNewImages] = useState<ImageListType>([]);
     const [isEditCovers, setIsEditCovers] = useState<boolean>(false);
     const [isEditImages, setIsEditImages] = useState<boolean>(false);
+
+
+
+    const projectUpdateFailedNotify = () => toast.error("😭 Fail to update project.", {
+        position: "top-center",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Flip,
+    });
+
+    const updateImagesToDBFailedNotify = () => toast.error("😭 Fail to update images to database.", {
+        position: "top-center",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Flip,
+    });
+
+
+    const projectId = projectInfo.id;
+    let coverImageUrlList: string[] = [];
+    let coverKeyList: string[] = [];
+    let imageUrlList: string[] = [];
+    let imageKeyList: string[] = [];
+
+    const uploadImagesToS3 = async () => {
+
+        if (coverImages.length === 0 && images.length === 0) return;
+
+        if (coverImages.length > 0) {
+            try {
+                await Promise.all(coverImages.map(async (image) => {
+                    if (image.file instanceof File) {
+                        const formData = new FormData();
+                        formData.append("file", image.file);
+                        formData.append("folderName", projectInfo.name);
+                        const data = await UploadImageToS3(formData);
+
+                        if ('location' in data && 'key' in data) {
+                            const coverImageUrl = data.location;
+                            const coverKey = data.key;
+                            coverImageUrlList.push(coverImageUrl);
+                            coverKeyList.push(coverKey);
+                            return data;
+                        } else {
+                            return data.message;
+                        }
+                    }
+                }))
+            } catch (error: any) {
+                updateImagesToDBFailedNotify();
+                throw error;
+            }
+        };
+
+        // if (images.length > 0) {
+        //     try {
+        //         await Promise.all(images.map(async (image) => {
+        //             if (image.file instanceof File) {
+        //                 const formData = new FormData();
+        //                 formData.append("file", image.file);
+        //                 formData.append("folderName", projectName);
+        //                 const data = await UploadImageToS3(formData);
+
+        //                 if ('location' in data && 'key' in data) {
+        //                     const imageUrl = data.location;
+        //                     const imageKey = data.key;
+        //                     imageUrlList.push(imageUrl);
+        //                     imageKeyList.push(imageKey);
+        //                     return data;
+        //                 } else {
+        //                     return data.message;
+        //                 }
+        //             }
+        //         }))
+        //     } catch (error: any) {
+        //         updateImagesToDBFailedNotify();
+        //         throw new Error(error.message);
+        //     }
+        // };
+
+        return { "Cover image url list": coverImageUrlList, "image url list": imageUrlList };
+    }
+
+
+    const uploadCoverImagesToDB = async () => {
+
+        if (!coverImageUrlList.length) return;
+
+        try {
+
+            const res = await fetch("/api/cover-images", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "projectId": projectId,
+                    "coverImageUrlList": coverImageUrlList,
+                    "coverKeyList": coverKeyList
+                }),
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                updateImagesToDBFailedNotify();
+                throw new Error(errorData.error || "Upload cover image to DB failed.")
+            }
+
+            const resData = await res.json()
+            return resData.message;
+
+        } catch (error) {
+            updateImagesToDBFailedNotify();
+            throw error;
+        }
+
+    }
+
+
+    const deleteImageFromDB = async (imageList: any[]) => {
+
+        if (!imageList.length) return;
+
+        try {
+            const res = await fetch("/api/project-images", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    imageList: imageList
+                }),
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                updateImagesToDBFailedNotify();
+                throw new Error(errorData.error || "Project images delete failed.");
+            }
+
+            const response = await res.json()
+            return response.message;
+
+        } catch (error) {
+            throw error;
+        }
+
+    }
+
+
+
+
+
 
     const {
         register,
@@ -47,6 +212,21 @@ const EditForm = (props: EditFormProps) => {
             // if different, delete old cover images on S3, upload new cover images to S3
             // return new cover images url, save
             // remove old and create new cover images on DB
+
+            if (coverImages != relatedImages.covers) {
+                await relatedImages.covers.map(async (oldCoverImage: any) => {
+                    try {
+                        await deleteImageFromS3(oldCoverImage.key);
+                        await deleteImageFromDB(relatedImages.covers)
+                    } catch (error) {
+                        throw error;
+                    }
+                })
+                if (coverImages.length > 0) {
+                    await uploadImagesToS3();
+                    await uploadCoverImagesToDB();
+                }
+            }
 
 
             // check images difference
@@ -164,11 +344,7 @@ const EditForm = (props: EditFormProps) => {
                     isEditCovers={isEditCovers}
                     setIsEditCovers={setIsEditCovers}
                     coverImages={coverImages}
-                    setCoverImages={setCoverImages}
-                    deleteCoverImages={deleteCoverImages}
-                    setDeleteCoverImages={setDeleteCoverImages}
-                    newCoverImages={newCoverImages}
-                    setNewCoverImages={setNewCoverImages} />
+                    setCoverImages={setCoverImages} />
 
                 <EditImageContainer
                     isEditImages={isEditImages}
@@ -176,8 +352,8 @@ const EditForm = (props: EditFormProps) => {
                     images={images}
                     setImages={setImages} />
 
-                {/* <CreateProjectBtn
-                    isSubmitting={isSubmitting} /> */}
+                <UpdateProjectBtn
+                    isSubmitting={isSubmitting} />
 
             </form>
 

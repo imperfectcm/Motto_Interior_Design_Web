@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ data: res }, { status: 200 });
 
     } catch (error: any) {
-        return NextResponse.json({ message: error.message || error.toString() }, { status: 500 })
+        return NextResponse.json({ error: error.error || error.toString() }, { status: 500 })
     }
 
 }
@@ -59,9 +59,8 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ data: res }, { status: 200 });
 
     } catch (error: any) {
-        return NextResponse.json(
-            { error: error.message || error.toString() }, { status: 500 }
-        )
+        return NextResponse.json({ error: error.error || error.toString() }, { status: 500 })
+
     }
 
 }

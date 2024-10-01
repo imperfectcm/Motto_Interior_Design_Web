@@ -9,10 +9,6 @@ interface EditCoverContainerProps {
     setIsEditCovers: Dispatch<SetStateAction<boolean>>;
     coverImages: ImageListType;
     setCoverImages: Dispatch<SetStateAction<ImageListType>>;
-    deleteCoverImages: ImageListType;
-    setDeleteCoverImages: Dispatch<SetStateAction<ImageListType>>;
-    newCoverImages: ImageListType;
-    setNewCoverImages: Dispatch<SetStateAction<ImageListType>>;
 }
 
 const EditCoverContainer = (props: EditCoverContainerProps) => {

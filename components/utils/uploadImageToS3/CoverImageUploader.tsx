@@ -14,9 +14,7 @@ export default function CoverImageUploader(props: CoverImageUploaderProps) {
 
     const maxNumber = 2;
 
-    const onChange = async (
-        imageList: ImageListType
-    ) => {
+    const onChange = async (imageList: ImageListType) => {
         await props.setCoverImages(imageList);
     };
 

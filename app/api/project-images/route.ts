@@ -25,24 +25,25 @@ export async function GET(request: NextRequest) {
     }
 }
 
+
 export async function POST(request: NextRequest) {
-
     try {
-
         const reqData = await request.json();
 
         const projectId: string = reqData.projectId
         const imageUrlList: string[] = reqData.imageUrlList
+        const imageKeyList: string[] = reqData.imageKeyList
         let sequence: number = 0;
 
         const uploadEachImage = async (imageUrlList: string[]) => {
-            imageUrlList.forEach(async (imageUrl) => {
+            imageUrlList.forEach(async (imageUrl, i) => {
+                const imageKey = imageKeyList[i];
                 sequence += 1;
                 if (imageUrl.includes(" ")) {
                     const replacedUrl = imageUrl.replaceAll(" ", "%20");
-                    await projectService.uploadImagesToDB(projectId, replacedUrl, sequence, cookies());
+                    await projectService.uploadImagesToDB(projectId, replacedUrl, imageKey, sequence, cookies());
                 } else {
-                    await projectService.uploadImagesToDB(projectId, imageUrl, sequence, cookies());
+                    await projectService.uploadImagesToDB(projectId, imageUrl, imageKey, sequence, cookies());
                 }
             })
         }
@@ -52,8 +53,29 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ message: "Images uploaded to DB successfully." }, { status: 200 });
 
     } catch (error: any) {
-        return NextResponse.json({ message: error.message || error.toString() }, { status: 500 })
+        return NextResponse.json({ error: error.error || error.toString() }, { status: 500 })
     }
-
 }
 
+
+export async function DELETE(request: NextRequest) {
+
+    try {
+        const reqData = await request.json();
+        const imageList = reqData.imageList;
+
+        const deleteEachImage = async (imageList: any[]) => {
+            imageList.forEach(async (image) => {
+                const imageId = image.id;
+                await projectService.deleteImageFromDB(imageId, cookies());
+            })
+        }
+
+        await deleteEachImage(imageList);
+
+        return NextResponse.json({ message: "Images deleted from DB successfully." }, { status: 200 });
+
+    } catch (error: any) {
+        return NextResponse.json({ error: error.error || error.toString() }, { status: 500 })
+    }
+}

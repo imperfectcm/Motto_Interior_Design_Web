@@ -8,21 +8,14 @@ export async function GET() {
         const projectList = await projectService.getAllProjectsInfo();
 
         if (!projectList) {
-            return NextResponse.json({ message: "Failed to get projects." });
+            return NextResponse.json({ message: "Failed to get projects." }, { status: 404 });
         }
 
-        return NextResponse.json({ data: projectList });
+        return NextResponse.json({ data: projectList }, { status: 200 });
 
     } catch (error: any) {
-        return new Response(
-            JSON.stringify({ error: error.message || error.toString() }),
-            {
-                status: 500,
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }
-        )
+        return NextResponse.json({ error: error.error || error.toString() }, { status: 500 })
+
     }
 
 }
