@@ -54,9 +54,8 @@ export default async function EditProject({ params }: { params: { name: string }
 
     const relatedImages = await getProjectImages(projectId);
 
-    console.log(projectInfo)
-    console.log(relatedImages)
-
+    console.log("projectInfo: ", projectInfo)
+    console.log("relatedImages: ", relatedImages)
 
     return (
         < EditForm

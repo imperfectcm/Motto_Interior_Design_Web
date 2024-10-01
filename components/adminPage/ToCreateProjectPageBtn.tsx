@@ -4,12 +4,12 @@ import { usePathname, useRouter } from "next/navigation";
 
 const CreateProjectBtn = () => {
 
-    const router = useRouter()
-    const pathname = usePathname()
+    const router = useRouter();
+    const pathname = usePathname();
 
     const toCreateProjectsPage = () => {
         router.push(`${pathname}/create-project`)
-      }
+    }
 
     return (
         <div className="flex justify-center items-center">

@@ -20,7 +20,11 @@ const EditForm = (props: EditFormProps) => {
     const relatedImages = props.relatedImages;
 
     const [coverImages, setCoverImages] = useState<ImageListType>(relatedImages.covers);
+    const [deleteCoverImages, setDeleteCoverImages] = useState<ImageListType>([]);
+    const [newCoverImages, setNewCoverImages] = useState<ImageListType>([]);
     const [images, setImages] = useState<ImageListType>(relatedImages.images);
+    const [deleteImages, setDeleteImages] = useState<ImageListType>([]);
+    const [newImages, setNewImages] = useState<ImageListType>([]);
     const [isEditCovers, setIsEditCovers] = useState<boolean>(false);
     const [isEditImages, setIsEditImages] = useState<boolean>(false);
 
@@ -160,7 +164,11 @@ const EditForm = (props: EditFormProps) => {
                     isEditCovers={isEditCovers}
                     setIsEditCovers={setIsEditCovers}
                     coverImages={coverImages}
-                    setCoverImages={setCoverImages} />
+                    setCoverImages={setCoverImages}
+                    deleteCoverImages={deleteCoverImages}
+                    setDeleteCoverImages={setDeleteCoverImages}
+                    newCoverImages={newCoverImages}
+                    setNewCoverImages={setNewCoverImages} />
 
                 <EditImageContainer
                     isEditImages={isEditImages}
