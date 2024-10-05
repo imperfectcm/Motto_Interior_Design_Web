@@ -30,6 +30,8 @@ export async function POST(request: NextRequest) {
     try {
         const reqData = await request.json();
 
+        if (!reqData) return;
+
         const projectId: string = reqData.projectId
         const imageUrlList: string[] = reqData.imageUrlList
         const imageKeyList: string[] = reqData.imageKeyList

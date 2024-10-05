@@ -8,7 +8,6 @@ class ProjectService {
 
 
     async getAllProjectsInfo() {
-
         try {
             const resultList = await pb.collection('projects').getFullList({
                 sort: '-created',
@@ -18,12 +17,10 @@ class ProjectService {
         } catch (error: any) {
             return { error: error.message };
         }
-
     }
 
 
     async getNonFeatureProjectsInfo() {
-
         try {
             const resultList = await pb.collection('projects').getFullList({
                 filter: 'is_feature_project = false',
@@ -34,12 +31,10 @@ class ProjectService {
         } catch (error: any) {
             return { error: error.message };
         }
-
     }
 
 
     async getFeatureProjectsInfo() {
-
         try {
             const resultList = await pb.collection('projects').getFullList({
                 filter: 'is_feature_project = true',
@@ -50,12 +45,10 @@ class ProjectService {
         } catch (error: any) {
             return { error: error.message };
         }
-
     }
 
 
     async getProjectInfoByName(projectName: string) {
-
         try {
             const resultList = await pb.collection('projects').getFirstListItem(`name="${projectName}"`);
 
@@ -63,12 +56,10 @@ class ProjectService {
         } catch (error: any) {
             return { error: error.message };
         }
-
     }
 
 
     async getProjectCover(projectId: string) {
-
         try {
             const resultList = await pb.collection('images').getFullList({
                 filter: `name = "${projectId}" && is_cover = true`,
@@ -78,12 +69,10 @@ class ProjectService {
         } catch (error: any) {
             return { error: error.message };
         }
-
     }
 
 
     async getProjectImages(projectId: string) {
-
         try {
             const resultList = await pb.collection('images').getFullList({
                 filter: `name = "${projectId}" && is_cover = false`,
@@ -93,13 +82,11 @@ class ProjectService {
         } catch (error: any) {
             return { error: error.message };
         }
-
     }
 
 
     async createProject(projectData: any, cookies: ReadonlyRequestCookies) {
         const pbAuthData = authService.getUser(cookies);
-
         const data = {
             "name": projectData.name,
             "year": projectData.year,
@@ -109,7 +96,6 @@ class ProjectService {
             "household_size": projectData.household_size,
             "description": projectData.description
         };
-
         try {
             const record = await pb.collection('projects').create(data);
             return record;
@@ -118,10 +104,37 @@ class ProjectService {
         }
     }
 
+    async updateProjectById(projectData: any, projectId: string, cookies: ReadonlyRequestCookies) {
+        const pbAuthData = authService.getUser(cookies);
+        const data = {
+            "name": projectData.name,
+            "year": projectData.year,
+            "location": projectData.location,
+            "apartment_name": projectData.apartment_name,
+            "size": projectData.size,
+            "household_size": projectData.household_size,
+            "description": projectData.description
+        };
+        try {
+            const record = await pb.collection('projects').update(projectId, data);
+            return record;
+        } catch (error: any) {
+            return { error: error.message };
+        }
+    }
+
+    async deleteProjectById(projectId: string, cookies: ReadonlyRequestCookies) {
+        const pbAuthData = authService.getUser(cookies);
+        try {
+            await pb.collection('projects').delete(projectId);
+            return { success: true };
+        } catch (error: any) {
+            return { error: error.message, success: false };
+        }
+    }
 
     async uploadCoverImagesToDB(projectId: string, coverImageUrl: string, coverKey: string, sequence: number, coverId: number, cookies: ReadonlyRequestCookies) {
         const pbAuthData = authService.getUser(cookies);
-
         const imageData = {
             "name": projectId,
             "url": coverImageUrl,
@@ -130,16 +143,13 @@ class ProjectService {
             "cover_id": coverId,
             "key": coverKey
         }
-
         try {
             const record = await pb.collection('images').create(imageData, { requestKey: null });
             return record;
         } catch (error: any) {
             return { error: error.message };
         }
-
     }
-
 
     async deleteImageFromDB(imageId: string, cookies: ReadonlyRequestCookies) {
         const pbAuthData = authService.getUser(cookies);

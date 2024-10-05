@@ -24,7 +24,7 @@ const EditImageContainer = (props: EditImageContainerProps) => {
             :
             <section>
                 <div className="grid grid-flow-row-dense grid-cols-3 gap-3">
-                    <div className="col-span-full text-2xl">Project Cover Images :</div>
+                    <div className="col-span-full text-2xl">Project Images :</div>
                     {props.images.length > 0 &&
                         props.images.map((image: any, index) => (
                             <div key={index} className={`relative col-span-1 group overflow-hidden flex flex-col`}>
