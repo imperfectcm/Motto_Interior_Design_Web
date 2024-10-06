@@ -80,70 +80,70 @@ const EditForm = (props: EditFormProps) => {
     const projectId: string = projectInfo.id;
     let coverImageUrlList: string[] = [];
     let coverKeyList: string[] = [];
-    let imageUrlList: string[] = [];
-    let imageKeyList: string[] = [];
+    // let imageUrlList: string[] = [];
+    // let imageKeyList: string[] = [];
 
-    const uploadCoverImagesToS3 = async () => {
-        if (coverImages.length === 0) return;
-        if (coverImages.length > 0) {
+    // const uploadCoverImagesToS3 = async (coverImages: ImageListType) => {
+    //     if (coverImages.length === 0) return;
+    //     if (coverImages.length > 0) {
+    //         try {
+    //             await Promise.all(coverImages.map(async (image) => {
+    //                 if (image.file instanceof File) {
+    //                     const formData = new FormData();
+    //                     formData.append("file", image.file);
+    //                     formData.append("folderName", projectName);
+    //                     const data = await UploadImageToS3(formData);
+
+    //                     if ('location' in data && 'key' in data) {
+    //                         const coverImageUrl = data.location;
+    //                         const coverKey = data.key;
+    //                         coverImageUrlList.push(coverImageUrl);
+    //                         coverKeyList.push(coverKey);
+    //                         return data;
+    //                     } else {
+    //                         return data.message;
+    //                     }
+    //                 }
+    //             }))
+    //         } catch (error: any) {
+    //             updateImagesToDBFailedToast();
+    //             throw error;
+    //         }
+    //     };
+    //     return { "Cover image url list": coverImageUrlList };
+    // }
+
+    const uploadImagesToS3 = async (imageList: ImageListType) => {
+        if (imageList.length === 0) return;
+        if (imageList.length > 0) {
+            let imageUrlList: string[] = [];
+            let imageKeyList: string[] = [];
             try {
-                await Promise.all(coverImages.map(async (image) => {
+                await Promise.all(imageList.map(async (image) => {
                     if (image.file instanceof File) {
                         const formData = new FormData();
                         formData.append("file", image.file);
                         formData.append("folderName", projectName);
                         const data = await UploadImageToS3(formData);
-
-                        if ('location' in data && 'key' in data) {
-                            const coverImageUrl = data.location;
-                            const coverKey = data.key;
-                            coverImageUrlList.push(coverImageUrl);
-                            coverKeyList.push(coverKey);
-                            return data;
-                        } else {
-                            return data.message;
-                        }
-                    }
-                }))
-            } catch (error: any) {
-                updateImagesToDBFailedToast();
-                throw error;
-            }
-        };
-        return { "Cover image url list": coverImageUrlList };
-    }
-
-    const uploadProjectImagesToS3 = async () => {
-        if (images.length === 0) return;
-        if (images.length > 0) {
-            try {
-                await Promise.all(images.map(async (image) => {
-                    if (image.file instanceof File) {
-                        const formData = new FormData();
-                        formData.append("file", image.file);
-                        formData.append("folderName", projectName);
-                        const data = await UploadImageToS3(formData);
-
                         if ('location' in data && 'key' in data) {
                             const imageUrl = data.location;
                             const imageKey = data.key;
                             imageUrlList.push(imageUrl);
                             imageKeyList.push(imageKey);
-                            return data;
                         } else {
                             return data.message;
                         }
                     }
                 }))
+                return { imageUrlList: imageUrlList, imageKeyList: imageKeyList };
             } catch (error: any) {
                 updateImagesToDBFailedToast();
                 throw error;
             }
-        };
-        return { "Image url list": imageUrlList };
+        }
     }
 
-    const uploadCoverImagesToDB = async () => {
+    const uploadCoverImagesToDB = async (coverImageUrlList: string[], coverKeyList: string[]) => {
         if (!coverImageUrlList.length) return;
         try {
             const res = await fetch("/api/cover-images", {
@@ -170,7 +170,7 @@ const EditForm = (props: EditFormProps) => {
         }
     }
 
-    const uploadProjectImagesToDB = async () => {
+    const uploadProjectImagesToDB = async (imageUrlList: string[], imageKeyList: string[]) => {
         if (!imageUrlList.length) return;
         try {
             const res = await fetch("/api/project-images", {
@@ -221,6 +221,33 @@ const EditForm = (props: EditFormProps) => {
         }
     }
 
+    const deleteImagesAction = async (newImageList: ImageListType, oldImageList: ImageListType, newProjectName: string, oldProjectName: string) => {
+        try {
+            if (newImageList != oldImageList || newProjectName != oldProjectName) {
+                await oldImageList.map(async (oldCoverImage: any) => {
+                    try {
+                        await deleteImageFromS3(oldCoverImage.key);
+                        await deleteImageFromDB(oldImageList)
+                    } catch (error) {
+                        throw error;
+                    }
+                })
+                if (newImageList.length > 0) {
+                    try {
+                        const imageData: { imageUrlList: string[], imageKeyList: string[] } | undefined = await uploadImagesToS3(newImageList);
+                        if (imageData) {
+                            await uploadCoverImagesToDB(imageData.imageUrlList, imageData.imageKeyList);
+                        }
+                    } catch (error) {
+                        throw error;
+                    }
+                }
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
     const updateProjectToDB = async (data: projectFormData, projectId: string) => {
         try {
             const res = await fetch("/api/project", {
@@ -266,8 +293,10 @@ const EditForm = (props: EditFormProps) => {
                 })
                 if (coverImages.length > 0) {
                     try {
-                        await uploadCoverImagesToS3();
-                        await uploadCoverImagesToDB();
+                        const imageData: { imageUrlList: string[], imageKeyList: string[] } | undefined = await uploadImagesToS3(coverImages);
+                        if (imageData) {
+                            await uploadCoverImagesToDB(imageData.imageUrlList, imageData.imageKeyList);
+                        }
                     } catch (error) {
                         throw error;
                     }
@@ -284,8 +313,10 @@ const EditForm = (props: EditFormProps) => {
                 })
                 if (images.length > 0) {
                     try {
-                        await uploadProjectImagesToS3();
-                        await uploadProjectImagesToDB();
+                        const imageData: { imageUrlList: string[], imageKeyList: string[] } | undefined = await uploadProjectImagesToS3(images);
+                        if (imageData) {
+                            await uploadProjectImagesToDB(imageData.imageUrlList, imageData.imageKeyList);
+                        }
                     } catch (error) {
                         throw error;
                     }
@@ -338,21 +369,21 @@ const EditForm = (props: EditFormProps) => {
                 await relatedImages.covers.map(async (oldCoverImage: any) => {
                     try {
                         await deleteImageFromS3(oldCoverImage.key);
-                        await deleteImageFromDB(relatedImages.covers)
                     } catch (error) {
                         throw error;
                     }
                 })
+                await deleteImageFromDB(relatedImages.covers)
             }
             if (relatedImages.images.length > 0) {
                 await relatedImages.images.map(async (oldImage: any) => {
                     try {
                         await deleteImageFromS3(oldImage.key);
-                        await deleteImageFromDB(relatedImages.images)
                     } catch (error) {
                         throw error;
                     }
                 })
+                await deleteImageFromDB(relatedImages.images)
             }
             await deleteProject(projectId);
             await successfullyDeleteToast();
