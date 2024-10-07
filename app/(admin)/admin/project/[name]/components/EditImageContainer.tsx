@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { ImageListType } from "react-images-uploading";
-import ImageUploader from "../utils/uploadImageToS3/ImageUploader";
+import ImageUploader from "../../../../../../components/utils/uploadImageToS3/ImageUploader";
 
 
 interface EditImageContainerProps {

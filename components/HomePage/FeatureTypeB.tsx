@@ -2,18 +2,12 @@
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
 interface FeatureTypeBProps {
     project: any;
 }
 
 export default async function FeatureTypeB(props: FeatureTypeBProps) {
-
     const project = props.project;
-
-    console.log("feature A cover: ", project);
-
-    const imgFolder = "/hardCodeImages/Project Chronology/"
 
     return (
         <section className="homepage-feature-project-box relative w-full bg-slate-100">
@@ -35,5 +29,4 @@ export default async function FeatureTypeB(props: FeatureTypeBProps) {
             </div>
         </section>
     );
-
 }

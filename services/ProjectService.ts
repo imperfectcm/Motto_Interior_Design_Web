@@ -12,8 +12,7 @@ class ProjectService {
             const resultList = await pb.collection('projects').getFullList({
                 sort: '-created',
             });
-
-            return resultList;
+            return { data: resultList, success: true };
         } catch (error: any) {
             return { error: error.message };
         }
@@ -40,7 +39,6 @@ class ProjectService {
                 filter: 'is_feature_project = true',
                 sort: '+feature_id',
             });
-
             return resultList;
         } catch (error: any) {
             return { error: error.message };
@@ -141,7 +139,7 @@ class ProjectService {
             "sequence": sequence,
             "is_cover": true,
             "cover_id": coverId,
-            "key": coverKey
+            "key": coverKey,
         }
         try {
             const record = await pb.collection('images').create(imageData, { requestKey: null });
@@ -172,7 +170,7 @@ class ProjectService {
             "url": imageUrl,
             "sequence": sequence,
             "is_cover": false,
-            "key": imageKey
+            "key": imageKey,
         }
 
         try {

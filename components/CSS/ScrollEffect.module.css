@@ -12,43 +12,12 @@
     }
 }
 
-
-/* .container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    overflow-x: auto;
-    overflow-y: auto;
-    scroll-behavior: smooth;
-}
-
-.container .div {
-    position: relative;
-    height: 70%;
-    animation: scrollEffect linear;
-    animation-timeline: view();
-    animation-range: entry 0% cover 40%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.container img {
-    object-fit: cover;
-    height: 100%;
-} */
-
-
 .container {
     display: grid;
     display: flex;
-
     column-gap: 1rem;
-
     overflow-x: scroll;
     /* scroll-behavior: smooth; */
-    /* scroll-behavior: auto; */
     width: 100vw;
     height: 100vh;
 }
@@ -63,7 +32,6 @@
     animation-timeline: view(inline);
     animation-range: entry 0% cover 40%;
     /* scroll-behavior: smooth; */
-
     display: flex;
     flex-direction: row;
     align-items: baseline;

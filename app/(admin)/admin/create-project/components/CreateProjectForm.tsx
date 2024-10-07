@@ -8,34 +8,11 @@ import { useRouter } from "next/navigation";
 import ImageUploader from "@/components/utils/uploadImageToS3/ImageUploader";
 import { useState } from "react";
 import { ImageListType } from "react-images-uploading";
-import { UploadImageToS3 } from "../utils/uploadImageToS3/UploadImageAction";
-import CoverImageUploader from "../utils/uploadImageToS3/CoverImageUploader";
-import { CreateProjectBtn } from "./createProjectBtn";
+import { UploadImageToS3 } from "../../../../../components/utils/uploadImageToS3/UploadImageAction";
+import CoverImageUploader from "../../../../../components/utils/uploadImageToS3/CoverImageUploader";
+import { CreateProjectBtn } from "./CreateProjectBtn";
 import React from "react";
-
-const projectCreateFailedNotify = () => toast.error("😭 Fail to create project.", {
-    position: "top-center",
-    autoClose: 4000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "dark",
-    transition: Flip,
-});
-
-const uploadImagesToDBFailedNotify = () => toast.error("😭 Fail to upload images to database.", {
-    position: "top-center",
-    autoClose: 4000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "dark",
-    transition: Flip,
-});
+import { projectCreateSuccessfully, projectCreateFailedToast, uploadImagesToDBFailedToast } from "@/components/toastify/toast";
 
 export type projectFormData = {
     projectName: string,
@@ -81,7 +58,7 @@ const CreateProjectForm = () => {
                     }
                 }))
             } catch (error: any) {
-                uploadImagesToDBFailedNotify();
+                uploadImagesToDBFailedToast();
                 throw error;
             }
         };
@@ -106,7 +83,7 @@ const CreateProjectForm = () => {
                     }
                 }))
             } catch (error: any) {
-                uploadImagesToDBFailedNotify();
+                uploadImagesToDBFailedToast();
                 throw new Error(error.message);
             }
         };
@@ -126,7 +103,7 @@ const CreateProjectForm = () => {
             });
             if (!res.ok) {
                 const errorData = await res.json();
-                projectCreateFailedNotify();
+                projectCreateFailedToast();
                 throw new Error(errorData.error || "Project create failed.");
             }
             const resData = await res.json()
@@ -153,7 +130,7 @@ const CreateProjectForm = () => {
             });
             if (!res.ok) {
                 const errorData = await res.json();
-                uploadImagesToDBFailedNotify();
+                uploadImagesToDBFailedToast();
                 throw new Error(errorData.error || "Upload cover image to DB failed.")
             }
             const resData = await res.json()
@@ -179,7 +156,7 @@ const CreateProjectForm = () => {
             });
             if (!res.ok) {
                 const errorData = await res.json();
-                uploadImagesToDBFailedNotify();
+                uploadImagesToDBFailedToast();
                 throw new Error(errorData.error || "Upload image to DB failed.")
             }
             const resData = await res.json()
@@ -188,16 +165,6 @@ const CreateProjectForm = () => {
         } catch (error) {
             throw error;
         }
-    }
-
-    const successfullyUploadHandle = async () => {
-        toast("Project created successfully", {
-            position: "top-center",
-            autoClose: 3000,
-            pauseOnHover: false,
-            transition: Flip,
-            onClose: () => router.push("/admin")
-        })
     }
 
     const {
@@ -216,7 +183,7 @@ const CreateProjectForm = () => {
             await creatProjectToDB(data);
             await uploadCoverImagesToDB();
             await uploadImagesToDB();
-            await successfullyUploadHandle();
+            await projectCreateSuccessfully();
         } catch (error) {
             throw error;
         }

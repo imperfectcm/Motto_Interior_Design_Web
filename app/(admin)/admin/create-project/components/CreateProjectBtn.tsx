@@ -4,9 +4,7 @@ interface CreateProjectBtnProps {
     isSubmitting: boolean;
 }
 
-
 export function CreateProjectBtn(props: CreateProjectBtnProps) {
-
     let isSubmitting = props.isSubmitting
 
     return (

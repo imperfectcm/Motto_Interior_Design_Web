@@ -1,24 +1,12 @@
-"use client";
 
-import { useRouter } from "next/navigation";
-import getAllProjectCovers from "../utils/GetAllProjectCover";
-import { usePathname } from "next/navigation";
+import EditPorjectBtn from "./EditProjectBtn";
 
-interface AllProjectCoversProps {
+interface ProjectCoversProps {
     projectList: any;
 }
 
-const AllProjectCovers = (props: AllProjectCoversProps) => {
-
+const ProjectCovers = (props: ProjectCoversProps) => {
     const coverList = props.projectList || [];
-
-    const router = useRouter();
-    const path = usePathname();
-
-    const toEditProjectsPage = (projectName: string) => {
-        router.push(`${path}/project/${projectName}`)
-    }
-
 
     return (
         <section className="grid grid-flow-row-dense grid-cols-3 gap-3 mb-10">
@@ -28,15 +16,12 @@ const AllProjectCovers = (props: AllProjectCoversProps) => {
                     <div className="flex-wrap text-xl">Name: {project.name}</div>
                     <div className="flex-wrap">Size: {project.size} sq. ft.</div>
                     <div className="flex justify-center w-full">
-                        <button className="w-1/3 bg-neutral-400 hover:bg-sky-900 hover:duration-200 text-neutral-100 py-1 rounded-full cursor-pointer"
-                            onClick={() => toEditProjectsPage(project.name)}>Edit</button>
+                        <EditPorjectBtn projectName={project.name} />
                     </div>
                 </div>
             ))}
         </section>
     )
-
-
 };
 
-export default AllProjectCovers;
+export default ProjectCovers;
