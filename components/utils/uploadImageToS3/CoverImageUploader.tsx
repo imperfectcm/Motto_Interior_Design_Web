@@ -4,19 +4,14 @@ import ImageUploading, { ImageListType } from "react-images-uploading";
 import { Dispatch, SetStateAction, useState } from "react";
 import Image from "next/image";
 
-
 interface CoverImageUploaderProps {
     coverImages: ImageListType;
     setCoverImages: Dispatch<SetStateAction<ImageListType>>;
 }
 
 export default function CoverImageUploader(props: CoverImageUploaderProps) {
-
     const maxNumber = 2;
-
-    const onChange = async (
-        imageList: ImageListType
-    ) => {
+    const onChange = async (imageList: ImageListType) => {
         await props.setCoverImages(imageList);
     };
 
@@ -64,7 +59,6 @@ export default function CoverImageUploader(props: CoverImageUploaderProps) {
                                         </div>
                                     </div>
                                 ))
-
                             }
                         </div>
                         {imageList.length > 0 && <span className="flex justify-center mt-5">

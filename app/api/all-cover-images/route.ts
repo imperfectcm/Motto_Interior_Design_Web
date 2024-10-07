@@ -21,7 +21,7 @@ export async function GET() {
         return NextResponse.json({ data: projectList }, { status: 200 });
 
     } catch (error: any) {
-        return NextResponse.json({ message: error.message || error.toString() }, { status: 500 })
+        return NextResponse.json({ error: error.error || error.toString() }, { status: 500 })
     }
 
 }

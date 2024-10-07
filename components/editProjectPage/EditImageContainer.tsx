@@ -24,7 +24,7 @@ const EditImageContainer = (props: EditImageContainerProps) => {
             :
             <section>
                 <div className="grid grid-flow-row-dense grid-cols-3 gap-3">
-                    <div className="col-span-full text-2xl">Project Cover Images :</div>
+                    <div className="col-span-full text-2xl">Project Images :</div>
                     {props.images.length > 0 &&
                         props.images.map((image: any, index) => (
                             <div key={index} className={`relative col-span-1 group overflow-hidden flex flex-col`}>
@@ -33,9 +33,9 @@ const EditImageContainer = (props: EditImageContainerProps) => {
                         ))
                     }
                 </div>
-                {props.images.length > 0 && <span className="flex justify-center mt-5">
+                <span className="flex justify-center mt-5">
                     <button className="w-1/3 bg-neutral-400 hover:bg-sky-900 hover:duration-200 text-neutral-100 py-1 rounded-full cursor-pointer" onClick={editImage}>Edit</button>
-                </span>}
+                </span>
             </section>
     )
 }

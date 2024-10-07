@@ -4,16 +4,13 @@ import ImageUploading, { ImageListType } from "react-images-uploading";
 import { Dispatch, SetStateAction, useState } from "react";
 import Image from "next/image";
 
-
 interface ImageUploaderProps {
     images: ImageListType;
     setImages: Dispatch<SetStateAction<ImageListType>>;
 }
 
 export default function ImageUploader(props: ImageUploaderProps) {
-
     const maxNumber = 40;
-
     const onChange = async (
         imageList: ImageListType
     ) => {
@@ -64,7 +61,6 @@ export default function ImageUploader(props: ImageUploaderProps) {
                                         </div>
                                     </div>
                                 ))
-
                             }
                         </div>
                         {imageList.length > 0 && <span className="flex justify-center mt-5">

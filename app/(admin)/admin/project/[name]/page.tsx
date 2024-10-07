@@ -12,7 +12,7 @@ export default async function EditProject({ params }: { params: { name: string }
     const getProjectByName = async () => {
         try {
 
-            const res = await fetch(`${process.env.WEB_URL}/api/project?projectName=${projectName}`);
+            const res = await fetch(`${process.env.WEB_URL}/api/project?projectName=${projectName}`, { cache: 'no-store' });
 
             if (!res.ok) {
                 const errorData = await res.json();
@@ -54,9 +54,8 @@ export default async function EditProject({ params }: { params: { name: string }
 
     const relatedImages = await getProjectImages(projectId);
 
-    console.log(projectInfo)
-    console.log(relatedImages)
-
+    // console.log("projectInfo: ", projectInfo)
+    // console.log("relatedImages: ", relatedImages)
 
     return (
         < EditForm

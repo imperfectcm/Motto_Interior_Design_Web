@@ -32,8 +32,10 @@ export async function UploadImageToS3(formData: FormData) {
         });
 
         const res = await s3.uploadFile(Buffer.from(await file.arrayBuffer()));
-        return res.location;
+        const data = {location: res.location, key: res.key};
+
+        return data;
     } catch (error: any) {
-        return { message: error.message };
+        throw error;
     }
 }

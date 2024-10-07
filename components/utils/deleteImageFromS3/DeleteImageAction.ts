@@ -10,29 +10,27 @@ const s3Config = {
     secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY as string
 };
 
-export async function DeleteImageFromS3(formData: FormData) {
+export async function deleteImageFromS3(projectKey: string) {
 
     try {
 
-        const file = formData.get("file") as File;
-        const folderName = formData.get("folderName") as string;
-
-        if (!file) {
-            return ({ message: "No image to upload." })
+        if (!projectKey) {
+            return ({ message: "No image to delete." })
         }
 
-        if (!folderName) {
-            return ({ message: "No project name." })
-        }
-
+        /* Import s3 config object and call the constrcutor */
         const s3 = new s3Client({
             ...s3Config,
-            dirName: folderName
         });
 
-        const res = await s3.uploadFile(Buffer.from(await file.arrayBuffer()));
-        return res.location;
+        await s3.deleteFile(projectKey);
+
+        console.log('File deleted');
+
+        return { message: 'Image deleted successfully' };
+
     } catch (error: any) {
-        return { message: error.message };
+        console.log(error);
+        throw error;
     }
 }
