@@ -1,5 +1,4 @@
-
-'use client';
+"use client";
 
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
@@ -24,8 +23,6 @@ const Contact: FC = () => {
     setSubmitting(true)
     sendEmail(data);
   }
-
-
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

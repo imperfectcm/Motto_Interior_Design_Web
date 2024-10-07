@@ -3,7 +3,7 @@
 import style from "@/components/CSS/ScrollEffect.module.css"
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from "react";
-import { useHorizontalScroll } from "./utils/HorizontalScroll";
+import { useHorizontalScroll } from "../../../../components/utils/horizontalScroll";
 
 interface ScrollEffectProps {
     projectName: string;
@@ -11,17 +11,12 @@ interface ScrollEffectProps {
 }
 
 export function ScrollEffect(props: ScrollEffectProps) {
-
     const scrollRef = useHorizontalScroll();
-
     const projectImages = props.projectImages;
-
 
     return (
         <div ref={scrollRef} className={style.container}>
             <div className={style.pre}></div>
-
-
             {projectImages.length && projectImages.map((image, index) => (
                 <div key={index} className={style.imgBox}>
                     <img
@@ -30,7 +25,6 @@ export function ScrollEffect(props: ScrollEffectProps) {
                     />
                 </div>
             ))}
-
             {Array.from({ length: 9 }, (_, i) => (
                 <div key={i} className={style.imgBox}>
                     <img
@@ -39,7 +33,6 @@ export function ScrollEffect(props: ScrollEffectProps) {
                     />
                 </div>
             ))}
-
             <div className={style.after}></div>
         </div>
     );

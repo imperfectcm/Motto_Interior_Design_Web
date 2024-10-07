@@ -1,5 +1,5 @@
 
-import Contact from '@/components/ContactUsForm';
+import Contact from '@/app/contact/components/ContactUsForm';
 
 export default function Home() {
   return (

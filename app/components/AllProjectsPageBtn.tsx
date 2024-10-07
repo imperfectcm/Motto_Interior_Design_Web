@@ -2,9 +2,8 @@
 
 import { useRouter } from "next/navigation"
 
-export default function ToAllProjectsPageBtn() {
+export default function AllProjectsPageBtn() {
     const router = useRouter()
-
     const toProjectsPage = () => {
         router.push("projects")
       }

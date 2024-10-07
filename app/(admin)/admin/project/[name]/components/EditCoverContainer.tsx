@@ -1,5 +1,5 @@
-import CoverImageDisplayer from "@/components/utils/CoverImageDisplayer";
-import CoverImageUploader from "@/components/utils/uploadImageToS3/CoverImageUploader";
+import CoverImageDisplayer from "@/app/(admin)/admin/project/[name]/components/CoverImageDisplayer";
+import CoverImageUploader from "@/components/s3Actions/upload/CoverImageUploader";
 import { Dispatch, SetStateAction } from "react";
 import { ImageListType } from "react-images-uploading";
 

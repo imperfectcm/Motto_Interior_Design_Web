@@ -22,20 +22,15 @@ class AuthService {
     // check admin login
     async isAdminAuthenticated(cookieStore: ReadonlyRequestCookies) {
         const cookie = cookieStore.get("pb_auth");
-        if (!cookie) {
-            return false;
-        }
+        if (!cookie) { return false };
         pb.authStore.loadFromCookie(cookie?.value || "");
-
         return pb.authStore.isAdmin || false
     }
 
     // get user info from cookie
     async getUser(cookieStore: ReadonlyRequestCookies) {
         const cookie = cookieStore.get("pb_auth");
-        if (!cookie) {
-            return false;
-        }
+        if (!cookie) { return false };
         pb.authStore.loadFromCookie(cookie?.value || "");
         return pb.authStore;
     }

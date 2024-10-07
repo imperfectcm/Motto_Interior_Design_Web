@@ -8,9 +8,7 @@ interface FeatureProjectsContainerProps {
 
 export default async function FeatureProjectsContainer(props: FeatureProjectsContainerProps) {
     const featureProjects = props.featureProjects;
-    const isOdd = (id: number) => {
-        return id % 2 === 1;
-    }
+    const isOdd = (id: number) => { return id % 2 === 1 };
 
     return (
         <section>

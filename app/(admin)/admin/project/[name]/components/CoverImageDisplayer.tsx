@@ -1,5 +1,5 @@
-import { ImageListType } from "react-images-uploading";
 
+import { ImageListType } from "react-images-uploading";
 
 interface CoverImageDisplayerProps {
     coverImages: ImageListType
@@ -7,7 +7,6 @@ interface CoverImageDisplayerProps {
 }
 
 const CoverImageDisplayer = (props: CoverImageDisplayerProps) => {
-
     const coverImages = props.coverImages;
     const editCover = props.editCover;
 

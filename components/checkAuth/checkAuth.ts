@@ -1,12 +1,10 @@
 
 import { redirect } from "next/navigation";
 
-const TurnToAdminPage = (isAdmin: boolean) => {
-  if (!isAdmin) {
-    redirect("/admin/login");
-  }
+const checkAuth = (isAdmin: boolean) => {
+  if (!isAdmin) { redirect("/admin/login"); }
 
   return (isAdmin);
 }
 
-export default TurnToAdminPage;
+export default checkAuth;
