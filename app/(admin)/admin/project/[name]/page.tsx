@@ -1,61 +1,19 @@
-import { projectFormData } from "@/components/createProjectPage/createProjectForm";
-import EditForm from "@/components/editProjectPage/EditForm";
+
+import EditForm from "@/app/(admin)/admin/project/[name]/components/EditForm";
+import getProjectByName from "@/components/getProjects/getProjectByName";
 import getProjectImages from "@/components/utils/getProjectImages";
-import { ErrorMessage } from "@hookform/error-message";
-import { useForm } from "react-hook-form";
+import CheckAuth from "@/components/utils/turnToAdminPage/TurnToAdminPage";
+import { authService } from "@/services/AuthService";
+import { cookies } from "next/headers";
 
 
 export default async function EditProject({ params }: { params: { name: string }; }) {
-
+    const isAdmin = await authService.isAdminAuthenticated(cookies());
+    await CheckAuth(isAdmin);
     const projectName = params.name.replaceAll("%20", " ");
-
-    const getProjectByName = async () => {
-        try {
-
-            const res = await fetch(`${process.env.WEB_URL}/api/project?projectName=${projectName}`, { cache: 'no-store' });
-
-            if (!res.ok) {
-                const errorData = await res.json();
-                return errorData.message;
-            }
-
-            const response = await res.json();
-            const data = response.data;
-
-            return data;
-
-        } catch (error: any) {
-            throw error;
-        }
-    }
-
-    const projectInfo = await getProjectByName();
+    const projectInfo = await getProjectByName(projectName);
     const projectId = projectInfo?.id;
-
-
-    // const getRelatedImages = async () => {
-    //     try {
-
-    //         const res = await fetch(`http://localhost:3000/api/project-images?projectId=${projectId}`);
-
-    //         if (!res.ok) {
-    //             const errorData = await res.json();
-    //             return errorData.message;
-    //         }
-
-    //         const response = await res.json();
-    //         const data = response.data;
-
-    //         return data;
-    //     } catch (error: any) {
-    //         throw error;
-    //     }
-    // }
-
     const relatedImages = await getProjectImages(projectId);
-
-    // console.log("projectInfo: ", projectInfo)
-    // console.log("relatedImages: ", relatedImages)
 
     return (
         < EditForm
@@ -63,6 +21,4 @@ export default async function EditProject({ params }: { params: { name: string }
             relatedImages={relatedImages}
         />
     );
-
-
 }

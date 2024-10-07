@@ -10,7 +10,7 @@ const imageListByRPA = importAll(require.context('./../../public/hardCodeImages/
 
 import { promises as fs } from 'fs';
 import ToAllProjectsPageBtn from "./ToAllProjectsPageBtn";
-import getAllProjectCovers from "../utils/GetAllProjectCover";
+import getAllProjectCovers from "../getProjects/getAllProjectsWithCovers";
 
 const imgFolder = "/hardCodeImages/Project Chronology/"
 

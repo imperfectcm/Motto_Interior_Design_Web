@@ -6,7 +6,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
     try {
         const reqData = await request.json();
-
         if (!reqData) return;
 
         const projectId: string = reqData.projectId
