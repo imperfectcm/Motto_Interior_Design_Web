@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "components/utils/uploadImageToS3/UploadImageAction.ts"
+    "components/s3Actions/upload/uploadImageAction.ts"
   ],
   "exclude": [
     "node_modules"

@@ -7,14 +7,14 @@ import { useState } from "react";
 import { ImageListType } from "react-images-uploading";
 import EditCoverContainer from "./EditCoverContainer";
 import EditImageContainer from "./EditImageContainer";
-import { UploadImageToS3 } from "../../../../../../components/utils/uploadImageToS3/UploadImageAction";
+import { UploadImageToS3 } from "../../../../../../components/s3Actions/upload/uploadImageAction";
 import { Flip, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { UpdateProjectBtn } from "./UpdateProjectBtn";
 import { useRouter } from "next/navigation";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { deleteImageFromS3 } from "../../../../../../components/utils/deleteImageFromS3/DeleteImageAction";
+import { deleteImageFromS3 } from "../../../../../../components/s3Actions/delete/deleteImageAction";
 import { projectDeleteSuccessfully, projectUpdateFailedToast, projectUpdateSuccessfully, uploadImagesToDBFailedToast } from "@/components/toastify/toast";
 
 interface EditFormProps {

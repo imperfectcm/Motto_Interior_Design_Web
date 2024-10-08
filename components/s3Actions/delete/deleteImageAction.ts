@@ -9,7 +9,6 @@ const s3Config = {
     secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY as string
 };
 
-
 export async function deleteImageFromS3(projectKey: string) {
     try {
         if (!projectKey) {

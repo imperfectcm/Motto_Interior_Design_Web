@@ -2,14 +2,12 @@
 
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message"
-import { Flip, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
-import ImageUploader from "@/components/utils/uploadImageToS3/ImageUploader";
+import ImageUploader from "@/components/s3Actions/upload/ImageUploader";
 import { useState } from "react";
 import { ImageListType } from "react-images-uploading";
-import { UploadImageToS3 } from "../../../../../components/utils/uploadImageToS3/UploadImageAction";
-import CoverImageUploader from "../../../../../components/utils/uploadImageToS3/CoverImageUploader";
+import { UploadImageToS3 } from "../../../../../components/s3Actions/upload/uploadImageAction";
+import CoverImageUploader from "../../../../../components/s3Actions/upload/CoverImageUploader";
 import { CreateProjectBtn } from "./CreateProjectBtn";
 import React from "react";
 import { projectCreateSuccessfully, projectCreateFailedToast, uploadImagesToDBFailedToast } from "@/components/toastify/toast";
