@@ -7,7 +7,7 @@ import { useState } from "react";
 import { ImageListType } from "react-images-uploading";
 import EditCoverContainer from "./EditCoverContainer";
 import EditImageContainer from "./EditImageContainer";
-import { UploadImageToS3 } from "../../../../../../components/s3Actions/upload/uploadImageAction";
+import { uploadAction } from "../../../../../../components/s3Actions/upload/uploadAction";
 import { Flip, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { UpdateProjectBtn } from "./UpdateProjectBtn";
@@ -16,6 +16,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { deleteImageFromS3 } from "../../../../../../components/s3Actions/delete/deleteImageAction";
 import { projectDeleteSuccessfully, projectUpdateFailedToast, projectUpdateSuccessfully, uploadImagesToDBFailedToast } from "@/components/toastify/toast";
+import uploadMultiImages from "@/components/s3Actions/upload/uploadMultiImages";
 
 interface EditFormProps {
     projectInfo: any;
@@ -34,41 +35,6 @@ const EditForm = (props: EditFormProps) => {
     const [isEditCovers, setIsEditCovers] = useState<boolean>(false);
     const [isEditImages, setIsEditImages] = useState<boolean>(false);
     const [swalProps, setSwalProps] = useState({});
-
-    const uploadImagesToS3 = async (imageList: ImageListType, projectName: string) => {
-        if (imageList.length === 0) return;
-        if (imageList.length > 0) {
-            try {
-                let imageUrlList: string[] = [];
-                let imageKeyList: string[] = [];
-                await Promise.all(imageList.map(async (image) => {
-                    if (image.file instanceof File) {
-                        const formData = new FormData();
-                        formData.append("file", image.file);
-                        formData.append("folderName", projectName);
-                        const data = await UploadImageToS3(formData);
-
-                        if ('location' in data && 'key' in data) {
-                            const imageUrl = data.location;
-                            const imageKey = data.key;
-                            imageUrlList.push(imageUrl);
-                            imageKeyList.push(imageKey);
-                            const imageInfo = { imageUrlList: imageUrlList, imageKeyList: imageKeyList }
-                            return imageInfo;
-                        } else {
-                            return data.message;
-                        }
-                    }
-                }))
-                console.log("imageUrlList: " + imageUrlList)
-                console.log("imageKeyList: " + imageKeyList)
-                return { imageUrlList: imageUrlList, imageKeyList: imageKeyList }
-            } catch (error: any) {
-                uploadImagesToDBFailedToast();
-                throw error;
-            }
-        };
-    }
 
     const uploadCoverImagesToDB = async (coverImageUrlList: string[], coverKeyList: string[], projectId: string) => {
         if (!coverImageUrlList.length) return;
@@ -193,7 +159,7 @@ const EditForm = (props: EditFormProps) => {
                 })
                 if (coverImages.length > 0) {
                     try {
-                        const imageInfo: { imageUrlList: string[], imageKeyList: string[] } | undefined = await uploadImagesToS3(coverImages, projectName);
+                        const imageInfo: { imageUrlList: string[], imageKeyList: string[] } | undefined = await uploadMultiImages(coverImages, projectName);
                         if (imageInfo) await uploadCoverImagesToDB(imageInfo.imageUrlList, imageInfo.imageKeyList, projectId);
                     } catch (error) {
                         throw error;
@@ -205,23 +171,23 @@ const EditForm = (props: EditFormProps) => {
                     try {
                         await deleteImageFromS3(oldImage.key);
                         await deleteImageFromDB(relatedImages.images)
-                    } catch (error) {
-                        throw error;
+                    } catch (error: any) {
+                        throw new Error(error.message);
                     }
                 })
                 if (images.length > 0) {
                     try {
-                        const imageInfo: { imageUrlList: string[], imageKeyList: string[] } | undefined = await uploadImagesToS3(images, projectName);
+                        const imageInfo: { imageUrlList: string[], imageKeyList: string[] } | undefined = await uploadMultiImages(images, projectName);
                         if (imageInfo) await uploadProjectImagesToDB(imageInfo.imageUrlList, imageInfo.imageKeyList, projectId);
-                    } catch (error) {
-                        throw error;
+                    } catch (error: any) {
+                        throw new Error(error.message);
                     }
                 }
             }
             await updateProjectToDB(data, projectId);
             await projectUpdateSuccessfully(router);
-        } catch (error) {
-            throw error;
+        } catch (error: any) {
+            throw new Error(error.message);
         }
     }
 

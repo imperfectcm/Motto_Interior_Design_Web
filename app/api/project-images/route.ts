@@ -29,7 +29,6 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
     try {
         const reqData = await request.json();
-
         if (!reqData) return;
 
         const projectId: string = reqData.projectId
@@ -49,19 +48,15 @@ export async function POST(request: NextRequest) {
                 }
             })
         }
-
         await uploadEachImage(imageUrlList);
-
         return NextResponse.json({ message: "Images uploaded to DB successfully." }, { status: 200 });
-
     } catch (error: any) {
-        return NextResponse.json({ error: error.error || error.toString() }, { status: 500 })
+        throw new Error(error.message);
     }
 }
 
 
 export async function DELETE(request: NextRequest) {
-
     try {
         const reqData = await request.json();
         const imageList = reqData.imageList;
@@ -72,11 +67,8 @@ export async function DELETE(request: NextRequest) {
                 await projectService.deleteImageFromDB(imageId, cookies());
             })
         }
-
         await deleteEachImage(imageList);
-
         return NextResponse.json({ message: "Images deleted from DB successfully." }, { status: 200 });
-
     } catch (error: any) {
         return NextResponse.json({ error: error.error || error.toString() }, { status: 500 })
     }

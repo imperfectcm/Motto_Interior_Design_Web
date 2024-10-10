@@ -6,7 +6,7 @@ const getAllProjectsWithCovers = async () => {
         const data = await res.json();
         return data.data || [];
     } catch (error: any) {
-        console.log(error)
+        console.log(error.message);
         return [];
     }
 }

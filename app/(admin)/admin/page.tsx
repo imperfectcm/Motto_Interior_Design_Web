@@ -10,10 +10,9 @@ const admin = async () => {
     const isAdmin = await authService.isAdminAuthenticated(cookies());
     await checkAuth(isAdmin);
     const projectList = await getAllProjectCovers();
-
     return (
         <main className="py-10">
-            <ProjectCoversContainer projectList={projectList} />
+            <ProjectCoversContainer projectList={projectList} lastDisplayId={projectList[0].display_id} />
             <CreateProjectBtn />
         </main>
     )

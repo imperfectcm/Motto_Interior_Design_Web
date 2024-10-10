@@ -3,7 +3,6 @@ import { cookies } from "next/headers";
 import { NextResponse, type NextRequest } from "next/server";
 import { projectService } from "@/services/ProjectService";
 
-
 export async function GET(request: NextRequest) {
     try {
         const projectName = request.nextUrl.searchParams.get("projectName");
@@ -24,6 +23,7 @@ export async function POST(request: NextRequest) {
             {
                 aboutProject,
                 apartmentName,
+                displayId,
                 householdSize,
                 location,
                 projectName,
@@ -37,12 +37,13 @@ export async function POST(request: NextRequest) {
             "apartment_name": apartmentName,
             "size": size,
             "household_size": householdSize,
-            "description": aboutProject
+            "description": aboutProject,
+            "display_id": displayId
         };
         const res = await projectService.createProject(projectData, cookies());
         return NextResponse.json({ data: res }, { status: 200 });
     } catch (error: any) {
-        return NextResponse.json({ error: error.error || error.toString() }, { status: 500 })
+        throw new Error(error.message);
     }
 }
 
@@ -85,6 +86,6 @@ export async function DELETE(request: NextRequest) {
         if (res.success) return NextResponse.json({ message: "Project deleted successfully." }, { status: 200 });
         else return NextResponse.json({ error: res.error }, { status: 500 });
     } catch (error: any) {
-        return NextResponse.json({ error: error.error || error.toString() }, { status: 500 })
+        return NextResponse.json({ error: error.error || error.toString() }, { status: 500 });
     }
 }

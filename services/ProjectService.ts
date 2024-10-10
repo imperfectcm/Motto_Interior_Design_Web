@@ -19,6 +19,19 @@ class ProjectService {
     }
 
 
+    async getLastDisplayId() {
+        try {
+            const resultList = await pb.collection('projects').getList(1, 1, {
+                sort: '-display_id',
+            });
+            const lastDisplayId = resultList.items[0].display_id
+            return { data: lastDisplayId, success: true };
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
+
+
     async getNonFeatureProjectsInfo() {
         try {
             const resultList = await pb.collection('projects').getFullList({
@@ -92,13 +105,15 @@ class ProjectService {
             "apartment_name": projectData.apartment_name,
             "size": projectData.size,
             "household_size": projectData.household_size,
-            "description": projectData.description
+            "description": projectData.description,
+            "display_id": projectData.display_id
         };
         try {
             const record = await pb.collection('projects').create(data);
+            console.log("record: ", record)
             return record;
         } catch (error: any) {
-            return { error: error.message };
+            throw new Error(error.message);
         }
     }
 
@@ -151,20 +166,17 @@ class ProjectService {
 
     async deleteImageFromDB(imageId: string, cookies: ReadonlyRequestCookies) {
         const pbAuthData = authService.getUser(cookies);
-
         try {
             await pb.collection('images').delete(imageId, { requestKey: null });
             return true;
         } catch (error: any) {
             return { error: error.message };
         }
-
     }
 
 
     async uploadImagesToDB(projectId: string, imageUrl: string, imageKey: string, sequence: number, cookies: ReadonlyRequestCookies) {
         const pbAuthData = authService.getUser(cookies);
-
         const imageData = {
             "name": projectId,
             "url": imageUrl,
@@ -172,7 +184,6 @@ class ProjectService {
             "is_cover": false,
             "key": imageKey,
         }
-
         try {
             const record = await pb.collection('images').create(imageData, { requestKey: null });
             return record;
@@ -180,7 +191,6 @@ class ProjectService {
             console.log("Error: " + error.message);
             return { error: error.message };
         }
-
     }
 
 }

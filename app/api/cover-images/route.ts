@@ -29,11 +29,9 @@ export async function POST(request: NextRequest) {
         }
 
         await uploadEachImage(coverImageUrlList);
-
         return NextResponse.json({ message: "Images uploaded to DB successfully." }, { status: 200 });
-
     } catch (error: any) {
-        return NextResponse.json({ error: error.error || error.toString() }, { status: 500 })
+        throw new Error(error.message);
     }
 
 }

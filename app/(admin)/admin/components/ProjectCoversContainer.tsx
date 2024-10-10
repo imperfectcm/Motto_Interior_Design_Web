@@ -2,14 +2,15 @@ import ProjectCovers from "./ProjectCovers";
 
 interface ProjectCoverContainerProps {
     projectList: any;
+    lastDisplayId: number;
 }
 
 const ProjectCoversContainer = (props: ProjectCoverContainerProps) => {
-    const projectList = props.projectList;
+    const { projectList, lastDisplayId } = props;
 
     return (
         <main>
-            <ProjectCovers projectList={projectList} />
+            <ProjectCovers projectList={projectList} lastDisplayId={lastDisplayId} />
         </main>
     )
 };

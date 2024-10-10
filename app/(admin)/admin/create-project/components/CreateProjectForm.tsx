@@ -1,16 +1,23 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message"
+import React from "react";
 import { useRouter } from "next/navigation";
-import ImageUploader from "@/components/s3Actions/upload/ImageUploader";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { ImageListType } from "react-images-uploading";
-import { UploadImageToS3 } from "../../../../../components/s3Actions/upload/uploadImageAction";
+import { ErrorMessage } from "@hookform/error-message"
+import ImageUploader from "@/components/s3Actions/upload/ImageUploader";
 import CoverImageUploader from "../../../../../components/s3Actions/upload/CoverImageUploader";
 import { CreateProjectBtn } from "./CreateProjectBtn";
-import React from "react";
-import { projectCreateSuccessfully, projectCreateFailedToast, uploadImagesToDBFailedToast } from "@/components/toastify/toast";
+import creatProjectToDB from "./createProjectToDB";
+import uploadMultiImages from "@/components/s3Actions/upload/uploadMultiImages";
+import uploadCoverImagesToDB from "@/components/uploadImagesToDB/uploadCoverImagesToDB";
+import uploadImagesToDB from "@/components/uploadImagesToDB/uploadImagesToDB";
+import { projectCreateSuccessfully, projectCreateFailedToast } from "@/components/toastify/toast";
+
+interface CreateProjectFormProps {
+    lastDisplayId: number;
+}
 
 export type projectFormData = {
     projectName: string,
@@ -19,151 +26,15 @@ export type projectFormData = {
     apartmentName: string,
     size: number,
     householdSize: number,
-    aboutProject: string
+    aboutProject: string,
+    displayId: number;
 }
 
-const CreateProjectForm = () => {
+const CreateProjectForm = (props: CreateProjectFormProps) => {
+    const lastDisplayId = props.lastDisplayId;
     const router = useRouter();
-    const [projectName, setProjectName] = useState("")
     const [coverImages, setCoverImages] = useState<ImageListType>([]);
     const [images, setImages] = useState<ImageListType>([]);
-
-    let projectId: string;
-    let coverImageUrlList: string[] = [];
-    let coverKeyList: string[] = [];
-    let imageUrlList: string[] = [];
-    let imageKeyList: string[] = [];
-
-    const uploadImagesToS3 = async () => {
-        if (coverImages.length > 0) {
-            try {
-                await Promise.all(coverImages.map(async (image) => {
-                    if (image.file instanceof File) {
-                        const formData = new FormData();
-                        formData.append("file", image.file);
-                        formData.append("folderName", projectName);
-                        const data = await UploadImageToS3(formData);
-
-                        if ('location' in data && 'key' in data) {
-                            const coverImageUrl = data.location;
-                            const coverKey = data.key;
-                            coverImageUrlList.push(coverImageUrl);
-                            coverKeyList.push(coverKey);
-                            return data;
-                        } else {
-                            return data.message;
-                        }
-                    }
-                }))
-            } catch (error: any) {
-                uploadImagesToDBFailedToast();
-                throw error;
-            }
-        };
-        if (images.length > 0) {
-            try {
-                await Promise.all(images.map(async (image) => {
-                    if (image.file instanceof File) {
-                        const formData = new FormData();
-                        formData.append("file", image.file);
-                        formData.append("folderName", projectName);
-                        const data = await UploadImageToS3(formData);
-
-                        if ('location' in data && 'key' in data) {
-                            const imageUrl = data.location;
-                            const imageKey = data.key;
-                            imageUrlList.push(imageUrl);
-                            imageKeyList.push(imageKey);
-                            return data;
-                        } else {
-                            return data.message;
-                        }
-                    }
-                }))
-            } catch (error: any) {
-                uploadImagesToDBFailedToast();
-                throw new Error(error.message);
-            }
-        };
-        return { "Cover image url list": coverImageUrlList, "image url list": imageUrlList };
-    }
-
-    const creatProjectToDB = async (data: projectFormData) => {
-        try {
-            const res = await fetch("/api/project", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    data
-                }),
-            });
-            if (!res.ok) {
-                const errorData = await res.json();
-                projectCreateFailedToast();
-                throw new Error(errorData.error || "Project create failed.");
-            }
-            const resData = await res.json()
-            projectId = resData.data.id;
-            return projectId;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    const uploadCoverImagesToDB = async () => {
-        if (!coverImageUrlList.length) return;
-        try {
-            const res = await fetch("/api/cover-images", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    "projectId": projectId,
-                    "coverImageUrlList": coverImageUrlList,
-                    "coverKeyList": coverKeyList
-                }),
-            });
-            if (!res.ok) {
-                const errorData = await res.json();
-                uploadImagesToDBFailedToast();
-                throw new Error(errorData.error || "Upload cover image to DB failed.")
-            }
-            const resData = await res.json()
-            return resData.message;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    const uploadImagesToDB = async () => {
-        if (!imageUrlList.length) return;
-        try {
-            const res = await fetch("/api/project-images", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    "projectId": projectId,
-                    "imageUrlList": imageUrlList,
-                    "imageKeyList": imageKeyList
-                }),
-            });
-            if (!res.ok) {
-                const errorData = await res.json();
-                uploadImagesToDBFailedToast();
-                throw new Error(errorData.error || "Upload image to DB failed.")
-            }
-            const resData = await res.json()
-            return resData.message;
-
-        } catch (error) {
-            throw error;
-        }
-    }
 
     const {
         register,
@@ -175,18 +46,20 @@ const CreateProjectForm = () => {
         } } = useForm<projectFormData>();
 
     const handleFormSubmit = async (data: projectFormData) => {
+        console.log("client side data: ", data)
         if (!isValid) return;
         try {
-            await uploadImagesToS3();
-            await creatProjectToDB(data);
-            await uploadCoverImagesToDB();
-            await uploadImagesToDB();
+            const projectId: string = await creatProjectToDB(data);
+            const coverList = await uploadMultiImages(coverImages, projectId);
+            const imageList = await uploadMultiImages(images, projectId);
+            if (coverList) await uploadCoverImagesToDB(coverList.imageUrlList, coverList.imageKeyList, projectId);
+            if (imageList) await uploadImagesToDB(imageList.imageUrlList, imageList.imageKeyList, projectId);
             await projectCreateSuccessfully(router);
-        } catch (error) {
-            throw error;
+        } catch (error: any) {
+            projectCreateFailedToast();
+            throw new Error(error.message);
         }
     }
-
 
     return (
         <main className="flex flex-col justify-center items-center py-10">
@@ -194,7 +67,6 @@ const CreateProjectForm = () => {
                 <CoverImageUploader
                     coverImages={coverImages}
                     setCoverImages={setCoverImages} />
-
                 <ImageUploader
                     images={images}
                     setImages={setImages} />
@@ -204,10 +76,7 @@ const CreateProjectForm = () => {
                     <label>Project name (專案名稱)</label>
                     <input
                         className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
-                        {...register("projectName", {
-                            required: true,
-                            onChange: (e) => setProjectName(e.target.value)
-                        })} />
+                        {...register("projectName", { required: true, })} />
                     <ErrorMessage errors={errors} name="projectName" />
                     <ErrorMessage
                         errors={errors}
@@ -280,6 +149,11 @@ const CreateProjectForm = () => {
                     <label>About project (專案介紹)</label>
                     <textarea className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
                         {...register("aboutProject")} />
+                </div>
+                <div className="flex flex-col">
+                    <label>Project ID (專案編號)</label>
+                    <input type="number" className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
+                        {...register("displayId", { value: lastDisplayId + 1 })} value={lastDisplayId + 1} />
                 </div>
                 <CreateProjectBtn
                     isSubmitting={isSubmitting} />
