@@ -201,7 +201,6 @@ const EditForm = (props: EditFormProps) => {
                 }
             }
             if (images != relatedImages.images || projectName != projectInfo.name) {
-                console.log("images?? ", images);
                 await relatedImages.images.map(async (oldImage: any) => {
                     try {
                         await deleteImageFromS3(oldImage.key);
@@ -220,7 +219,7 @@ const EditForm = (props: EditFormProps) => {
                 }
             }
             await updateProjectToDB(data, projectId);
-            await projectUpdateSuccessfully();
+            await projectUpdateSuccessfully(router);
         } catch (error) {
             throw error;
         }
@@ -283,7 +282,7 @@ const EditForm = (props: EditFormProps) => {
                 })
             }
             await deleteProject(projectId);
-            await projectDeleteSuccessfully();
+            await projectDeleteSuccessfully(router);
         } catch (error) {
             throw error;
         }

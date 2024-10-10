@@ -1,4 +1,5 @@
 
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
 import { Flip, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,8 +28,7 @@ export const uploadImagesToDBFailedToast = () => toast.error("😭 Upload images
     transition: Flip,
 });
 
-export const projectCreateSuccessfully = async () => {
-    const router = useRouter();
+export const projectCreateSuccessfully = async (router: AppRouterInstance) => {
     toast("Project created successfully", {
         position: "top-center",
         autoClose: 3000,
@@ -50,8 +50,7 @@ export const projectUpdateFailedToast = () => toast.error("😭 Update project f
     transition: Flip,
 });
 
-export const projectUpdateSuccessfully = async () => {
-    const router = useRouter();
+export const projectUpdateSuccessfully = async (router: AppRouterInstance) => {
     toast("Project updated successfully", {
         position: "top-center",
         autoClose: 3000,
@@ -61,8 +60,7 @@ export const projectUpdateSuccessfully = async () => {
     })
 }
 
-export const projectDeleteSuccessfully = async () => {
-    const router = useRouter();
+export const projectDeleteSuccessfully = async (router: AppRouterInstance) => {
     toast("Project delete successfully", {
         position: "top-center",
         autoClose: 3000,

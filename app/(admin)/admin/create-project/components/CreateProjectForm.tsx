@@ -181,7 +181,7 @@ const CreateProjectForm = () => {
             await creatProjectToDB(data);
             await uploadCoverImagesToDB();
             await uploadImagesToDB();
-            await projectCreateSuccessfully();
+            await projectCreateSuccessfully(router);
         } catch (error) {
             throw error;
         }

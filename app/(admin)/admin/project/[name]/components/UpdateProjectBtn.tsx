@@ -6,7 +6,6 @@ interface CreateProjectBtnProps {
 
 
 export function UpdateProjectBtn(props: CreateProjectBtnProps) {
-
     let isSubmitting = props.isSubmitting
 
     return (
