@@ -21,7 +21,6 @@ export async function deleteImageFromS3(projectKey: string) {
         console.log('File deleted');
         return { message: 'Image deleted successfully' };
     } catch (error: any) {
-        console.log(error);
-        throw error;
+        throw new Error(error.message);
     }
 }

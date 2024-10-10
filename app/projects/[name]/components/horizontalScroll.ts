@@ -15,9 +15,6 @@ export function useHorizontalScroll() {
                     left: el.scrollLeft + e.deltaY,
                     // behavior: "smooth",
                 });
-
-                console.log("el.scrollLeft: ", el.scrollLeft)
-                console.log("e.deltaY: ", e.deltaY)
             };
             el.addEventListener("wheel", onWheel);
             

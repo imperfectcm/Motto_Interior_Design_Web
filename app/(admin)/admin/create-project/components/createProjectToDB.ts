@@ -16,7 +16,6 @@ const creatProjectToDB = async (data: projectFormData) => {
         if (res.ok) {
             const resData = await res.json()
             const projectId = resData.data.id;
-            console.log("projectId: ", projectId)
             return projectId;
         }
     } catch (error: any) {

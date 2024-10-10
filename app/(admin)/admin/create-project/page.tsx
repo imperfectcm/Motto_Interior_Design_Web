@@ -9,7 +9,6 @@ const CreateProject = async () => {
     const isAdmin = await authService.isAdminAuthenticated(cookies());
     await checkAuth(isAdmin);
     const lastDisplayId = await getLastDisplayId();
-    console.log("Last Display Id: ", lastDisplayId)
 
     return (<CreateProjectForm lastDisplayId={lastDisplayId}/>)
 }

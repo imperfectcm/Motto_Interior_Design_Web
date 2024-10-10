@@ -46,7 +46,6 @@ const CreateProjectForm = (props: CreateProjectFormProps) => {
         } } = useForm<projectFormData>();
 
     const handleFormSubmit = async (data: projectFormData) => {
-        console.log("client side data: ", data)
         if (!isValid) return;
         try {
             const projectId: string = await creatProjectToDB(data);

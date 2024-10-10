@@ -110,7 +110,6 @@ class ProjectService {
         };
         try {
             const record = await pb.collection('projects').create(data);
-            console.log("record: ", record)
             return record;
         } catch (error: any) {
             throw new Error(error.message);
@@ -188,8 +187,7 @@ class ProjectService {
             const record = await pb.collection('images').create(imageData, { requestKey: null });
             return record;
         } catch (error: any) {
-            console.log("Error: " + error.message);
-            return { error: error.message };
+            throw new Error(error.message);
         }
     }
 
