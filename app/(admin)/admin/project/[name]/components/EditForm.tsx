@@ -17,6 +17,7 @@ import withReactContent from 'sweetalert2-react-content'
 import { deleteImageFromS3 } from "../../../../../../components/s3Actions/delete/deleteImageAction";
 import { projectDeleteSuccessfully, projectUpdateFailedToast, projectUpdateSuccessfully, uploadImagesToDBFailedToast } from "@/components/toastify/toast";
 import uploadMultiImages from "@/components/s3Actions/upload/uploadMultiImages";
+import { uploadCoverImages } from "@/controllers/images";
 
 interface EditFormProps {
     projectInfo: any;
@@ -35,33 +36,6 @@ const EditForm = (props: EditFormProps) => {
     const [isEditCovers, setIsEditCovers] = useState<boolean>(false);
     const [isEditImages, setIsEditImages] = useState<boolean>(false);
     const [swalProps, setSwalProps] = useState({});
-
-    const uploadCoverImagesToDB = async (coverImageUrlList: string[], coverKeyList: string[], projectId: string) => {
-        if (!coverImageUrlList.length) return;
-        try {
-            const res = await fetch("/api/cover-images", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    "projectId": projectId,
-                    "coverImageUrlList": coverImageUrlList,
-                    "coverKeyList": coverKeyList,
-                }),
-            });
-            if (!res.ok) {
-                const errorData = await res.json();
-                uploadImagesToDBFailedToast();
-                throw new Error(errorData.error || "Upload cover image to DB failed.")
-            }
-            const resData = await res.json()
-            return resData.message;
-        } catch (error) {
-            uploadImagesToDBFailedToast();
-            throw error;
-        }
-    }
 
     const uploadProjectImagesToDB = async (imageUrlList: string[], imageKeyList: string[], projectId: string) => {
         if (!imageUrlList.length) return;
@@ -149,32 +123,32 @@ const EditForm = (props: EditFormProps) => {
         if (!isValid) return;
         try {
             if (coverImages != relatedImages.covers || projectName != projectInfo.name) {
-                await relatedImages.covers.map(async (oldCoverImage: any) => {
+                for await (const oldCoverImage of relatedImages.covers) {
                     try {
                         await deleteImageFromS3(oldCoverImage.key);
                         await deleteImageFromDB(relatedImages.covers)
                     } catch (error) {
                         throw error;
                     }
-                })
+                }
                 if (coverImages.length > 0) {
                     try {
                         const imageInfo: { imageUrlList: string[], imageKeyList: string[] } | undefined = await uploadMultiImages(coverImages, projectName);
-                        if (imageInfo) await uploadCoverImagesToDB(imageInfo.imageUrlList, imageInfo.imageKeyList, projectId);
+                        if (imageInfo) await uploadCoverImages(imageInfo.imageUrlList, imageInfo.imageKeyList, projectId);
                     } catch (error) {
                         throw error;
                     }
                 }
             }
             if (images != relatedImages.images || projectName != projectInfo.name) {
-                await relatedImages.images.map(async (oldImage: any) => {
+                for await (const oldImage of relatedImages.images) {
                     try {
                         await deleteImageFromS3(oldImage.key);
                         await deleteImageFromDB(relatedImages.images)
                     } catch (error: any) {
                         throw new Error(error.message);
                     }
-                })
+                }
                 if (images.length > 0) {
                     try {
                         const imageInfo: { imageUrlList: string[], imageKeyList: string[] } | undefined = await uploadMultiImages(images, projectName);

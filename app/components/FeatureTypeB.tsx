@@ -22,11 +22,12 @@ export default async function FeatureTypeB(props: FeatureTypeBProps) {
                 </div>
             </div>
             <div className="absolute inset-y-10 left-1/2 w-2/5 flex pl-32 img-shadow">
-                <img className="object-cover aspect-[3/4]" src={project.cover[0].url} alt="Home Page Feature Projects Cover Image" loading="lazy" />
+                <img className="object-cover aspect-[3/4]" src={project.cover[0]?.url} alt="Home Page Feature Projects Cover Image" loading="lazy" />
             </div>
-            <div className="absolute bottom-1/4 left-1/2 w-1/5 h-1/3 flex img-shadow">
-                <img className="object-cover aspect-[1/1]" src={project.cover[1].url} alt="Home Page Feature Projects Cover Image" loading="lazy" />
-            </div>
+            {project.cover[1] &&
+                <div className="absolute bottom-1/4 left-1/2 w-1/5 h-1/3 flex img-shadow">
+                    <img className="object-cover aspect-[1/1]" src={project.cover[1]?.url} alt="Home Page Feature Projects Cover Image" loading="lazy" />
+                </div>}
         </section>
     );
 }

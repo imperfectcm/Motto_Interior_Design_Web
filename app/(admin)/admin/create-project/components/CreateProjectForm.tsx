@@ -11,9 +11,8 @@ import CoverImageUploader from "../../../../../components/s3Actions/upload/Cover
 import { CreateProjectBtn } from "./CreateProjectBtn";
 import creatProjectToDB from "./createProjectToDB";
 import uploadMultiImages from "@/components/s3Actions/upload/uploadMultiImages";
-import uploadCoverImagesToDB from "@/components/uploadImagesToDB/uploadCoverImagesToDB";
-import uploadImagesToDB from "@/components/uploadImagesToDB/uploadImagesToDB";
 import { projectCreateSuccessfully, projectCreateFailedToast } from "@/components/toastify/toast";
+import { uploadCoverImages, uploadImages } from "@/controllers/images";
 
 interface CreateProjectFormProps {
     lastDisplayId: number;
@@ -51,8 +50,8 @@ const CreateProjectForm = (props: CreateProjectFormProps) => {
             const projectId: string = await creatProjectToDB(data);
             const coverList = await uploadMultiImages(coverImages, projectId);
             const imageList = await uploadMultiImages(images, projectId);
-            if (coverList) await uploadCoverImagesToDB(coverList.imageUrlList, coverList.imageKeyList, projectId);
-            if (imageList) await uploadImagesToDB(imageList.imageUrlList, imageList.imageKeyList, projectId);
+            if (coverList) await uploadCoverImages(coverList.imageUrlList, coverList.imageKeyList, projectId);
+            if (imageList) await uploadImages(imageList.imageUrlList, imageList.imageKeyList, projectId);
             await projectCreateSuccessfully(router);
         } catch (error: any) {
             projectCreateFailedToast();

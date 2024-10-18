@@ -21,9 +21,9 @@ export async function POST(request: NextRequest) {
                 coverId += 1;
                 if (coverImageUrl.includes(" ")) {
                     const replacedUrl = coverImageUrl.replaceAll(" ", "%20");
-                    await projectService.uploadCoverImagesToDB(projectId, replacedUrl, coverKey, sequence, coverId, cookies());
+                    await projectService.uploadCoverImages(projectId, replacedUrl, coverKey, sequence, coverId, cookies());
                 } else {
-                    await projectService.uploadCoverImagesToDB(projectId, coverImageUrl, coverKey, sequence, coverId, cookies());
+                    await projectService.uploadCoverImages(projectId, coverImageUrl, coverKey, sequence, coverId, cookies());
                 }
             })
         }
