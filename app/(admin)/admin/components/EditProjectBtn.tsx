@@ -15,7 +15,7 @@ const EditPorjectBtn = (props: EditPorjectBtnProps) => {
     }
 
     return (
-        <button className="w-1/3 bg-neutral-400 hover:bg-sky-900 hover:duration-200 text-neutral-100 py-1 rounded-full cursor-pointer"
+        <button className="w-1/3 bg-neutral-400 hover:bg-sky-900 duration-200 text-neutral-100 py-1 rounded-full cursor-pointer"
             onClick={() => toEditProjectPage(projectName)}>Edit</button>
     )
 }

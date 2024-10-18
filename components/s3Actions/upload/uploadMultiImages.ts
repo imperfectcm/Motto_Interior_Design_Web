@@ -4,12 +4,12 @@ import { uploadAction } from "./uploadAction";
 import { uploadImagesToDBFailedToast } from "@/components/toastify/toast";
 
 const uploadMultiImages = async (imageList: ImageListType, projectId: string) => {
-    if (imageList.length === 0) return null;
+    if (imageList.length === 0) return undefined;
     if (imageList.length > 0) {
         try {
             let imageUrlList: string[] = [];
             let imageKeyList: string[] = [];
-            await Promise.all(imageList.map(async (image) => {
+            for await (const image of imageList) {
                 if (image.file instanceof File) {
                     const formData = new FormData();
                     formData.append("file", image.file);
@@ -25,7 +25,7 @@ const uploadMultiImages = async (imageList: ImageListType, projectId: string) =>
                         return imageInfo;
                     }
                 }
-            }))
+            }
             return { imageUrlList: imageUrlList, imageKeyList: imageKeyList }
         } catch (error: any) {
             uploadImagesToDBFailedToast();

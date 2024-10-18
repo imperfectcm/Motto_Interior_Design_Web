@@ -34,7 +34,7 @@ const EditImageContainer = (props: EditImageContainerProps) => {
                     }
                 </div>
                 <span className="flex justify-center mt-5">
-                    <button className="w-1/3 bg-neutral-400 hover:bg-sky-900 hover:duration-200 text-neutral-100 py-1 rounded-full cursor-pointer" onClick={editImage}>Edit</button>
+                    <button className="w-1/3 bg-neutral-400 hover:bg-sky-900 duration-200 text-neutral-100 py-1 rounded-full cursor-pointer" onClick={editImage}>Edit</button>
                 </span>
             </section>
     )

@@ -135,6 +135,20 @@ class ProjectService {
         }
     }
 
+    async updateFeatureProjectById(projectData: any, cookies: ReadonlyRequestCookies) {
+        const pbAuthData = authService.getUser(cookies);
+        const data = {
+            "is_feature_project": projectData.is_feature_project,
+            "feature_id": projectData.feature_id
+        };
+        try {
+            const record = await pb.collection('projects').update(projectData.id, data);
+            return record;
+        } catch (error: any) {
+            return { error: error.message };
+        }
+    }
+
     async deleteProjectById(projectId: string, cookies: ReadonlyRequestCookies) {
         const pbAuthData = authService.getUser(cookies);
         try {
@@ -145,7 +159,7 @@ class ProjectService {
         }
     }
 
-    async uploadCoverImagesToDB(projectId: string, coverImageUrl: string, coverKey: string, sequence: number, coverId: number, cookies: ReadonlyRequestCookies) {
+    async uploadCoverImages(projectId: string, coverImageUrl: string, coverKey: string, sequence: number, coverId: number, cookies: ReadonlyRequestCookies) {
         const pbAuthData = authService.getUser(cookies);
         const imageData = {
             "name": projectId,

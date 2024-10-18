@@ -1,6 +1,7 @@
 
 import { projectCreateFailedToast } from "@/components/toastify/toast";
 import { projectFormData } from "./CreateProjectForm";
+import { revalidateTag } from "next/cache";
 
 const creatProjectToDB = async (data: projectFormData) => {
     try {
@@ -13,6 +14,7 @@ const creatProjectToDB = async (data: projectFormData) => {
                 data
             }),
         });
+        revalidateTag('create-project');
         if (res.ok) {
             const resData = await res.json()
             const projectId = resData.data.id;
