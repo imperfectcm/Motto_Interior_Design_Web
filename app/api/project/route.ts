@@ -72,7 +72,7 @@ export async function PUT(request: NextRequest) {
             "description": aboutProject
         };
         const res = await projectService.updateProjectById(projectData, projectId, cookies());
-        if (res.success) return NextResponse.json({ data: res.data }, { status: 200 });
+        return NextResponse.json({ data: res }, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ error: error.error || error.toString() }, { status: 500 })
     }
