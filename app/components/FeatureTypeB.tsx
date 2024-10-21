@@ -8,6 +8,7 @@ interface FeatureTypeBProps {
 
 export default async function FeatureTypeB(props: FeatureTypeBProps) {
     const project = props.project;
+    const projectName = project.name;
 
     return (
         <section className="homepage-feature-project-box relative w-full bg-slate-100">
@@ -17,9 +18,9 @@ export default async function FeatureTypeB(props: FeatureTypeBProps) {
                 <div className="font-light">
                     As we explore the desolate surface of the moon and experience its tranquil, uninhabited environment, our project aims to transform the shopping experience for our customers by redefining the physical space. Located in Tsuen Wan&apos;s Citywalk, this project was commissioned by INTIQUE, a women&apos;s fashion brand with a focus on retro fashion.
                 </div>
-                <div className="white-neumor-btn flex items-center gap-3 w-fit rounded-full px-10 py-4">
+                <a href={`/projects/${projectName}`} className="white-neumor-btn flex items-center gap-3 w-fit rounded-full px-10 py-4">
                     EXPLORER<FontAwesomeIcon icon={faArrowRight} />
-                </div>
+                </a>
             </div>
             <div className="absolute inset-y-10 left-1/2 w-2/5 flex pl-32 img-shadow">
                 <img className="object-cover aspect-[3/4]" src={project.cover[0]?.url} alt="Home Page Feature Projects Cover Image" loading="lazy" />

@@ -12,14 +12,16 @@ interface ProjectDetailProps {
 export default async function ProjectDetail(props: ProjectDetailProps) {
     const projectName = props.params.name.replaceAll("%20", " ");
     const projectInfo = await getProjectByName(projectName);
-    const projectId = projectInfo?.id;
+    const projectId = await projectInfo?.id;
     const relatedImages = await getProjectImages(projectId);
-    const projectImages = relatedImages?.images;
+    const projectCovers = await relatedImages?.covers;
+    const projectImages = await relatedImages?.images;
 
     return (
         <div>
             <ScrollEffect
                 projectName={projectName}
+                projectCovers={projectCovers}
                 projectImages={projectImages} />
         </div>
     );

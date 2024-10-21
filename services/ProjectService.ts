@@ -143,7 +143,7 @@ class ProjectService {
         };
         try {
             const record = await pb.collection('projects').update(projectData.id, data);
-            return record;
+            return { data: record, success: true };
         } catch (error: any) {
             return { error: error.message };
         }

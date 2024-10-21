@@ -10,17 +10,17 @@ export const updateFeatureProject = async (data: any) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ data }),
+            cache: 'no-cache',
         });
-        revalidateTag('update-project');
         if (!res.ok) {
             const errorData = await res.json();
             projectUpdateFailedToast();
             throw new Error(errorData.error || "Project update failed.");
         }
-        const resData = await res.json()
+        const resData = await res.json();
         data = resData.data;
         return data;
-    } catch (error) {
-        throw error;
+    } catch (error: any) {
+        throw new Error(error.message);
     }
 }

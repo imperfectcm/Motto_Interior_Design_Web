@@ -3,6 +3,20 @@ export const serverGetProjectsWithCovers = async () => {
     try {
         const res = await fetch(`${process.env.WEB_URL}/api/all-projects-with-covers`, {
             cache: 'no-store',
+        })
+        if (!res.ok) return ({ message: "Failed to get project cover images." })
+        const data = await res.json();
+        return data.data || [];
+    } catch (error: any) {
+        console.log(error.message);
+        return [];
+    }
+}
+
+export const clientGetProjectsWithCovers = async () => {
+    try {
+        const res = await fetch("/api/all-projects-with-covers", {
+            cache: 'no-store',
             next: {
                 tags: ['create-project', 'update-project'],
             },
@@ -15,7 +29,6 @@ export const serverGetProjectsWithCovers = async () => {
         return [];
     }
 }
-
 
 export const getLastDisplayId = async () => {
     try {
@@ -32,7 +45,6 @@ export const getLastDisplayId = async () => {
     }
 }
 
-
 export const getProjectByName = async (projectName: string) => {
     try {
         const res = await fetch(`${process.env.WEB_URL}/api/project?projectName=${projectName}`, { cache: 'no-store' });
@@ -44,6 +56,6 @@ export const getProjectByName = async (projectName: string) => {
         const data = response.data;
         return data;
     } catch (error: any) {
-        throw error;
+        throw new Error(error.message);
     }
 }

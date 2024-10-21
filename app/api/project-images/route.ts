@@ -11,13 +11,12 @@ export async function GET(request: NextRequest) {
         if (!projectId) return NextResponse.json({ message: "No project id is provided." }, { status: 404 });
 
         const coverRes = await projectService.getProjectCover(projectId);
-        if (!coverRes) return NextResponse.json({ message: "Failed to get cover image by project name." }, { status: 404 });
         imagelist.covers = coverRes;
 
         const imageRes = await projectService.getProjectImages(projectId);
-        if (!imageRes) return NextResponse.json({ message: "Failed to get images by project name." }, { status: 404 });
         imagelist.images = imageRes;
 
+        if (!coverRes && !imageRes) return NextResponse.json({ message: "Failed to get images by project name." }, { status: 404 });
         return NextResponse.json({ data: imagelist }, { status: 200 });
 
     } catch (error: any) {

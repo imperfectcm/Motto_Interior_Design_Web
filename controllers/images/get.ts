@@ -24,6 +24,6 @@ export const getProjectImages = async (projectId: string) => {
         const data = response.data;
         return data;
     } catch (error: any) {
-        throw error;
+        throw new Error(error.message);
     }
 }

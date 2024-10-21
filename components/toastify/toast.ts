@@ -1,12 +1,11 @@
 
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { useRouter } from "next/navigation";
 import { Flip, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 export const projectCreateFailedToast = () => toast.error("😭 Create project failed", {
     position: "top-center",
-    autoClose: 4000,
+    autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -18,7 +17,7 @@ export const projectCreateFailedToast = () => toast.error("😭 Create project f
 
 export const uploadImagesToDBFailedToast = () => toast.error("😭 Upload images to database failed", {
     position: "top-center",
-    autoClose: 4000,
+    autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -40,7 +39,7 @@ export const projectCreateSuccessfully = async (router: AppRouterInstance) => {
 
 export const projectUpdateFailedToast = () => toast.error("😭 Update project failed", {
     position: "top-center",
-    autoClose: 4000,
+    autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -69,3 +68,25 @@ export const projectDeleteSuccessfully = async (router: AppRouterInstance) => {
         onClose: () => router.push("/admin")
     })
 }
+
+export const setFeatureProjectSuccessfully = async () => {
+    toast("Set feature projects successfully", {
+        position: "top-center",
+        autoClose: 3000,
+        pauseOnHover: false,
+        transition: Flip,
+        onClose: () => location.reload()
+    })
+}
+
+export const setFeatureProjectFailedToast = () => toast.error("😭 Set feature projects failed", {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+    transition: Flip,
+});
