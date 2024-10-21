@@ -129,7 +129,7 @@ class ProjectService {
         };
         try {
             const record = await pb.collection('projects').update(projectId, data);
-            return record;
+            return { data: record, success: true };
         } catch (error: any) {
             return { error: error.message };
         }
@@ -171,24 +171,13 @@ class ProjectService {
         }
         try {
             const record = await pb.collection('images').create(imageData, { requestKey: null });
-            return record;
+            return { data: record, success: true };
         } catch (error: any) {
             return { error: error.message };
         }
     }
 
-    async deleteImageFromDB(imageId: string, cookies: ReadonlyRequestCookies) {
-        const pbAuthData = authService.getUser(cookies);
-        try {
-            await pb.collection('images').delete(imageId, { requestKey: null });
-            return true;
-        } catch (error: any) {
-            return { error: error.message };
-        }
-    }
-
-
-    async uploadImagesToDB(projectId: string, imageUrl: string, imageKey: string, sequence: number, cookies: ReadonlyRequestCookies) {
+    async uploadImages(projectId: string, imageUrl: string, imageKey: string, sequence: number, cookies: ReadonlyRequestCookies) {
         const pbAuthData = authService.getUser(cookies);
         const imageData = {
             "name": projectId,
@@ -199,9 +188,19 @@ class ProjectService {
         }
         try {
             const record = await pb.collection('images').create(imageData, { requestKey: null });
-            return record;
+            return { data: record, success: true };
         } catch (error: any) {
             throw new Error(error.message);
+        }
+    }
+
+    async deleteImageFromDB(imageId: string, cookies: ReadonlyRequestCookies) {
+        const pbAuthData = authService.getUser(cookies);
+        try {
+            await pb.collection('images').delete(imageId, { requestKey: null });
+            return { data: "image is deleted", success: true };
+        } catch (error: any) {
+            return { error: error.message };
         }
     }
 

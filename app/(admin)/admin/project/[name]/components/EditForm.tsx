@@ -7,8 +7,6 @@ import { useState } from "react";
 import { ImageListType } from "react-images-uploading";
 import EditCoverContainer from "./EditCoverContainer";
 import EditImageContainer from "./EditImageContainer";
-import { uploadAction } from "../../../../../../components/s3Actions/upload/uploadAction";
-import { Flip, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { UpdateProjectBtn } from "./UpdateProjectBtn";
 import { useRouter } from "next/navigation";
@@ -17,7 +15,8 @@ import withReactContent from 'sweetalert2-react-content'
 import { deleteImageFromS3 } from "../../../../../../components/s3Actions/delete/deleteImageAction";
 import { projectDeleteSuccessfully, projectUpdateFailedToast, projectUpdateSuccessfully, uploadImagesToDBFailedToast } from "@/components/toastify/toast";
 import uploadMultiImages from "@/components/s3Actions/upload/uploadMultiImages";
-import { uploadCoverImages } from "@/controllers/images";
+import { updateProjectToDB } from "@/controllers/projects";
+import { deleteImages, uploadImages } from "@/controllers/images";
 
 interface EditFormProps {
     projectInfo: any;
@@ -26,90 +25,28 @@ interface EditFormProps {
 
 const EditForm = (props: EditFormProps) => {
     const router = useRouter();
-    const projectInfo = props.projectInfo;
-    const relatedImages = props.relatedImages;
+    const { projectInfo, relatedImages } = props;
     const projectId: string = projectInfo.id;
 
-    const [projectName, setProjectName] = useState<string>(projectInfo.name)
-    const [coverImages, setCoverImages] = useState<ImageListType>(relatedImages.covers);
+    const [covers, setCovers] = useState<ImageListType>(relatedImages.covers);
     const [images, setImages] = useState<ImageListType>(relatedImages.images);
     const [isEditCovers, setIsEditCovers] = useState<boolean>(false);
     const [isEditImages, setIsEditImages] = useState<boolean>(false);
-    const [swalProps, setSwalProps] = useState({});
 
-    const uploadProjectImagesToDB = async (imageUrlList: string[], imageKeyList: string[], projectId: string) => {
-        if (!imageUrlList.length) return;
-        try {
-            const res = await fetch("/api/project-images", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    "projectId": projectId,
-                    "imageUrlList": imageUrlList,
-                    "imageKeyList": imageKeyList,
-                }),
-            });
-            if (!res.ok) {
-                const errorData = await res.json();
-                uploadImagesToDBFailedToast();
-                throw new Error(errorData.error || "Upload project image to DB failed.")
-            }
-            const resData = await res.json()
-            return resData.message;
-        } catch (error) {
-            uploadImagesToDBFailedToast();
-            throw error;
-        }
+    const checkUnwantedImage = async (oldImages: string[], newImages: any[]): Promise<any[]> => {
+        const newImageSet = new Set(newImages);
+        return new Promise((resolve, reject) => {
+            const unwantedImages = oldImages.filter(image => !newImageSet.has(image));
+            resolve(unwantedImages);
+        });
     }
-
-    const deleteImageFromDB = async (imageList: any[]) => {
-        if (!imageList.length) return;
-        try {
-            const res = await fetch("/api/project-images", {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    imageList: imageList
-                }),
-            });
-            if (!res.ok) {
-                const errorData = await res.json();
-                uploadImagesToDBFailedToast();
-                throw new Error(errorData.error || "Project images delete failed.");
-            }
-            const response = await res.json()
-            return response.message;
-        } catch (error) {
-            throw error;
-        }
+    const checkNewImage = async (oldImages: string[], newImages: any[]): Promise<any[]> => {
+        const oldImageSet = new Set(oldImages);
+        return new Promise((resolve, reject) => {
+            const newAddImages = newImages.filter(image => !oldImageSet.has(image));
+            resolve(newAddImages);
+        });
     }
-
-    const updateProjectToDB = async (data: projectFormData, projectId: string) => {
-        try {
-            const res = await fetch("/api/project", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ data, projectId }),
-            });
-            if (!res.ok) {
-                const errorData = await res.json();
-                projectUpdateFailedToast();
-                throw new Error(errorData.error || "Project update failed.");
-            }
-            const resData = await res.json()
-            projectId = resData.data.id;
-            return projectId;
-        } catch (error) {
-            throw error;
-        }
-    }
-
     const {
         register,
         handleSubmit,
@@ -118,50 +55,72 @@ const EditForm = (props: EditFormProps) => {
             isValid,
             isSubmitting
         } } = useForm<projectFormData>();
-
     const handleFormSubmit = async (data: projectFormData) => {
         if (!isValid) return;
         try {
-            if (coverImages != relatedImages.covers || projectName != projectInfo.name) {
-                for await (const oldCoverImage of relatedImages.covers) {
+            // handle covers
+            let unwantedCovers: any[] = [];
+            let newAddCovers: any[] = [];
+            await checkUnwantedImage(relatedImages.covers, covers)
+                .then(unwnatedImgs => {
+                    unwantedCovers = unwnatedImgs;
+                })
+            await checkNewImage(relatedImages.covers, covers)
+                .then(newImgs => {
+                    newAddCovers = newImgs;
+                })
+            if (unwantedCovers.length > 0) {
+                for await (const item of unwantedCovers) {
                     try {
-                        await deleteImageFromS3(oldCoverImage.key);
-                        await deleteImageFromDB(relatedImages.covers)
-                    } catch (error) {
-                        throw error;
-                    }
-                }
-                if (coverImages.length > 0) {
-                    try {
-                        const imageInfo: { imageUrlList: string[], imageKeyList: string[] } | undefined = await uploadMultiImages(coverImages, projectName);
-                        if (imageInfo) await uploadCoverImages(imageInfo.imageUrlList, imageInfo.imageKeyList, projectId);
-                    } catch (error) {
-                        throw error;
+                        await deleteImageFromS3(item.key);
+                        await deleteImages([item]);
+                    } catch (error: any) {
+                        console.log(error.message);
                     }
                 }
             }
-            if (images != relatedImages.images || projectName != projectInfo.name) {
-                for await (const oldImage of relatedImages.images) {
-                    try {
-                        await deleteImageFromS3(oldImage.key);
-                        await deleteImageFromDB(relatedImages.images)
-                    } catch (error: any) {
-                        throw new Error(error.message);
-                    }
+            if (newAddCovers.length > 0) {
+                try {
+                    const imageInfo: { imageUrlList: string[], imageKeyList: string[] } | undefined = await uploadMultiImages(newAddCovers, projectId);
+                    if (imageInfo) await uploadImages(imageInfo.imageUrlList, imageInfo.imageKeyList, projectId, "cover");
+                } catch (error: any) {
+                    console.log(error.message);
                 }
-                if (images.length > 0) {
+            }
+            // handle images
+            let unwantedImages: any[] = [];
+            let newAddImages: any[] = [];
+            await checkUnwantedImage(relatedImages.images, images)
+                .then(unwnatedImgs => {
+                    unwantedImages = unwnatedImgs;
+                })
+            await checkNewImage(relatedImages.images, images)
+                .then(newImgs => {
+                    newAddImages = newImgs;
+                })
+            if (unwantedImages.length > 0) {
+                for await (const item of unwantedImages) {
                     try {
-                        const imageInfo: { imageUrlList: string[], imageKeyList: string[] } | undefined = await uploadMultiImages(images, projectName);
-                        if (imageInfo) await uploadProjectImagesToDB(imageInfo.imageUrlList, imageInfo.imageKeyList, projectId);
+                        await deleteImageFromS3(item.key);
+                        await deleteImages([item]);
                     } catch (error: any) {
-                        throw new Error(error.message);
+                        console.log(error.message);
                     }
                 }
             }
+            if (newAddImages.length > 0) {
+                try {
+                    const imageInfo: { imageUrlList: string[], imageKeyList: string[] } | undefined = await uploadMultiImages(newAddImages, projectId);
+                    if (imageInfo) await uploadImages(imageInfo.imageUrlList, imageInfo.imageKeyList, projectId);
+                } catch (error: any) {
+                    console.log(error.message);
+                }
+            }
+            // update project info
             await updateProjectToDB(data, projectId);
             await projectUpdateSuccessfully(router);
         } catch (error: any) {
-            throw new Error(error.message);
+            console.log(error.message);
         }
     }
 
@@ -205,7 +164,7 @@ const EditForm = (props: EditFormProps) => {
                 await relatedImages.covers.map(async (oldCoverImage: any) => {
                     try {
                         await deleteImageFromS3(oldCoverImage.key);
-                        await deleteImageFromDB(relatedImages.covers)
+                        await deleteImages(relatedImages.covers)
                     } catch (error) {
                         throw error;
                     }
@@ -215,7 +174,7 @@ const EditForm = (props: EditFormProps) => {
                 await relatedImages.images.map(async (oldImage: any) => {
                     try {
                         await deleteImageFromS3(oldImage.key);
-                        await deleteImageFromDB(relatedImages.images)
+                        await deleteImages(relatedImages.images)
                     } catch (error) {
                         throw error;
                     }
@@ -228,15 +187,14 @@ const EditForm = (props: EditFormProps) => {
         }
     }
 
-
     return (
         <main className="flex flex-col justify-center items-center py-10">
             <div className="flex flex-col w-9/12 gap-y-5">
                 <EditCoverContainer
                     isEditCovers={isEditCovers}
                     setIsEditCovers={setIsEditCovers}
-                    coverImages={coverImages}
-                    setCoverImages={setCoverImages} />
+                    coverImages={covers}
+                    setCoverImages={setCovers} />
 
                 <EditImageContainer
                     isEditImages={isEditImages}
@@ -250,7 +208,7 @@ const EditForm = (props: EditFormProps) => {
                     <label>Project name (專案名稱)</label>
                     <input
                         className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
-                        {...register("projectName", { required: true, value: projectInfo.name, onChange: (e) => setProjectName(e.target.value) })} />
+                        {...register("projectName", { required: true, value: projectInfo.name })} />
                     <ErrorMessage errors={errors} name="projectName" />
                     <ErrorMessage
                         errors={errors}
