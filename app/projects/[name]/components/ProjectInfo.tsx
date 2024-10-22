@@ -1,5 +1,4 @@
 
-
 interface ProjectInfoProps {
     projectInfo: any;
 }

@@ -1,17 +1,14 @@
-import React from "react";
 
-interface AllProjectsProps {
-    // names: string[];
-    // coverPhotos: string[];
-}
+import { serverGetProjectsWithCovers } from "@/controllers/projects/get";
+import { ProjectGallery } from "./components/ProjectGallery";
+import { HomepageBtn } from "./components/HomepageBtn";
 
-export default function AllProjects(props: AllProjectsProps) {
-    // const projectName = props.names;
-    const test = "test";
-
+export default async function AllProjects() {
+    const projectList = await serverGetProjectsWithCovers();
     return (
-        <div>
-            <h1>All Projects Page: {test}</h1>
-        </div>
-    );
+        <main className="p-5">
+            <ProjectGallery projectList={projectList} />
+            <HomepageBtn />
+        </main>
+    )
 }

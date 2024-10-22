@@ -47,7 +47,7 @@ const CreateProjectForm = (props: CreateProjectFormProps) => {
     const handleFormSubmit = async (data: projectFormData) => {
         if (!isValid) return;
         try {
-            const projectId: string = await creatProjectToDB(data);
+            const projectId: string = await creatProjectToDB(data, );
             const coverList = await uploadMultiImages(coverImages, projectId);
             const imageList = await uploadMultiImages(images, projectId);
             if (coverList) await uploadImages(coverList.imageUrlList, coverList.imageKeyList, projectId, "cover");

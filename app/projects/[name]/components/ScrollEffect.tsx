@@ -2,10 +2,8 @@
 
 import style from "@/components/CSS/ScrollEffect.module.css"
 import Image from 'next/image'
-import { useCallback, useEffect, useState } from "react";
 import { useHorizontalScroll } from "./horizontalScroll";
 import ProjectInfo from "./ProjectInfo";
-
 
 interface ScrollEffectProps {
     projectInfo: any;

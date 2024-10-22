@@ -140,6 +140,16 @@ body {
   height: 70vh;
 }
 
+.hover-project-title {
+  color: rgb(var(--off-white-rgb));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 5%;
+  background: linear-gradient(to bottom, transparent 0 50%, rgba(0, 0, 0, 0.8) 90%);
+}
+
 /* project detail page */
 .track-title {
   display: flex;
