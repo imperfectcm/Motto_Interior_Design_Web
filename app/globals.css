@@ -141,17 +141,27 @@ body {
 }
 
 /* project detail page */
+.track-title {
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  top: 10%;
+  position: relative;
+  min-width: 15vw;
+  max-width: 20vw;
+}
+
 @keyframes scrollEffect {
   from {
-      opacity: 0;
-      scale: 0.5;
-      transform-origin: bottom left;
+    opacity: 0;
+    scale: 0.5;
+    transform-origin: bottom left;
   }
 
   to {
-      opacity: 1;
-      scale: 1;
-      transform-origin: bottom left;
+    opacity: 1;
+    scale: 1;
+    transform-origin: bottom left;
   }
 }
 
@@ -198,7 +208,7 @@ body {
 }
 
 .track-after {
-  width: 12.5vw;
+  width: 30vw;
 }
 
 /* loading effect */

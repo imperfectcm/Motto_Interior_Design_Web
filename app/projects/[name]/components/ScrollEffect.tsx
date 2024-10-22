@@ -4,12 +4,14 @@ import style from "@/components/CSS/ScrollEffect.module.css"
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from "react";
 import { useHorizontalScroll } from "./horizontalScroll";
+import ProjectInfo from "./ProjectInfo";
 
 
 interface ScrollEffectProps {
+    projectInfo: any;
     projectName: string;
-    projectCovers: any[];
-    projectImages: any[];
+    projectCovers?: any[];
+    projectImages?: any[];
 }
 
 export function ScrollEffect(props: ScrollEffectProps) {
@@ -20,15 +22,20 @@ export function ScrollEffect(props: ScrollEffectProps) {
     return (
         <div ref={scrollRef} className="track-container scroll-auto">
             <div className="track-pre"></div>
-            {projectImages.length > 0 && projectImages.map((image, index) => (
-                <div key={index} className="track-img ">
-                    <img
-                        src={image.url}
-                        alt={`Project ${props.projectName} ${index + 1}`} />
-                </div>
-            ))}
+            <ProjectInfo projectInfo={props.projectInfo} />
+            {
+                projectImages && projectImages.length > 0 &&
+                projectImages.map((image, index) => (
+                    <div key={index} className="track-img">
+                        <img
+                            src={image.url}
+                            alt={`Project ${props.projectName} ${index + 1}`}
+                        />
+                    </div>
+                ))
+            }
             <div className="track-after"></div>
-        </div>
+        </div >
     );
 }
 

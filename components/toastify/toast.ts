@@ -90,3 +90,15 @@ export const setFeatureProjectFailedToast = () => toast.error("😭 Set feature 
     theme: "dark",
     transition: Flip,
 });
+
+export const loginFailedToast = () => toast.error("🥲 Fail to authenticate user.", {
+    position: "top-center",
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+    transition: Flip,
+});

@@ -13,7 +13,7 @@ class AuthService {
         try {
             const result = await pb.admins.authWithPassword(email, password);
             if (!result?.token) { throw new Error("Invalid email or password.") }
-            return result;
+            return { data: result, success: true };
         } catch (error: any) {
             return { error: error.message };
         }

@@ -18,11 +18,14 @@ export default async function ProjectDetail(props: ProjectDetailProps) {
     const projectImages = await relatedImages?.images;
 
     return (
-        <div>
-            <ScrollEffect
-                projectName={projectName}
-                projectCovers={projectCovers}
-                projectImages={projectImages} />
-        </div>
+        <main>
+            {relatedImages &&
+                <ScrollEffect
+                    projectInfo={projectInfo}
+                    projectName={projectName}
+                    projectCovers={projectCovers}
+                    projectImages={projectImages} />
+            }
+        </main>
     );
 }

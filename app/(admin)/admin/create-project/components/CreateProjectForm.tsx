@@ -12,7 +12,7 @@ import { CreateProjectBtn } from "./CreateProjectBtn";
 import creatProjectToDB from "./createProjectToDB";
 import uploadMultiImages from "@/components/s3Actions/upload/uploadMultiImages";
 import { projectCreateSuccessfully, projectCreateFailedToast } from "@/components/toastify/toast";
-import { uploadCoverImages, uploadImages } from "@/controllers/images";
+import { uploadImages } from "@/controllers/images";
 
 interface CreateProjectFormProps {
     lastDisplayId: number;
@@ -50,7 +50,7 @@ const CreateProjectForm = (props: CreateProjectFormProps) => {
             const projectId: string = await creatProjectToDB(data);
             const coverList = await uploadMultiImages(coverImages, projectId);
             const imageList = await uploadMultiImages(images, projectId);
-            if (coverList) await uploadCoverImages(coverList.imageUrlList, coverList.imageKeyList, projectId);
+            if (coverList) await uploadImages(coverList.imageUrlList, coverList.imageKeyList, projectId, "cover");
             if (imageList) await uploadImages(imageList.imageUrlList, imageList.imageKeyList, projectId);
             await projectCreateSuccessfully(router);
         } catch (error: any) {
@@ -145,7 +145,7 @@ const CreateProjectForm = (props: CreateProjectFormProps) => {
                 </div>
                 <div className="flex flex-col">
                     <label>About project (專案介紹)</label>
-                    <textarea className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
+                    <textarea className="p-1 bg-inherit border-b-2 border-slate-500 outline-0 whitespace-pre-wrap"
                         {...register("aboutProject")} />
                 </div>
                 <div className="flex flex-col">

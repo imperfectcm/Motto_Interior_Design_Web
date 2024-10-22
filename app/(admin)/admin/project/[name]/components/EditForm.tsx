@@ -279,7 +279,7 @@ const EditForm = (props: EditFormProps) => {
                 </div>
                 <div className="flex flex-col">
                     <label>About project (專案介紹)</label>
-                    <textarea className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
+                    <textarea className="p-1 bg-inherit border-b-2 border-slate-500 outline-0 whitespace-pre-wrap"
                         {...register("aboutProject", { value: projectInfo.description })} />
                 </div>
                 <UpdateProjectBtn
