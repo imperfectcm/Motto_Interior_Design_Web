@@ -5,6 +5,7 @@ import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { ToastContainer } from "react-toastify";
+import Navbar from "./components/Navbar";
 
 
 config.autoAddCss = false;
@@ -28,8 +29,9 @@ export default function RootLayout(props: RootLayoutProps) {
         <title>Motto Interior Design</title>
       </head>
       <body>
-      <ToastContainer />
-          {props.children}
+        <ToastContainer />
+        <Navbar />
+        {props.children}
       </body>
     </html>
   );

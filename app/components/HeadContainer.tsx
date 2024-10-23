@@ -14,6 +14,7 @@ export default function HeadContainer() {
                     layout="fill"
                     objectFit="cover"
                     objectPosition="center"
+                    className="homepage-poster"
                 />
             </div>
         </section>

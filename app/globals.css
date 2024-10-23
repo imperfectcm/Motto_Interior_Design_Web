@@ -35,8 +35,38 @@ body {
   background-color: rgb(var(--off-white-rgb));
 }
 
-/* scrollbar */
+/* navbar */
+.nav-item {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(var(--motto-blue-rgb));
+  font-weight: 500;
+  letter-spacing: 0.05rem;
+}
 
+.nav-bg {
+  background: rgb(var(--off-white-rgb));
+}
+
+.nav-arrow {
+  margin-left: 1rem;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(0.05rem);
+  transition-duration: 200ms;
+}
+
+.nav-item:hover .nav-arrow {
+  opacity: 1;
+}
+
+/* homepage */
+.homepage-poster {
+  transform: translateY(-7rem);
+}
+
+/* scrollbar */
 .homepage-cover-img-box {
   background-color: rgb(var(--off-white-rgb));
   height: 150vh;
