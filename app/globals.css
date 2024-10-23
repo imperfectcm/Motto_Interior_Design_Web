@@ -41,8 +41,8 @@ body {
   justify-content: center;
   align-items: center;
   color: rgb(var(--motto-blue-rgb));
-  font-weight: 500;
-  letter-spacing: 0.05rem;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
 }
 
 .nav-bg {
