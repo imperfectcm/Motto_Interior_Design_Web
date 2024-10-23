@@ -7,7 +7,6 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./components/Navbar";
 
-
 config.autoAddCss = false;
 
 const inter = Inter({ subsets: ["latin"] });
