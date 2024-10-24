@@ -20,14 +20,14 @@ export default function HeadContainer() {
             <motion.div className="z-10 absolute top-1/2 end-[41%] text-5xl font-medium text-right"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                transition={{ duration: 1.5, delay: 0.2, ease: 'easeOut' }}>
+                transition={{ duration: 1.5, delay: 0, ease: 'easeOut' }}>
                 Interior Design
             </motion.div>
-            <motion.div className="z-10 absolute top-2/3 end-1/3 text-3xl font-medium"
+            <motion.div className="z-10 absolute top-2/3 end-[41%] text-2xl font-medium"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                transition={{ duration: 1.5, delay: 0.2, ease: 'easeOut' }}>
-                Some information will be typed here ...
+                transition={{ duration: 1.5, delay: 0, ease: 'easeOut' }}>
+                Choices of lifestyle. Not just design.
             </motion.div>
             <div className="z-0 fixed h-screen w-2/5 right-0">
                 <Image

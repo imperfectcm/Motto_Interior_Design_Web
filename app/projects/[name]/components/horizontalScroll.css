@@ -9,13 +9,13 @@ body::-webkit-scrollbar {
 .info {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     height: 80%;
-    top: 10%;
     position: relative;
     min-width: 15vw;
     max-width: 20vw;
     margin-left: 2dvw;
-  }
+}
 
 .image-gallery {
     height: 100vh;
@@ -23,7 +23,7 @@ body::-webkit-scrollbar {
     position: sticky;
     top: 0;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: flex-start;
     overflow: hidden;
 }
@@ -40,5 +40,5 @@ body::-webkit-scrollbar {
 }
 
 .image {
-    height: calc(100vh - 7rem);
+    height: calc(100vh - 14rem);
 }
