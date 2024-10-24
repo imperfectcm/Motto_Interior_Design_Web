@@ -1,3 +1,4 @@
+"use client";
 
 interface ProjectInfoProps {
     projectInfo: any;
@@ -6,7 +7,7 @@ interface ProjectInfoProps {
 const ProjectInfo = (props: ProjectInfoProps) => {
     const projectInfo = props.projectInfo;
     return (
-        <div className="track-title pt-8 mr-8 gap-4">
+        <div className="info pt-8 mr-8 gap-4">
             <div className="text-3xl font-bold">
                 <div>{projectInfo.name}</div>
             </div>

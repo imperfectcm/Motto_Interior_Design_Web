@@ -1,7 +1,8 @@
-import { ScrollEffect } from "@/app/projects/[name]/components/ScrollEffect";
+
 import { getProjectImages } from "@/controllers/images/get";
 import { getProjectByName } from "@/controllers/projects/get";
 import React from "react";
+import HorizontalGallery from "./components/HorizontalGallery";
 
 interface ProjectDetailProps {
     params: {
@@ -18,9 +19,9 @@ export default async function ProjectDetail(props: ProjectDetailProps) {
     const projectImages = await relatedImages?.images;
 
     return (
-        <main>
+        <main className="single-project-gallery">
             {relatedImages &&
-                <ScrollEffect
+                <HorizontalGallery
                     projectInfo={projectInfo}
                     projectName={projectName}
                     projectCovers={projectCovers}

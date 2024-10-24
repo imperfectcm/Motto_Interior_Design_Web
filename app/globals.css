@@ -180,16 +180,7 @@ body {
   background: linear-gradient(to bottom, transparent 0 50%, rgba(0, 0, 0, 0.8) 90%);
 }
 
-/* project detail page */
-.track-title {
-  display: flex;
-  flex-direction: column;
-  height: 80%;
-  top: 10%;
-  position: relative;
-  min-width: 15vw;
-  max-width: 20vw;
-}
+/* project detail page -- NOT IN USED*/
 
 @keyframes scrollEffect {
   from {
@@ -205,17 +196,21 @@ body {
   }
 }
 
+.single-project-gallery {
+  height: calc(100vh - 7rem);
+}
+
 .track-container {
-  display: grid;
   display: flex;
   column-gap: 1rem;
-  overflow-x: scroll;
+  overflow-x: auto;
   /* scroll-behavior: smooth; */
   width: 100vw;
   height: 100vh;
   transform: translateY(-7rem);
 }
 
+.single-project-gallery::-webkit-scrollbar,
 .track-container::-webkit-scrollbar {
   display: none;
 }

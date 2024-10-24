@@ -1,0 +1,50 @@
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-bg {
+    position: fixed;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    top: 10%;
+    position: relative;
+    min-width: 15vw;
+    max-width: 20vw;
+    margin-left: 2dvw;
+  }
+
+.image-gallery {
+    height: 100vh;
+    width: max-content;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.image-track {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2rem;
+    background: rgb(var(--off-white-rgb));
+}
+
+.imgAni {
+    transform-origin: bottom;
+}
+
+.image-column {
+    height: calc(100vh - 7rem);
+}
+
+.image-column img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
