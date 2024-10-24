@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url(https://db.onlinewebfonts.com/c/694fc852c21b98bcd2b807168bc8fd94?family=Room+Bold);
+
+@font-face {
+  font-family: "Room Bold";
+  src: url("https://db.onlinewebfonts.com/t/694fc852c21b98bcd2b807168bc8fd94.eot");
+  src: url("https://db.onlinewebfonts.com/t/694fc852c21b98bcd2b807168bc8fd94.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/694fc852c21b98bcd2b807168bc8fd94.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/694fc852c21b98bcd2b807168bc8fd94.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/694fc852c21b98bcd2b807168bc8fd94.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/694fc852c21b98bcd2b807168bc8fd94.svg#Room Bold")format("svg");
+}
+
 :root {
   --foreground-rgb: 70, 70, 70;
   --off-white-rgb: 248, 240, 227;
@@ -43,6 +55,10 @@ body {
   color: rgb(var(--motto-blue-rgb));
   font-weight: 400;
   letter-spacing: 0.03rem;
+}
+
+.motto-name {
+  font-family: "Room Bold";
 }
 
 .nav-bg {
