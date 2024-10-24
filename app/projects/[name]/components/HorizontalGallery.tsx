@@ -1,9 +1,8 @@
 'use client'
 
-import React, { useEffect } from "react";
+import React from "react";
 import "./horizontalScroll.css"
-import { motion, useTransform, useScroll, useViewportScroll, useCycle, useMotionValue, useAnimation, useInView, useSpring } from "framer-motion";
-// import { useInView } from 'react-intersection-observer';
+import { motion, useTransform, useScroll, useSpring } from "framer-motion";
 import { useRef } from "react";
 import ImageContainer from "./ImageContainer";
 import ProjectInfo from "./ProjectInfo";

@@ -25,19 +25,19 @@ const Contact: FC = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="grid gap-6 md:grid-cols-2">
+    <form className="flex flex-col w-1/2 gap-y-10" onSubmit={handleSubmit(onSubmit)}>
+      <div className="grid gap-5 md:grid-cols-3">
 
-        <div className='mb-5'>
+        <div>
           <label
             htmlFor='title'
-            className='block mb-2 text-sm font-medium text-gray-900'
+            className='block mb-2 text-sm font-medium'
           >
             Title
           </label>
           <select
             defaultValue="Title"
-            className="bg-gray-50 border border-gray-300 p-3 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            className="p-2 text-sm rounded-lg outline-0 block w-full bg-slate-600 text-slate-200"
             {...register('title', { required: true })}
             disabled={submitting}>
             <option value="Title" disabled>Title</option>
@@ -47,62 +47,62 @@ const Contact: FC = () => {
           </select>
         </div>
 
-        <div className='mb-5'>
+        <div className='col-span-2'>
           <label
             htmlFor='last-name'
-            className='block mb-2 text-sm font-medium text-gray-900'
+            className='block mb-2 text-sm font-medium'
           >
             Last Name
           </label>
           <input
             type='text'
             placeholder='Last Name'
-            className='block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500'
+            className='w-full p-1 bg-inherit border-b-2 border-slate-500 outline-0'
             {...register('lastName', { required: true })}
             disabled={submitting}
           />
         </div>
       </div>
-      <div className='mb-5'>
+      <div>
         <label
           htmlFor='phone'
-          className='block mb-2 text-sm font-medium text-gray-900'
+          className='block mb-2 text-sm font-medium'
         >
           Phone
         </label>
         <input
           type='text'
           placeholder='Phone'
-          className='block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500'
+          className='w-full p-1 bg-inherit border-b-2 border-slate-500 outline-0'
           {...register('phone', { required: true })}
           disabled={submitting}
         />
       </div>
 
-      <div className='mb-5'>
+      <div>
         <label
           htmlFor='address'
-          className='block mb-2 text-sm font-medium text-gray-900'
+          className='block mb-2 text-sm font-medium'
         >
           Address
         </label>
         <textarea
           placeholder='Address'
-          className='block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500'
+          className='w-full p-1 bg-inherit border-b-2 border-slate-500 outline-0'
           {...register('address')}
           disabled={submitting}
         />
       </div>
 
-      <div className='mb-5'>
+      <div>
         <label
           htmlFor='unit-scale'
-          className='block mb-2 text-sm font-medium text-gray-900'
+          className='block mb-2 text-sm font-medium'
         >
           Unit Scale
         </label>
         <select
-          className="bg-gray-50 border border-gray-300 p-3 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="p-2 text-sm rounded-lg outline-0 block w-full bg-slate-600 text-slate-200"
           {...register('unitScale', { required: true })}
           disabled={submitting}
           defaultValue="Unit Scale"
@@ -114,15 +114,15 @@ const Contact: FC = () => {
         </select>
       </div>
 
-      <div className='mb-5'>
+      <div>
         <label
           htmlFor='situation'
-          className='block mb-2 text-sm font-medium text-gray-900'
+          className='block mb-2 text-sm font-medium'
         >
           Situation
         </label>
         <select
-          className="bg-gray-50 border border-gray-300 p-3 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="p-2 text-sm rounded-lg outline-0 block w-full bg-slate-600 text-slate-200"
           {...register('situation', { required: true })}
           disabled={submitting}
           defaultValue="Situation"
@@ -133,23 +133,23 @@ const Contact: FC = () => {
         </select>
       </div>
 
-      <div className='mb-5'>
+      <div>
         <label
           htmlFor='message'
-          className='block mb-2 text-sm font-medium text-gray-900'
+          className='block mb-2 text-sm font-medium'
         >
           Message
         </label>
         <textarea
           placeholder='Message'
-          className='block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500'
+          className='w-full p-1 bg-inherit border-b-2 border-slate-500 outline-0'
           {...register('message')}
           disabled={submitting}
         />
       </div>
 
-      <div className="flex items-center space-x-4">
-        <button className='hover:shadow-form rounded-md bg-purple-500 py-3 px-8 text-base font-semibold text-white outline-none'>
+      <div className="mt-5 flex justify-center items-center">
+        <button className='beige-neumor-btn rounded-full px-8 py-2'>
           Submit
         </button>
         <DNA

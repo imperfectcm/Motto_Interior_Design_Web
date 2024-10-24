@@ -2,7 +2,8 @@
 
 // import { promises as fs } from 'fs';
 import Image from 'next/image';
-import { motion } from "framer-motion";
+import { motion, useTransform, useScroll, useSpring } from "framer-motion";
+import { useRef } from "react";
 
 interface AllProjectsProps {
     projectList: any[];
@@ -11,11 +12,14 @@ interface AllProjectsProps {
 export default function AllProjects(props: AllProjectsProps) {
     const projectList = props.projectList;
 
+    const ref = useRef(null);
+    const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "30% center"] });
+    const smoothScrollYProgress = useSpring(scrollYProgress, { stiffness: 1000, damping: 30 });
+    const scale = useTransform(smoothScrollYProgress, [0, 1], [0.5, 1]);
+
     return (
-        <motion.div className="col-start-2 col-span-6 row-start-3 row-span-3 overflow-x-auto snap-x snap-mandatory pb-3"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1.5, delay: 0.2, ease: 'easeOut' }}>
+        <motion.div ref={ref} style={{ scale: scale }}
+            className="col-start-2 col-span-6 row-start-3 row-span-3 overflow-x-auto snap-x snap-mandatory pb-3">
             <div className="w-full h-full flex flex-row homepage-cover-img">
                 {projectList && projectList.map((project: any, index: number) => {
                     return (

@@ -46,7 +46,7 @@ export default function FeatureTypeA(props: FeatureTypeAProps) {
                     transition={{ duration: 1.5, delay: 0.2, ease: 'easeOut' }}>
                     <Image src={project.cover[1]?.url} alt="Home Page Feature Projects Cover Image" loading="lazy"
                         fill
-                        style={{ objectFit: "cover" }}
+                        style={{ objectFit: "contain" }}
                         sizes='33vw'
                         className="aspect-[1/1] translate-x-10" />
                 </motion.div>
