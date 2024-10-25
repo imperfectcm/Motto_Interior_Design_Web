@@ -20,7 +20,7 @@ export default async function ProjectDetail(props: ProjectDetailProps) {
     const nextProject = await getProjectByDisplayId(projectInfo.display_id - 1);
 
     return (
-        <main className="single-project-gallery">
+        <main>
             {relatedImages &&
                 <HorizontalGallery
                     projectInfo={projectInfo}

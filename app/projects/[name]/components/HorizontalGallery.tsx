@@ -27,7 +27,7 @@ const HorizontalGallery = (props: HorizontalGalleryProps) => {
     const x = useTransform(smoothScrollYProgress, [0, 1], ["0%", "-100%"]);
 
     return (
-        <div ref={targetRef} style={{ height: `${boxHeight}vh` }} >
+        <section ref={targetRef} style={{ height: `${boxHeight}vh` }} className="image-page-body">
             <div className="image-gallery">
                 <ProjectInfo projectInfo={props.projectInfo} />
                 <motion.div className="image-track" style={{ x }}>
@@ -42,7 +42,7 @@ const HorizontalGallery = (props: HorizontalGalleryProps) => {
                     }
                 </motion.div>
             </div>
-        </div>
+        </section>
     )
 };
 

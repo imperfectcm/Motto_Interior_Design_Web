@@ -6,7 +6,7 @@ import NavItems from "./NavItems";
 const Navbar = async () => {
     const isAdmin = await authService.isAdminAuthenticated(cookies());
     return (
-        <nav className="z-40 relative h-28 w-full nav-bg">
+        <nav className="z-30 relative h-28 w-full nav-bg">
             <NavItems isAdmin={isAdmin} />
         </nav>
     )

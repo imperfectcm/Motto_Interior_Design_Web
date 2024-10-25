@@ -15,7 +15,7 @@ export default function AllProjects(props: AllProjectsProps) {
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "30% center"] });
     const smoothScrollYProgress = useSpring(scrollYProgress, { stiffness: 1000, damping: 30 });
-    const scale = useTransform(smoothScrollYProgress, [0, 1], [0.5, 1]);
+    const scale = useTransform(smoothScrollYProgress, [0, 1], [0.75, 1]);
 
     return (
         <motion.div ref={ref} style={{ scale: scale }}

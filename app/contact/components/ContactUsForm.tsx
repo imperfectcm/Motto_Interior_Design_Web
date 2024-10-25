@@ -25,9 +25,8 @@ const Contact: FC = () => {
   }
 
   return (
-    <form className="flex flex-col w-1/2 gap-y-10" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col justify-center w-1/2 gap-y-5" onSubmit={handleSubmit(onSubmit)}>
       <div className="grid gap-5 md:grid-cols-3">
-
         <div>
           <label
             htmlFor='title'
@@ -78,7 +77,6 @@ const Contact: FC = () => {
           disabled={submitting}
         />
       </div>
-
       <div>
         <label
           htmlFor='address'
@@ -87,13 +85,13 @@ const Contact: FC = () => {
           Address
         </label>
         <textarea
+          rows={1}
           placeholder='Address'
           className='w-full p-1 bg-inherit border-b-2 border-slate-500 outline-0'
           {...register('address')}
           disabled={submitting}
         />
       </div>
-
       <div>
         <label
           htmlFor='unit-scale'
@@ -113,7 +111,6 @@ const Contact: FC = () => {
           <option value="> 700">&gt; 700</option>
         </select>
       </div>
-
       <div>
         <label
           htmlFor='situation'
@@ -132,7 +129,6 @@ const Contact: FC = () => {
           <option value="Renovation">Renovation</option>
         </select>
       </div>
-
       <div>
         <label
           htmlFor='message'
@@ -141,13 +137,13 @@ const Contact: FC = () => {
           Message
         </label>
         <textarea
+          rows={4}
           placeholder='Message'
           className='w-full p-1 bg-inherit border-b-2 border-slate-500 outline-0'
           {...register('message')}
           disabled={submitting}
         />
       </div>
-
       <div className="mt-5 flex justify-center items-center">
         <button className='beige-neumor-btn rounded-full px-8 py-2'>
           Submit
@@ -161,9 +157,7 @@ const Contact: FC = () => {
           wrapperClass="dna-wrapper"
         />
       </div>
-
     </form>
-
   );
 };
 
