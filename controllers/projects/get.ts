@@ -59,3 +59,18 @@ export const getProjectByName = async (projectName: string) => {
         throw new Error(error.message);
     }
 }
+
+export const getProjectByDisplayId = async (displayId: number) => {
+    try {
+        const res = await fetch(`${process.env.WEB_URL}/api/project-by-id?displayId=${displayId}`, { cache: 'no-store' });
+        if (!res.ok) {
+            const errorData = await res.json();
+            return errorData.message;
+        }
+        const response = await res.json();
+        const data = response.data;
+        return data;
+    } catch (error: any) {
+        throw new Error(error.message);
+    }
+}

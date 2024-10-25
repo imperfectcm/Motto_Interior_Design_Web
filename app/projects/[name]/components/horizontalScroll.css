@@ -12,9 +12,9 @@ body::-webkit-scrollbar {
     justify-content: center;
     height: 80%;
     position: relative;
-    min-width: 15vw;
-    max-width: 20vw;
-    margin-left: 2dvw;
+    min-width: 18dvw;
+    max-width: 18dvw;
+    margin: 0 30dvw 0 2dvw;
 }
 
 .image-gallery {
@@ -30,9 +30,10 @@ body::-webkit-scrollbar {
 
 .image-track {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 2rem;
     background: rgb(var(--off-white-rgb));
+    min-width: calc(100% - 100vw);
 }
 
 .image-column {
@@ -41,4 +42,15 @@ body::-webkit-scrollbar {
 
 .image {
     height: calc(100vh - 14rem);
+}
+
+.next-project {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -50dvw;
+    margin-right: 2dvw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }

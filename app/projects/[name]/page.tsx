@@ -1,6 +1,6 @@
 
 import { getProjectImages } from "@/controllers/images/get";
-import { getProjectByName } from "@/controllers/projects/get";
+import { getProjectByDisplayId, getProjectByName } from "@/controllers/projects/get";
 import React from "react";
 import HorizontalGallery from "./components/HorizontalGallery";
 
@@ -17,6 +17,7 @@ export default async function ProjectDetail(props: ProjectDetailProps) {
     const relatedImages = await getProjectImages(projectId);
     const projectCovers = await relatedImages?.covers;
     const projectImages = await relatedImages?.images;
+    const nextProject = await getProjectByDisplayId(projectInfo.display_id - 1);
 
     return (
         <main className="single-project-gallery">
@@ -25,7 +26,8 @@ export default async function ProjectDetail(props: ProjectDetailProps) {
                     projectInfo={projectInfo}
                     projectName={projectName}
                     projectCovers={projectCovers}
-                    projectImages={projectImages} />
+                    projectImages={projectImages}
+                    nextProject={nextProject} />
             }
         </main>
     );

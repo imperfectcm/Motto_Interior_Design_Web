@@ -6,18 +6,16 @@ class ProjectService {
 
     constructor() { }
 
-
     async getAllProjectsInfo() {
         try {
             const resultList = await pb.collection('projects').getFullList({
-                sort: '-created',
+                sort: '-display_id',
             });
             return { data: resultList, success: true };
         } catch (error: any) {
             return { error: error.message };
         }
     }
-
 
     async getLastDisplayId() {
         try {
@@ -26,12 +24,11 @@ class ProjectService {
             });
             console.log("resultList: ", resultList)
             const lastDisplayId = resultList.items[0].display_id
-            return { data: lastDisplayId, success: true };
+            return { data: lastDisplayId || 1, success: true };
         } catch (error: any) {
             throw new Error(error.message);
         }
     }
-
 
     async getNonFeatureProjectsInfo() {
         try {
@@ -46,7 +43,6 @@ class ProjectService {
         }
     }
 
-
     async getFeatureProjectsInfo() {
         try {
             const resultList = await pb.collection('projects').getFullList({
@@ -59,7 +55,6 @@ class ProjectService {
         }
     }
 
-
     async getProjectInfoByName(projectName: string) {
         try {
             const resultList = await pb.collection('projects').getFirstListItem(`name="${projectName}"`);
@@ -70,6 +65,15 @@ class ProjectService {
         }
     }
 
+    async getProjectInfoByDisplayId(displayId: number) {
+        try {
+            const resultList = await pb.collection('projects').getFirstListItem(`display_id="${displayId}"`);
+
+            return resultList;
+        } catch (error: any) {
+            return { error: error.message };
+        }
+    }
 
     async getProjectCover(projectId: string) {
         try {
@@ -83,7 +87,6 @@ class ProjectService {
         }
     }
 
-
     async getProjectImages(projectId: string) {
         try {
             const resultList = await pb.collection('images').getFullList({
@@ -95,7 +98,6 @@ class ProjectService {
             return { error: error.message };
         }
     }
-
 
     async createProject(projectData: any, cookies: ReadonlyRequestCookies) {
         const pbAuthData = authService.getUser(cookies);
