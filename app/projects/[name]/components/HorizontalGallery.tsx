@@ -35,7 +35,7 @@ const HorizontalGallery = (props: HorizontalGalleryProps) => {
                         <ImageContainer imageSource={image} key={i} />
                     )}
                     {nextProject.name &&
-                        <div className="next-project text-4xl">
+                        <div className="next-project">
                             <div className="text-base">Next Project</div>
                             <a href={`${nextProject.name}`} className="">{nextProject.name}</a>
                         </div>

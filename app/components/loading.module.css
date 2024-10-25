@@ -42,7 +42,7 @@
 .circle:nth-child(0) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 0vh;
   top: 0vh;
@@ -55,7 +55,7 @@
 .circle:nth-child(1) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 2.1875vh;
   top: 2.1875vh;
@@ -68,7 +68,7 @@
 .circle:nth-child(2) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 4.375vh;
   top: 4.375vh;
@@ -81,7 +81,7 @@
 .circle:nth-child(3) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 6.5625vh;
   top: 6.5625vh;
@@ -94,7 +94,7 @@
 .circle:nth-child(4) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 8.75vh;
   top: 8.75vh;
@@ -107,7 +107,7 @@
 .circle:nth-child(5) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 10.9375vh;
   top: 10.9375vh;
@@ -120,7 +120,7 @@
 .circle:nth-child(6) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 13.125vh;
   top: 13.125vh;
@@ -133,7 +133,7 @@
 .circle:nth-child(7) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 15.3125vh;
   top: 15.3125vh;
@@ -146,7 +146,7 @@
 .circle:nth-child(8) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 17.5vh;
   top: 17.5vh;
@@ -159,7 +159,7 @@
 .circle:nth-child(9) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 19.6875vh;
   top: 19.6875vh;
@@ -172,7 +172,7 @@
 .circle:nth-child(10) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 21.875vh;
   top: 21.875vh;
@@ -185,7 +185,7 @@
 .circle:nth-child(11) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 24.0625vh;
   top: 24.0625vh;
@@ -198,7 +198,7 @@
 .circle:nth-child(12) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 26.25vh;
   top: 26.25vh;
@@ -211,7 +211,7 @@
 .circle:nth-child(13) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 28.4375vh;
   top: 28.4375vh;
@@ -224,7 +224,7 @@
 .circle:nth-child(14) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 30.625vh;
   top: 30.625vh;
@@ -237,7 +237,7 @@
 .circle:nth-child(15) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #c7c7c7;
   border-radius: 50%;
   left: 32.8125vh;
   top: 32.8125vh;
@@ -250,7 +250,7 @@
 .circle:nth-child(16) {
   position: absolute;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid rgb(199, 199, 199);
   border-radius: 50%;
   left: 35vh;
   top: 35vh;
@@ -261,7 +261,7 @@
 }
 
 .circle:nth-child(2n) {
-  border: 2px dashed rgba(255, 255, 255, 0.5);
+  border: 2px dashed rgba(199, 199, 199, 0.5);
 }
 
 .circle:last-child {
