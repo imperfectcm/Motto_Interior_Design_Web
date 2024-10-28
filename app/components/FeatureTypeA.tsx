@@ -36,7 +36,7 @@ export default function FeatureTypeA(props: FeatureTypeAProps) {
                 <Image src={project.cover[0]?.url} alt="Home Page Feature Projects Cover Image"
                     fill
                     style={{ objectFit: "contain" }}
-                    sizes='33vw'
+                    sizes='(max-width: 1200px) 100vw, 75vw'
                     className="aspect-[3/4]" />
             </motion.div>
             {project.cover[1] &&
@@ -47,7 +47,7 @@ export default function FeatureTypeA(props: FeatureTypeAProps) {
                     <Image src={project.cover[1]?.url} alt="Home Page Feature Projects Cover Image" loading="lazy"
                         fill
                         style={{ objectFit: "contain" }}
-                        sizes='33vw'
+                        sizes='(max-width: 1200px) 100vw, 75vw'
                         className="aspect-[1/1] translate-x-10" />
                 </motion.div>
             }

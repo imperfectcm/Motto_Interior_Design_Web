@@ -11,7 +11,7 @@ const Introduction = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1.5, delay: 0.2, ease: 'easeOut' }}>
                     <div>
-                        我們的名字 <span className="font-semibold">Motto</span> 來自日文單字 “もっと” ，意思是 “更多” 。
+                        我們的名字 <span className="font-semibold">Motto</span> 來自日文單字 &quot;もっと&quot; ，意思是 &quot;更多&quot; 。
                     </div>
                     <div>
                         它也是一個有趣的雙關語提醒我設計座右銘(Motto)：為您的家創造更多可能性。
@@ -22,7 +22,7 @@ const Introduction = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1.5, delay: 0.5, ease: 'easeOut' }}>
                     <div>
-                        Our name, <span className="font-semibold">Motto</span>, comes from the Japanese word "もっと" , which means "more".
+                        Our name, <span className="font-semibold">Motto</span>, comes from the Japanese word &quot;もっと&quot; , which means &quot;more&quot;.
                     </div>
                     <div>
                         It also serves as a playful reminder of my design philosophy: to create more possibilities for your home.
@@ -80,7 +80,7 @@ const Introduction = () => {
                         </div>
                     </div>
                     <div>
-                        <div>We don't simply design spaces; we prioritize your living experience within them.</div>
+                        <div>We don&apos;t simply design spaces; we prioritize your living experience within them.</div>
                         <div>We bring your ideas and needs to life, crafting practical yet distinctive environments.</div>
                     </div>
                 </motion.div>

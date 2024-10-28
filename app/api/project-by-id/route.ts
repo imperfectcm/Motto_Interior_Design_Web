@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
     try {
         const paramId = request.nextUrl.searchParams.get("displayId");
-        console.log("paramId: ", paramId);
         if (!paramId) return NextResponse.json({ message: "No project display id is provided." }, { status: 404 });
         const displayId = ~~paramId;
         const res = await projectService.getProjectInfoByDisplayId(displayId);

@@ -30,7 +30,7 @@ export default function NotFound() {
         <div className={styles["error__content"]}>
           <div className={styles["error__message message"]}>
             <h1 className={styles["message__title"]}>Page Not Found</h1>
-            <p className={styles["message__text"]}>We're sorry, the page you were looking for isn't found here.</p>
+            <p className={styles["message__text"]}>We&apos;re sorry, the page you were looking for isn&apos;t found here.</p>
             <br></br>
           </div>
           <div className={styles["error__nav e-nav"]}>

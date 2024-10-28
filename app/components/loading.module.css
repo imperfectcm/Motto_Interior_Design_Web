@@ -48,8 +48,8 @@
   top: 0vh;
   width: 70vh;
   height: 70vh;
-  -webkit-animation: spin Infinitys infinite linear;
-  animation: spin Infinitys infinite linear;
+  -webkit-animation: spin infinite linear;
+  animation: spin infinite linear;
 }
 
 .circle:nth-child(1) {

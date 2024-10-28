@@ -18,7 +18,6 @@ interface HorizontalGalleryProps {
 const HorizontalGallery = (props: HorizontalGalleryProps) => {
     const projectImages = props.projectImages;
     const nextProject = props.nextProject;
-    console.log("nextProject: ", nextProject)
     let boxHeight: number = 400;
     if (projectImages) boxHeight = (projectImages.length * 70);
     const targetRef = useRef(null);

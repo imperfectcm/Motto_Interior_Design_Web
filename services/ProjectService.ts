@@ -22,7 +22,6 @@ class ProjectService {
             const resultList = await pb.collection('projects').getList(1, 1, {
                 sort: '-display_id',
             });
-            console.log("resultList: ", resultList)
             const lastDisplayId = resultList.items[0].display_id
             return { data: lastDisplayId || 1, success: true };
         } catch (error: any) {

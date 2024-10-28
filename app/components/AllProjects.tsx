@@ -33,7 +33,7 @@ export default function AllProjects(props: AllProjectsProps) {
                                     id={`${index}`}
                                     src={project.cover[0]?.url || "no-image.png"}
                                     fill
-                                    sizes='33vw'
+                                    sizes='(max-width: 1200px) 100vw, 75vw'
                                     style={{ objectFit: "cover" }}
                                     alt={`Cover of project ${project.name}`}
                                 />

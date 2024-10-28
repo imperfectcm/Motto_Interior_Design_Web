@@ -2,11 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from "framer-motion";
-
-const variants = {
-    visible: { opacity: 1 },
-    hidden: { opacity: 0 },
-}
+import Hero from '@/public/heroImage/hero-sample.jpg';
 
 export default function HeadContainer() {
     return (
@@ -31,7 +27,7 @@ export default function HeadContainer() {
             </motion.div>
             <div className="z-0 fixed h-screen w-2/5 right-0">
                 <Image
-                    src="/hardCodeImages/Project Chronology/00 cover.jpg"
+                    src={Hero}
                     alt="Main Page Cover Image"
                     fill
                     sizes="75vw"
