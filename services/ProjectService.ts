@@ -1,5 +1,5 @@
 
-import { authService, pb, POCKET_BASE_URL } from './AuthService';
+import { authService, pb } from './AuthService';
 import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
 class ProjectService {

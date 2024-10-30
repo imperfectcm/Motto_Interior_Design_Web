@@ -1,3 +1,4 @@
+'use server';
 
 import { getProjectImages } from "@/controllers/images/get";
 import { getProjectByDisplayId, getProjectByName } from "@/controllers/projects/get";
@@ -13,7 +14,7 @@ interface ProjectDetailProps {
 export default async function ProjectDetail(props: ProjectDetailProps) {
     const projectName = props.params.name.replaceAll("%20", " ");
     const projectInfo = await getProjectByName(projectName);
-    const projectId = await projectInfo?.id;
+    const projectId = await projectInfo.id;
     const relatedImages = await getProjectImages(projectId);
     const projectCovers = await relatedImages?.covers;
     const projectImages = await relatedImages?.images;
