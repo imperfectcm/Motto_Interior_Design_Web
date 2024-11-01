@@ -6,6 +6,7 @@ export const serverGetProjectsWithCovers = async () => {
         })
         if (!res.ok) return ({ message: "Failed to get project cover images." })
         const data = await res.json();
+        console.log("data: ", data)
         return data.data || [];
     } catch (error: any) {
         console.log(error.message);
@@ -46,6 +47,7 @@ export const getLastDisplayId = async () => {
 }
 
 export const getProjectByName = async (projectName: string) => {
+    console.log("get projectName: ", projectName)
     try {
         const res = await fetch(`${process.env.WEB_URL}/api/project?projectName=${projectName}`, { cache: 'no-store' });
         if (!res.ok) {

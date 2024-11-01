@@ -14,11 +14,18 @@ interface ProjectDetailProps {
 export default async function ProjectDetail(props: ProjectDetailProps) {
     const projectName = props.params.name.replaceAll("%20", " ");
     const projectInfo = await getProjectByName(projectName);
+
     const projectId = await projectInfo.id;
+    const nextProject = await getProjectByDisplayId(projectInfo.display_id - 1);
+
     const relatedImages = await getProjectImages(projectId);
     const projectCovers = await relatedImages?.covers;
     const projectImages = await relatedImages?.images;
-    const nextProject = await getProjectByDisplayId(projectInfo.display_id - 1);
+
+    console.log("projectName: ", projectName)
+    console.log("projectInfo: ", projectInfo)
+    console.log("nextProject: ", nextProject)
+    console.log("relatedImages: ", relatedImages)
 
     return (
         <main>

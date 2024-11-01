@@ -55,9 +55,10 @@ class ProjectService {
     }
 
     async getProjectInfoByName(projectName: string) {
+        console.log("service project name: ", projectName);
         try {
             const resultList = await pb.collection('projects').getFirstListItem(`name="${projectName}"`);
-
+            console.log("service result: ", resultList);
             return resultList;
         } catch (error: any) {
             return { error: error.message };
@@ -68,7 +69,7 @@ class ProjectService {
         try {
             const resultList = await pb.collection('projects').getFirstListItem(`display_id="${displayId}"`);
 
-            return resultList;
+            return { data: resultList, success: true };
         } catch (error: any) {
             return { error: error.message };
         }

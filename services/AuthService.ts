@@ -10,8 +10,10 @@ class AuthService {
 
     // login
     async authenticate(email: string, password: string) {
+        console.log("email: " + email, ", password: " + password);
         try {
             const result = await pb.admins.authWithPassword(email, password);
+            console.log("admin result: ", result)
             if (!result?.token) { throw new Error("Invalid email or password.") }
             return { data: result, success: true };
         } catch (error: any) {

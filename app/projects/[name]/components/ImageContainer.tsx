@@ -1,3 +1,4 @@
+"use client";
 
 import "./horizontalScroll.css"
 import { useRef } from "react";
