@@ -48,18 +48,16 @@ class ProjectService {
                 filter: 'is_feature_project = true',
                 sort: '+feature_id',
             });
-            return resultList;
+            return { data: resultList, success: true };
         } catch (error: any) {
             return { error: error.message };
         }
     }
 
     async getProjectInfoByName(projectName: string) {
-        console.log("service project name: ", projectName);
         try {
             const resultList = await pb.collection('projects').getFirstListItem(`name="${projectName}"`);
-            console.log("service result: ", resultList);
-            return resultList;
+            return { data: resultList, success: true };
         } catch (error: any) {
             return { error: error.message };
         }

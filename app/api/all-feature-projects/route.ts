@@ -5,14 +5,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        const projectList = await projectService.getFeatureProjectsInfo();
-
-        if (!projectList) {
+        const res = await projectService.getFeatureProjectsInfo();
+        if (!res) {
             return NextResponse.json({ message: "No feature projects." }, { status: 404 });
         }
-
-        return NextResponse.json({ data: projectList }, { status: 200 });
-
+        if (res.success) return NextResponse.json({ data: res.data }, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ error: error.error || error.toString() }, { status: 500 })
     }

@@ -149,6 +149,7 @@ const EditForm = (props: EditFormProps) => {
         deleteSwal.fire({
             title: "Do you want to delete this project?",
             confirmButtonText: "Delete",
+            confirmButtonColor: "#DC2626",
             showCancelButton: true
         }).then(async (result) => {
             /* Read more about isConfirmed, isDenied below */
@@ -285,7 +286,10 @@ const EditForm = (props: EditFormProps) => {
                 <UpdateProjectBtn
                     isSubmitting={isSubmitting} />
             </form>
-            <button onClick={deletePopUp}>Delete Project</button>
+            <div className="mt-5 flex justify-center items-center">
+                <button className="beige-neumor-btn rounded-full px-8 py-2 text-slate-200 bg-red-600 hover:bg-red-900"
+                    onClick={deletePopUp}>Delete Project</button>
+            </div>
         </main>
     )
 }

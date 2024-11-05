@@ -1,8 +1,7 @@
 import PocketBase from 'pocketbase';
 import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
-const POCKET_BASE_URL = "http://localhost:8090";
-export const pb = new PocketBase(POCKET_BASE_URL);
+export const pb = new PocketBase(process.env.POCKETBASE_URL);
 
 class AuthService {
 
@@ -10,7 +9,6 @@ class AuthService {
 
     // login
     async authenticate(email: string, password: string) {
-        console.log("email: " + email, ", password: " + password);
         try {
             const result = await pb.admins.authWithPassword(email, password);
             console.log("admin result: ", result)

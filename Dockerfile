@@ -1,5 +1,5 @@
 FROM node:lts
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY . .
 
 RUN yarn install
