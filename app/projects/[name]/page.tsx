@@ -4,6 +4,10 @@ import { getProjectImages } from "@/controllers/images/get";
 import { getProjectByDisplayId, getProjectByName } from "@/controllers/projects/get";
 import React from "react";
 import HorizontalGallery from "./components/HorizontalGallery";
+import "./components/horizontalScroll.css"
+import NavItems from "@/app/components/NavItems";
+import { authService } from "@/services/AuthService";
+import { cookies } from "next/headers";
 
 interface ProjectDetailProps {
     params: {
@@ -27,8 +31,13 @@ export default async function ProjectDetail(props: ProjectDetailProps) {
     console.log("nextProject: ", nextProject)
     console.log("relatedImages: ", relatedImages)
 
+    const isAdmin = await authService.isAdminAuthenticated(cookies());
     return (
+
         <main>
+            <nav className="z-30 fixed top-0 h-28 w-full nav-bg">
+                <NavItems isAdmin={isAdmin} />
+            </nav>
             {relatedImages &&
                 <HorizontalGallery
                     projectInfo={projectInfo}

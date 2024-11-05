@@ -34,7 +34,11 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: rgb(var(--off-white-rgb))
+  background: rgb(var(--off-white-rgb));
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 @layer utilities {
@@ -88,6 +92,7 @@ body {
   height: 150vh;
 
   div::-webkit-scrollbar {
+    display: block !important;
     height: 20px;
   }
 

@@ -1,11 +1,7 @@
 
-::-webkit-scrollbar {
-    display: none;
-}
-
-.nav-bg {
+/* .nav-bg {
     position: fixed;
-}
+} */
 
 .info {
     display: flex;
@@ -35,14 +31,6 @@
     gap: 2rem;
     background: rgb(var(--off-white-rgb));
     min-width: calc(100% - 100vw);
-}
-
-.image-column {
-    transform-origin: bottom;
-}
-
-.image {
-    height: calc(100vh - 14rem);
 }
 
 .next-project {

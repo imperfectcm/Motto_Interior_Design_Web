@@ -1,6 +1,5 @@
 "use client";
 
-import "./horizontalScroll.css"
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
@@ -14,8 +13,8 @@ const ImageContainer = (props: ImageContainerProps) => {
     const inView = useInView(ref, { amount: 0.3, });
 
     return (
-        <motion.div ref={ref} animate={{ scale: inView ? 1 : 0.8 }} transition={{ duration: 0.5 }} className="image-column group">
-            <section className="image overflow-hidden rounded-lg" key={imageSource.id} >
+        <motion.div ref={ref} animate={{ scale: inView ? 1 : 0.8 }} transition={{ duration: 0.5 }} className="origin-bottom group">
+            <section className="h-[calc(100vh-14rem)] overflow-hidden rounded-lg" key={imageSource.id} >
                 <img src={`${imageSource.url}`} alt="Project image"
                     className="h-full w-full object-contain group-hover:scale-103 duration-200" />
             </section>
