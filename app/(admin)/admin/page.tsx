@@ -5,10 +5,9 @@ import { getLastDisplayId, serverGetProjectsWithCovers } from "@/controllers/pro
 
 const admin = async () => {
     const projectList = await serverGetProjectsWithCovers();
-    const lastDisplayId = await getLastDisplayId();
     return (
         <main className="py-10 px-5">
-            <ProjectsContainer projectList={projectList} lastDisplayId={lastDisplayId} />
+            <ProjectsContainer projectList={projectList} />
             <CreateProjectBtn />
         </main>
     )

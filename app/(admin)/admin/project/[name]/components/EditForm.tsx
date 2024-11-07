@@ -13,25 +13,29 @@ import { useRouter } from "next/navigation";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { deleteImageFromS3 } from "../../../../../../components/s3Actions/delete/deleteImageAction";
-import { projectDeleteSuccessfully, projectUpdateFailedToast, projectUpdateSuccessfully, uploadImagesToDBFailedToast } from "@/components/toastify/toast";
+import { projectDeleteSuccessfully, projectUpdateSuccessfully } from "@/components/toastify/toast";
 import uploadMultiImages from "@/components/s3Actions/upload/uploadMultiImages";
-import { updateProjectToDB } from "@/controllers/projects";
+import { deleteProject, updateProjectDisplayId, updateProjectToDB } from "@/controllers/projects";
 import { deleteImages, uploadImages } from "@/controllers/images";
+import ActionLoading from "@/components/actionLoading/ActionLoading";
 
 interface EditFormProps {
     projectInfo: any;
     relatedImages: any;
+    projectList: any;
 }
 
 const EditForm = (props: EditFormProps) => {
     const router = useRouter();
-    const { projectInfo, relatedImages } = props;
+    const { projectInfo, relatedImages, projectList } = props;
     const projectId: string = projectInfo.id;
+    const displayId = projectInfo.display_id;
 
     const [covers, setCovers] = useState<ImageListType>(relatedImages.covers);
     const [images, setImages] = useState<ImageListType>(relatedImages.images);
     const [isEditCovers, setIsEditCovers] = useState<boolean>(false);
     const [isEditImages, setIsEditImages] = useState<boolean>(false);
+    const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
     const checkUnwantedImage = async (oldImages: string[], newImages: any[]): Promise<any[]> => {
         const newImageSet = new Set(newImages);
@@ -47,6 +51,16 @@ const EditForm = (props: EditFormProps) => {
             resolve(newAddImages);
         });
     }
+    const deleteUnwantedImage = async (projectImages: any[]) => {
+        let resList: any[] = [];
+        for await (const item of projectImages) {
+            const s3Res = await deleteImageFromS3(item.key);
+            const res = await deleteImages([item]);
+            resList.push([s3Res, res]);
+        }
+        return resList;
+    }
+
     const {
         register,
         handleSubmit,
@@ -124,26 +138,6 @@ const EditForm = (props: EditFormProps) => {
         }
     }
 
-    const deleteProject = async (projectId: string) => {
-        try {
-            const res = await fetch("/api/project", {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ projectId }),
-            });
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.error || "Delete project failed.");
-            }
-            const resData = await res.json()
-            return resData;
-        } catch (error) {
-            throw error;
-        }
-    }
-
     const deleteSwal = withReactContent(Swal)
     const deletePopUp = async () => {
         deleteSwal.fire({
@@ -161,30 +155,39 @@ const EditForm = (props: EditFormProps) => {
 
     const handleDelete = async () => {
         try {
+            setIsDeleting(true);
+            const affectProjects = [...projectList.filter((project: any) => project.display_id > displayId)]
+            let removedCovers: any[] = [];
+            if (relatedImages.covers.length == 0) removedCovers.push("no original covers")
             if (relatedImages.covers.length > 0) {
-                await relatedImages.covers.map(async (oldCoverImage: any) => {
-                    try {
-                        await deleteImageFromS3(oldCoverImage.key);
-                        await deleteImages(relatedImages.covers)
-                    } catch (error) {
-                        throw error;
-                    }
-                })
+                try {
+                    removedCovers = await deleteUnwantedImage(relatedImages.covers);
+                } catch (error: any) {
+                    console.log(error.message);
+                    removedCovers = [];
+                }
             }
+            let removedImages: any[] = [];
+            if (relatedImages.images.length == 0) removedImages.push("no original images")
             if (relatedImages.images.length > 0) {
-                await relatedImages.images.map(async (oldImage: any) => {
-                    try {
-                        await deleteImageFromS3(oldImage.key);
-                        await deleteImages(relatedImages.images)
-                    } catch (error) {
-                        throw error;
-                    }
-                })
+                try {
+                    removedImages = await deleteUnwantedImage(relatedImages.images);
+                } catch (error: any) {
+                    console.log(error.message);
+                    removedImages = [];
+                }
             }
-            await deleteProject(projectId);
-            await projectDeleteSuccessfully(router);
-        } catch (error) {
-            throw error;
+            if (removedCovers.length > 0 && removedImages.length > 0) {
+                if (affectProjects.length > 0) {
+                    for await (const project of affectProjects) {
+                        await updateProjectDisplayId({ projectId: project.id, displayId: (project.display_id - 1) })
+                    }
+                }
+                await deleteProject(projectId);
+                await projectDeleteSuccessfully(router);
+            }
+        } catch (error: any) {
+            throw new Error(error.message);
         }
     }
 
@@ -286,10 +289,13 @@ const EditForm = (props: EditFormProps) => {
                 <UpdateProjectBtn
                     isSubmitting={isSubmitting} />
             </form>
-            <div className="mt-5 flex justify-center items-center">
-                <button className="beige-neumor-btn rounded-full px-8 py-2 text-slate-200 bg-red-600 hover:bg-red-900"
-                    onClick={deletePopUp}>Delete Project</button>
-            </div>
+            {isDeleting ? <ActionLoading />
+                :
+                <div className="mt-5 flex justify-center items-center">
+                    <button className="beige-neumor-btn rounded-full px-8 py-2 text-slate-200 bg-red-600 hover:bg-red-900"
+                        onClick={deletePopUp}>Delete Project</button>
+                </div>
+            }
         </main>
     )
 }

@@ -6,10 +6,8 @@ interface CreateProjectBtnProps {
     isSubmitting: boolean;
 }
 
-
 export function UpdateProjectBtn(props: CreateProjectBtnProps) {
     let isSubmitting = props.isSubmitting
-
     return (
         isSubmitting ?
             <ActionLoading />

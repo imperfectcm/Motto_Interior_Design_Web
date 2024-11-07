@@ -24,7 +24,7 @@ export const uploadImages = async (imageUrlList: string[], imageKeyList: string[
 }
 
 export const deleteImages = async (imageList: any[]) => {
-    if (!imageList.length) return;
+    if (imageList.length === 0) return;
     try {
         const res = await fetch("/api/project-images", {
             method: "DELETE",

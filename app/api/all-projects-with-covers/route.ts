@@ -1,12 +1,13 @@
 import { projectService } from "@/services/ProjectService";
 import { NextResponse } from "next/server";
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
     try {
         const res = await projectService.getAllProjectsInfo();
         if (!res) return NextResponse.json({ message: "No projects got." }, { status: 404 });
         if (res.success) {
-            const projectList = res.data;
+            const projectList = [...res.data];
             for await (const project of projectList) {
                 const cover = await projectService.getProjectCover(project.id);
                 project.cover = cover;

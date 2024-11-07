@@ -6,7 +6,6 @@ import Image from "next/image";
 
 interface AllProjectsProps {
     projectList: any;
-    lastDisplayId: number;
     featureProject: any[];
     setFeatureProject: Dispatch<SetStateAction<any[]>>;
 }
@@ -14,11 +13,10 @@ interface AllProjectsProps {
 const AllProjects = (props: AllProjectsProps) => {
     const {
         projectList,
-        lastDisplayId,
         featureProject,
         setFeatureProject
     } = props;
-    const coverList = props.projectList || [];
+    const coverList = projectList || [];
 
     return (
         <section className="grid grid-flow-row-dense grid-cols-3 gap-5 mb-10">
@@ -26,7 +24,7 @@ const AllProjects = (props: AllProjectsProps) => {
             {coverList?.length > 0 && coverList.map((project: any, index: number) => (
                 <div key={index} className="flex flex-col place-items-center">
                     <div className="relative w-full aspect-[3/4] grow">
-                        <Image src={project.cover[0]?.url || "no-image.png"} alt={`Cover of project ${project.name}`}
+                        <Image src={project.cover[0]?.url || "/no-image.png"} alt={`Cover of project ${project.name}`}
                             fill
                             sizes="(max-width: 1200px) 100vw, 75vw"
                             className="relative object-cover" />

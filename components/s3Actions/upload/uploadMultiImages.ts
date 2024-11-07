@@ -9,7 +9,7 @@ const uploadMultiImages = async (imageList: ImageListType, projectId: string) =>
     let imageKeyList: string[] = [];
 
     try {
-        for (const image of imageList) {
+        for await (const image of imageList) {
             if (image.file instanceof File) {
                 const formData = new FormData();
                 formData.append("file", image.file);

@@ -13,8 +13,6 @@ services:
             - pocketbase
         environment:
             - POCKETBASE_URL=http://pocketbase:8090
-        volumes:
-            - .:/app
     pocketbase:
         build:
             context: .
@@ -27,6 +25,7 @@ services:
             - "8090:8090"
         volumes:
             - ./pb_data:/pb_data
+            - ./pb_migrations:/pb_migrations
         command: ./pocketbase serve --http=0.0.0.0:8090 --dir /pb_data
         healthcheck:
             #optional (recommended) since v0.10.0

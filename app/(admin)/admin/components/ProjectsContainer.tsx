@@ -1,23 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FeatureProjects from "./FeatureProjects";
 import AllProjects from "./AllProjects";
 import { updateFeatureProject } from "@/controllers/projects";
 import { setFeatureProjectFailedToast, setFeatureProjectSuccessfully } from "@/components/toastify/toast";
+import { clientGetLastDisplayId, clientGetProjectsWithCovers } from "@/controllers/projects/get";
 
 interface ProjectCoverContainerProps {
     projectList: any;
-    lastDisplayId: number;
 }
 
 const ProjectsContainer = (props: ProjectCoverContainerProps) => {
-    const { projectList, lastDisplayId } = props;
+    const { projectList } = props;
     let originFeature = [...projectList.filter((project: any) => project.is_feature_project === true)]
         .sort((a: any, b: any) => a.feature_id - b.feature_id);
     const [projects, setProjects] = useState<any[]>(projectList);
     const [originFeatureProject, setOriginFeatureProject] = useState<any[]>(originFeature);
     const [featureProject, setFeatureProject] = useState<any[]>(originFeature);
+
+    // const getAllProjectList = async () => {
+    //     const projectList: any = await clientGetProjectsWithCovers();
+    //     setProjects(projectList);
+    //     const originFeature = [...projectList.filter((project: any) => project.is_feature_project === true)]
+    //         .sort((a: any, b: any) => a.feature_id - b.feature_id);
+    //     setOriginFeatureProject(originFeature);
+    //     setFeatureProject(originFeature);
+    // }
+
+    // useEffect(() => {
+    //     console.log("new render")
+    //     getAllProjectList();
+    // }, [])
+
+
+
 
     const removeOriginFeature = async (originFeature: any[]) => {
         let result: any[] = []
@@ -78,7 +95,6 @@ const ProjectsContainer = (props: ProjectCoverContainerProps) => {
             />
             <AllProjects
                 projectList={projects}
-                lastDisplayId={lastDisplayId}
                 featureProject={featureProject}
                 setFeatureProject={setFeatureProject}
             />

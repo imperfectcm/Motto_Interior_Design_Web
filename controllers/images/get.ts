@@ -15,7 +15,7 @@ export const getFeatureProjectCovers = async () => {
 
 export const getProjectImages = async (projectId: string) => {
     try {
-        const res = await fetch(`${process.env.WEB_URL}/api/project-images?projectId=${projectId}`);
+        const res = await fetch(`${process.env.WEB_URL}/api/project-images?projectId=${projectId}`, { cache: 'no-store' });
         if (!res.ok) {
             const errorData = await res.json();
             return errorData.message;

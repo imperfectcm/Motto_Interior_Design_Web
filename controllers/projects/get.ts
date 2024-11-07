@@ -1,12 +1,14 @@
+import next from "next";
 
 export const serverGetProjectsWithCovers = async () => {
     try {
+        console.log("refresh the data now")
         const res = await fetch(`${process.env.WEB_URL}/api/all-projects-with-covers`, {
-            cache: 'no-store',
+            cache: 'no-store'
         })
-        if (!res.ok) return ({ message: "Failed to get project cover images." })
+        if (!res.ok) return ({ message: "Failed to get project with cover images." })
         const data = await res.json();
-        return data.data || [];
+        return data.data;
     } catch (error: any) {
         console.log(error.message);
         return [];
@@ -16,14 +18,23 @@ export const serverGetProjectsWithCovers = async () => {
 export const clientGetProjectsWithCovers = async () => {
     try {
         const res = await fetch("/api/all-projects-with-covers", {
-            cache: 'no-store',
-            next: {
-                tags: ['create-project', 'update-project'],
-            },
+            cache: 'no-store'
         })
-        if (!res.ok) return ({ message: "Failed to get project cover images." })
+        if (!res.ok) return ({ message: "Failed to get project with cover images." })
         const data = await res.json();
-        return data.data || [];
+        return data.data;
+    } catch (error: any) {
+        console.log(error.message);
+        return [];
+    }
+}
+
+export const clientGetAllProjects = async () => {
+    try {
+        const res = await fetch("/api/all-projects", { cache: 'no-store', })
+        if (!res.ok) return ({ message: "Failed to get projects" })
+        const data = await res.json();
+        return data.data;
     } catch (error: any) {
         console.log(error.message);
         return [];
@@ -38,7 +49,22 @@ export const getLastDisplayId = async () => {
             return response.message;
         }
         const data = await res.json();
-        return data.data || [];
+        return data.data;
+    } catch (error: any) {
+        console.log(error.message);
+        return null;
+    }
+}
+
+export const clientGetLastDisplayId = async () => {
+    try {
+        const res = await fetch(`/api/last-display-id`, { cache: 'no-store' })
+        if (!res.ok) {
+            const response = await res.json();
+            return response.message;
+        }
+        const data = await res.json();
+        return data.data;
     } catch (error: any) {
         console.log(error.message);
         return null;

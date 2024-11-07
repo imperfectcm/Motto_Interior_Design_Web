@@ -9,10 +9,11 @@ import { ErrorMessage } from "@hookform/error-message"
 import ImageUploader from "@/components/s3Actions/upload/ImageUploader";
 import CoverImageUploader from "../../../../../components/s3Actions/upload/CoverImageUploader";
 import { CreateProjectBtn } from "./CreateProjectBtn";
-import creatProjectToDB from "./createProjectToDB";
+import { creatProjectToDB } from "@/controllers/projects";
 import uploadMultiImages from "@/components/s3Actions/upload/uploadMultiImages";
 import { projectCreateSuccessfully, projectCreateFailedToast } from "@/components/toastify/toast";
 import { uploadImages } from "@/controllers/images";
+import { revalidateTag } from "next/cache";
 
 interface CreateProjectFormProps {
     lastDisplayId: number;
@@ -46,17 +47,25 @@ const CreateProjectForm = (props: CreateProjectFormProps) => {
 
     const handleFormSubmit = async (data: projectFormData) => {
         if (!isValid) return;
-        try {
-            const projectId: string = await creatProjectToDB(data, );
-            const coverList = await uploadMultiImages(coverImages, projectId);
-            const imageList = await uploadMultiImages(images, projectId);
-            if (coverList) await uploadImages(coverList.imageUrlList, coverList.imageKeyList, projectId, "cover");
-            if (imageList) await uploadImages(imageList.imageUrlList, imageList.imageKeyList, projectId);
+        return new Promise(async (resolve, reject) => {
+            try {
+                const projectId = await creatProjectToDB(data);
+                const coverList = await uploadMultiImages(coverImages, projectId);
+                const imageList = await uploadMultiImages(images, projectId);
+
+                if (coverList) await uploadImages(coverList.imageUrlList, coverList.imageKeyList, projectId, "cover");
+                if (imageList) await uploadImages(imageList.imageUrlList, imageList.imageKeyList, projectId);
+
+                resolve(projectId);
+            } catch (error) {
+                reject(error);
+            }
+        }).then(async (projectId) => {
             await projectCreateSuccessfully(router);
-        } catch (error: any) {
+        }).catch((error) => {
             projectCreateFailedToast();
             throw new Error(error.message);
-        }
+        });
     }
 
     return (

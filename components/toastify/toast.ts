@@ -33,7 +33,7 @@ export const projectCreateSuccessfully = async (router: AppRouterInstance) => {
         autoClose: 3000,
         pauseOnHover: false,
         transition: Flip,
-        onClose: () => router.push("/admin")
+        onClose: () => window.location.href='/admin'
     })
 }
 
@@ -55,7 +55,7 @@ export const projectUpdateSuccessfully = async (router: AppRouterInstance) => {
         autoClose: 3000,
         pauseOnHover: false,
         transition: Flip,
-        onClose: () => router.push("/admin")
+        onClose: () => window.location.href='/admin'
     })
 }
 
@@ -65,7 +65,7 @@ export const projectDeleteSuccessfully = async (router: AppRouterInstance) => {
         autoClose: 3000,
         pauseOnHover: false,
         transition: Flip,
-        onClose: () => router.push("/admin")
+        onClose: () => window.location.href='/admin'
     })
 }
 
@@ -93,7 +93,7 @@ export const setFeatureProjectFailedToast = () => toast.error("😭 Set feature 
 
 export const loginFailedToast = () => toast.error("🥲 Fail to authenticate user.", {
     position: "top-center",
-    autoClose: 4000,
+    autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

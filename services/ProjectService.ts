@@ -10,7 +10,10 @@ class ProjectService {
         try {
             const resultList = await pb.collection('projects').getFullList({
                 sort: '-display_id',
+                keepalive: false,
+                cache: 'no-store',
             });
+            console.log("Project info: ", resultList)
             return { data: resultList, success: true };
         } catch (error: any) {
             return { error: error.message };
@@ -19,10 +22,13 @@ class ProjectService {
 
     async getLastDisplayId() {
         try {
-            const resultList = await pb.collection('projects').getList(1, 1, {
+            const resultList = await pb.collection('projects').getFullList({
                 sort: '-display_id',
+                keepalive: false,
+                cache: 'no-store',
             });
-            const lastDisplayId = resultList.items[0].display_id
+            const lastDisplayId = resultList[0].display_id
+            console.log("lastDisplayId: ", lastDisplayId)
             return { data: lastDisplayId || 1, success: true };
         } catch (error: any) {
             throw new Error(error.message);
@@ -34,6 +40,8 @@ class ProjectService {
             const resultList = await pb.collection('projects').getFullList({
                 filter: 'is_feature_project = false',
                 sort: '-created',
+                keepalive: false,
+                cache: 'no-store',
             });
 
             return resultList;
@@ -47,6 +55,8 @@ class ProjectService {
             const resultList = await pb.collection('projects').getFullList({
                 filter: 'is_feature_project = true',
                 sort: '+feature_id',
+                keepalive: false,
+                cache: 'no-store',
             });
             return { data: resultList, success: true };
         } catch (error: any) {
@@ -56,7 +66,7 @@ class ProjectService {
 
     async getProjectInfoByName(projectName: string) {
         try {
-            const resultList = await pb.collection('projects').getFirstListItem(`name="${projectName}"`);
+            const resultList = await pb.collection('projects').getFirstListItem(`name="${projectName}"`, { cache: 'no-store', });
             return { data: resultList, success: true };
         } catch (error: any) {
             return { error: error.message };
@@ -65,8 +75,7 @@ class ProjectService {
 
     async getProjectInfoByDisplayId(displayId: number) {
         try {
-            const resultList = await pb.collection('projects').getFirstListItem(`display_id="${displayId}"`);
-
+            const resultList = await pb.collection('projects').getFirstListItem(`display_id="${displayId}"`, { cache: 'no-store', });
             return { data: resultList, success: true };
         } catch (error: any) {
             return { error: error.message };
@@ -78,6 +87,8 @@ class ProjectService {
             const resultList = await pb.collection('images').getFullList({
                 filter: `name = "${projectId}" && is_cover = true`,
                 sort: '+sequence',
+                keepalive: false,
+                cache: 'no-store',
             });
             return resultList;
         } catch (error: any) {
@@ -90,6 +101,8 @@ class ProjectService {
             const resultList = await pb.collection('images').getFullList({
                 filter: `name = "${projectId}" && is_cover = false`,
                 sort: '+sequence',
+                keepalive: false,
+                cache: 'no-store',
             });
             return resultList;
         } catch (error: any) {
@@ -98,7 +111,7 @@ class ProjectService {
     }
 
     async createProject(projectData: any, cookies: ReadonlyRequestCookies) {
-        const pbAuthData = authService.getUser(cookies);
+        const pbAuthData = await authService.getUser(cookies);
         const data = {
             "name": projectData.name,
             "year": projectData.year,
@@ -137,7 +150,7 @@ class ProjectService {
     }
 
     async updateFeatureProjectById(projectData: any, cookies: ReadonlyRequestCookies) {
-        const pbAuthData = authService.getUser(cookies);
+        const pbAuthData = await authService.getUser(cookies);
         const data = {
             "is_feature_project": projectData.is_feature_project,
             "feature_id": projectData.feature_id
@@ -151,7 +164,7 @@ class ProjectService {
     }
 
     async deleteProjectById(projectId: string, cookies: ReadonlyRequestCookies) {
-        const pbAuthData = authService.getUser(cookies);
+        const pbAuthData = await authService.getUser(cookies);
         try {
             await pb.collection('projects').delete(projectId);
             return { success: true };
@@ -160,8 +173,19 @@ class ProjectService {
         }
     }
 
+    async updateProjectByDisplayId(projectId: string, displayId: number, cookies: ReadonlyRequestCookies) {
+        const pbAuthData = await authService.getUser(cookies);
+        const data = { "display_id": displayId };
+        try {
+            const record = await pb.collection('projects').update(projectId, data);
+            return { data: record, success: true };
+        } catch (error: any) {
+            return { error: error.message };
+        }
+    }
+
     async uploadCoverImages(projectId: string, coverImageUrl: string, coverKey: string, sequence: number, coverId: number, cookies: ReadonlyRequestCookies) {
-        const pbAuthData = authService.getUser(cookies);
+        const pbAuthData = await authService.getUser(cookies);
         const imageData = {
             "name": projectId,
             "url": coverImageUrl,
@@ -179,7 +203,7 @@ class ProjectService {
     }
 
     async uploadImages(projectId: string, imageUrl: string, imageKey: string, sequence: number, cookies: ReadonlyRequestCookies) {
-        const pbAuthData = authService.getUser(cookies);
+        const pbAuthData = await authService.getUser(cookies);
         const imageData = {
             "name": projectId,
             "url": imageUrl,
@@ -196,7 +220,7 @@ class ProjectService {
     }
 
     async deleteImageFromDB(imageId: string, cookies: ReadonlyRequestCookies) {
-        const pbAuthData = authService.getUser(cookies);
+        const pbAuthData = await authService.getUser(cookies);
         try {
             await pb.collection('images').delete(imageId, { requestKey: null });
             return { data: "image is deleted", success: true };

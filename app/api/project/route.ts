@@ -2,6 +2,7 @@
 import { cookies } from "next/headers";
 import { NextResponse, type NextRequest } from "next/server";
 import { projectService } from "@/services/ProjectService";
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
     try {
@@ -19,26 +20,15 @@ export async function POST(request: NextRequest) {
     try {
         const reqData = await request.json();
         if (!reqData) return NextResponse.json({ message: "No data to create." }, { status: 404 })
-        const
-            {
-                aboutProject,
-                apartmentName,
-                displayId,
-                householdSize,
-                location,
-                projectName,
-                size,
-                year
-            } = reqData.data
         const projectData = {
-            "name": projectName,
-            "year": year,
-            "location": location,
-            "apartment_name": apartmentName,
-            "size": size,
-            "household_size": householdSize,
-            "description": aboutProject,
-            "display_id": displayId
+            "name": reqData.data.projectName,
+            "year": reqData.data.year,
+            "location": reqData.data.location,
+            "apartment_name": reqData.data.apartmentName,
+            "size": reqData.data.size,
+            "household_size": reqData.data.householdSize,
+            "description": reqData.data.aboutProject,
+            "display_id": reqData.data.displayId
         };
         const res = await projectService.createProject(projectData, cookies());
         return NextResponse.json({ data: res }, { status: 200 });

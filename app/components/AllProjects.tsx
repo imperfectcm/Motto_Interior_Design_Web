@@ -28,14 +28,16 @@ export default function AllProjects(props: AllProjectsProps) {
                                     <div className="text-2xl">{project.name}</div>
                                     <div>{project.size} sq. ft.</div>
                                 </span>
-                                <Image className="aspect-[3/4]"
-                                    id={`${index}`}
-                                    src={project.cover[0]?.url || "no-image.png"}
-                                    fill
-                                    sizes='(max-width: 1200px) 100vw, 75vw'
-                                    style={{ objectFit: "cover" }}
-                                    alt={`Cover of project ${project.name}`}
-                                />
+                                {project.cover.length > 0 &&
+                                    <Image className="aspect-[3/4]"
+                                        id={`${index}`}
+                                        src={project.cover[0]?.url || "/no-image.png"}
+                                        fill
+                                        sizes='(max-width: 1200px) 100vw, 75vw'
+                                        style={{ objectFit: "cover" }}
+                                        alt={`Cover of project ${project.name}`}
+                                    />
+                                }
                             </div>
                         </a>
                     )
