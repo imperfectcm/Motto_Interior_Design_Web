@@ -3,9 +3,7 @@ import next from "next";
 export const serverGetProjectsWithCovers = async () => {
     try {
         console.log("refresh the data now")
-        const res = await fetch(`${process.env.WEB_URL}/api/all-projects-with-covers`, {
-            cache: 'no-store'
-        })
+        const res = await fetch(`${process.env.WEB_URL}/api/all-projects-with-covers`, { cache: 'no-cache' })
         if (!res.ok) return ({ message: "Failed to get project with cover images." })
         const data = await res.json();
         return data.data;
@@ -17,9 +15,7 @@ export const serverGetProjectsWithCovers = async () => {
 
 export const clientGetProjectsWithCovers = async () => {
     try {
-        const res = await fetch("/api/all-projects-with-covers", {
-            cache: 'no-store'
-        })
+        const res = await fetch("/api/all-projects-with-covers", { cache: 'no-cache' })
         if (!res.ok) return ({ message: "Failed to get project with cover images." })
         const data = await res.json();
         return data.data;
@@ -31,7 +27,7 @@ export const clientGetProjectsWithCovers = async () => {
 
 export const clientGetAllProjects = async () => {
     try {
-        const res = await fetch("/api/all-projects", { cache: 'no-store', })
+        const res = await fetch("/api/all-projects", { cache: 'no-cache', })
         if (!res.ok) return ({ message: "Failed to get projects" })
         const data = await res.json();
         return data.data;
@@ -43,7 +39,7 @@ export const clientGetAllProjects = async () => {
 
 export const getLastDisplayId = async () => {
     try {
-        const res = await fetch(`${process.env.WEB_URL}/api/last-display-id`, { cache: 'no-store' })
+        const res = await fetch(`${process.env.WEB_URL}/api/last-display-id`, { cache: 'no-cache' })
         if (!res.ok) {
             const response = await res.json();
             return response.message;
@@ -58,7 +54,7 @@ export const getLastDisplayId = async () => {
 
 export const clientGetLastDisplayId = async () => {
     try {
-        const res = await fetch(`/api/last-display-id`, { cache: 'no-store' })
+        const res = await fetch(`/api/last-display-id`, { cache: 'no-cache' })
         if (!res.ok) {
             const response = await res.json();
             return response.message;
@@ -73,7 +69,7 @@ export const clientGetLastDisplayId = async () => {
 
 export const getProjectByName = async (projectName: string) => {
     try {
-        const res = await fetch(`${process.env.WEB_URL}/api/project?projectName=${projectName}`, { cache: 'no-store' });
+        const res = await fetch(`${process.env.WEB_URL}/api/project?projectName=${projectName}`, { cache: 'no-cache' });
         if (!res.ok) {
             const errorData = await res.json();
             return errorData.message;
@@ -88,7 +84,7 @@ export const getProjectByName = async (projectName: string) => {
 
 export const getProjectByDisplayId = async (displayId: number) => {
     try {
-        const res = await fetch(`${process.env.WEB_URL}/api/project-by-id?displayId=${displayId}`, { cache: 'no-store' });
+        const res = await fetch(`${process.env.WEB_URL}/api/project-by-id?displayId=${displayId}`, { cache: 'no-cache' });
         if (!res.ok) {
             const errorData = await res.json();
             return errorData.message;

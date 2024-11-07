@@ -102,3 +102,15 @@ export const loginFailedToast = () => toast.error("🥲 Fail to authenticate use
     theme: "dark",
     transition: Flip,
 });
+
+export const logoutFailedToast = () => toast.error("🥲 Fail to log out.", {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+    transition: Flip,
+});

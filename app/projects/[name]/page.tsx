@@ -10,9 +10,7 @@ import { authService } from "@/services/AuthService";
 import { cookies } from "next/headers";
 
 interface ProjectDetailProps {
-    params: {
-        name: string;
-    }
+    params: { name: string; }
 }
 
 export default async function ProjectDetail(props: ProjectDetailProps) {
@@ -26,7 +24,6 @@ export default async function ProjectDetail(props: ProjectDetailProps) {
 
     const isAdmin = await authService.isAdminAuthenticated(cookies());
     return (
-
         <main>
             <nav className="z-30 fixed top-0 h-28 w-full nav-bg">
                 <NavItems isAdmin={isAdmin} />

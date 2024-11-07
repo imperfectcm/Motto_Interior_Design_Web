@@ -1,7 +1,7 @@
 
 export const getFeatureProjectCovers = async () => {
     try {
-        const res = await fetch(`${process.env.WEB_URL}/api/feature-cover-images`, { cache: 'no-store' })
+        const res = await fetch(`${process.env.WEB_URL}/api/feature-cover-images`, { cache: 'no-cache' })
         if (!res.ok) {
             return ({ message: "Get feature project covers failed" })
         }
@@ -15,7 +15,7 @@ export const getFeatureProjectCovers = async () => {
 
 export const getProjectImages = async (projectId: string) => {
     try {
-        const res = await fetch(`${process.env.WEB_URL}/api/project-images?projectId=${projectId}`, { cache: 'no-store' });
+        const res = await fetch(`${process.env.WEB_URL}/api/project-images?projectId=${projectId}`, { cache: 'no-cache' });
         if (!res.ok) {
             const errorData = await res.json();
             return errorData.message;

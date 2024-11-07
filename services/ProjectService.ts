@@ -10,10 +10,9 @@ class ProjectService {
         try {
             const resultList = await pb.collection('projects').getFullList({
                 sort: '-display_id',
-                keepalive: false,
+                // keepalive: false,
                 cache: 'no-store',
             });
-            console.log("Project info: ", resultList)
             return { data: resultList, success: true };
         } catch (error: any) {
             return { error: error.message };
@@ -28,7 +27,6 @@ class ProjectService {
                 cache: 'no-store',
             });
             const lastDisplayId = resultList[0].display_id
-            console.log("lastDisplayId: ", lastDisplayId)
             return { data: lastDisplayId || 1, success: true };
         } catch (error: any) {
             throw new Error(error.message);
@@ -40,7 +38,7 @@ class ProjectService {
             const resultList = await pb.collection('projects').getFullList({
                 filter: 'is_feature_project = false',
                 sort: '-created',
-                keepalive: false,
+                // keepalive: false,
                 cache: 'no-store',
             });
 
@@ -55,7 +53,7 @@ class ProjectService {
             const resultList = await pb.collection('projects').getFullList({
                 filter: 'is_feature_project = true',
                 sort: '+feature_id',
-                keepalive: false,
+                // keepalive: false,
                 cache: 'no-store',
             });
             return { data: resultList, success: true };
@@ -87,7 +85,7 @@ class ProjectService {
             const resultList = await pb.collection('images').getFullList({
                 filter: `name = "${projectId}" && is_cover = true`,
                 sort: '+sequence',
-                keepalive: false,
+                // keepalive: false,
                 cache: 'no-store',
             });
             return resultList;
@@ -101,7 +99,7 @@ class ProjectService {
             const resultList = await pb.collection('images').getFullList({
                 filter: `name = "${projectId}" && is_cover = false`,
                 sort: '+sequence',
-                keepalive: false,
+                // keepalive: false,
                 cache: 'no-store',
             });
             return resultList;

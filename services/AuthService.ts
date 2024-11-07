@@ -35,6 +35,15 @@ class AuthService {
         return pb.authStore;
     }
 
+    async signout() {
+        try {
+            pb.authStore.clear();
+            return { data: "Successed to sign out.", success: true };
+        } catch (error: any) {
+            return { error: error.message };
+        }
+    }
+
 }
 
 export const authService = new AuthService();

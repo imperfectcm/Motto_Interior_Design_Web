@@ -20,21 +20,18 @@ const ProjectsContainer = (props: ProjectCoverContainerProps) => {
     const [featureProject, setFeatureProject] = useState<any[]>(originFeature);
 
     // const getAllProjectList = async () => {
-    //     const projectList: any = await clientGetProjectsWithCovers();
-    //     setProjects(projectList);
-    //     const originFeature = [...projectList.filter((project: any) => project.is_feature_project === true)]
-    //         .sort((a: any, b: any) => a.feature_id - b.feature_id);
-    //     setOriginFeatureProject(originFeature);
-    //     setFeatureProject(originFeature);
+    //     const csrProjectList: any[] = await clientGetProjectsWithCovers();
+    //     if (csrProjectList) setProjects(csrProjectList);
+    //     if (Array.isArray(csrProjectList)) {
+    //         const csrOriginFeature = [...csrProjectList.filter((project: any) => project.is_feature_project === true)]
+    //             .sort((a: any, b: any) => a.feature_id - b.feature_id);
+    //         setOriginFeatureProject(csrOriginFeature);
+    //         setFeatureProject(csrOriginFeature);
+    //     }
     // }
-
     // useEffect(() => {
-    //     console.log("new render")
     //     getAllProjectList();
     // }, [])
-
-
-
 
     const removeOriginFeature = async (originFeature: any[]) => {
         let result: any[] = []

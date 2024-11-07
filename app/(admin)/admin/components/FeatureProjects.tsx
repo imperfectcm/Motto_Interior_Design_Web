@@ -23,7 +23,7 @@ const FeatureProjects = (props: FeatureProjectsProps) => {
             {featureProject.length > 0 ? featureProject.map((project: any, index: number) => (
                 <div key={index} className="flex flex-col place-items-center">
                     <div className="relative w-full aspect-[3/4] grow">
-                        <Image src={project?.cover[0]?.url || "no-image.png"} alt={`Cover of project ${project.name}`}
+                        <Image src={project?.cover[0]?.url || "/no-image.png"} alt={`Cover of project ${project.name}`}
                             fill
                             sizes="(max-width: 1200px) 100vw, 75vw"
                             className="object-cover" />

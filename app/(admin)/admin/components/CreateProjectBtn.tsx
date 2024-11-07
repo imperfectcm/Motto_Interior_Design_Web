@@ -2,7 +2,6 @@
 
 import { usePathname, useRouter } from "next/navigation";
 
-
 const CreateProjectBtn = () => {
     const router = useRouter();
     const pathname = usePathname();
