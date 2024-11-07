@@ -1,7 +1,7 @@
 
 import CreateProjectBtn from "@/app/(admin)/admin/components/CreateProjectBtn";
 import ProjectsContainer from "./components/ProjectsContainer";
-import { getLastDisplayId, serverGetProjectsWithCovers } from "@/controllers/projects/get";
+import { serverGetProjectsWithCovers } from "@/controllers/projects/get";
 import AdminLogOutBtn from "./components/AdminLogOutBtn";
 
 const admin = async () => {
