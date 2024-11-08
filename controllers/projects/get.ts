@@ -54,6 +54,11 @@ export const getLatestDisplayId = async () => {
 export const getProjectByName = async (projectName: string) => {
     try {
         const res = await fetch(`${process.env.WEB_URL}/api/project?projectName=${projectName}`, { cache: 'no-cache' });
+        if (res.status === 404) {
+            const response = await res.json();
+            const data = response.data;
+            return data;
+        }
         if (!res.ok) {
             const errorData = await res.json();
             return errorData.message;

@@ -64,7 +64,7 @@ class ProjectService {
 
     async getProjectInfoByName(projectName: string) {
         try {
-            const resultList = await pb.collection('projects').getFirstListItem(`name="${projectName}"`, { cache: 'no-store', });
+            const resultList = await pb.collection('projects').getFirstListItem(`name="${projectName}"`, { cache: 'no-cache', });
             return { data: resultList, success: true };
         } catch (error: any) {
             return { error: error.message };
@@ -73,7 +73,7 @@ class ProjectService {
 
     async getProjectInfoByDisplayId(displayId: number) {
         try {
-            const resultList = await pb.collection('projects').getFirstListItem(`display_id="${displayId}"`, { cache: 'no-store', });
+            const resultList = await pb.collection('projects').getFirstListItem(`display_id="${displayId}"`, { cache: 'no-cache', });
             return { data: resultList, success: true };
         } catch (error: any) {
             return { error: error.message };

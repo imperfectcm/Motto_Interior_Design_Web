@@ -43,7 +43,7 @@ const LoginForm = () => {
                     <input className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
                         type="password"
                         {...register("password", { required: true })}
-                        value="" />
+                    />
                     <ErrorMessage errors={errors} name="password" />
                     <ErrorMessage
                         errors={errors}
