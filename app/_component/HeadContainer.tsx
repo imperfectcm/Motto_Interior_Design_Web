@@ -5,6 +5,9 @@ import { motion } from "framer-motion";
 import Hero from '@/public/heroImage/hero-sample.jpg';
 
 export default function HeadContainer() {
+
+    console.log("hello from motto interior design")
+
     return (
         <section className="relative h-screen w-full flex">
             <motion.div className="z-10 absolute bottom-1/2 end-1/2 mr-10 text-9xl font-bold"

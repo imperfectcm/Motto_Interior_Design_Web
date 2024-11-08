@@ -22,7 +22,7 @@ class ProjectService {
     async getLastDisplayId() {
         try {
             const resultList = await pb.collection('projects').getList(1, 1, {
-                sort: '+display_id',
+                sort: '-display_id',
                 cache: 'no-cache',
             });
             const lastDisplayId = resultList.items[0].display_id;

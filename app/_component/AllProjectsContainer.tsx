@@ -2,8 +2,6 @@
 
 import AllProjects from "./AllProjects";
 import AllProjectsPageBtn from "./AllProjectsPageBtn";
-import { motion, useTransform, useScroll, useSpring } from "framer-motion";
-import { useRef } from "react";
 
 interface AllProjectsContainerProps {
     projectList: any;
