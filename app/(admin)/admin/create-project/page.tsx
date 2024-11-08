@@ -1,10 +1,13 @@
+"use server";
 
-import CreateProjectForm from "@/app/(admin)/admin/create-project/components/CreateProjectForm";
-import { getLastDisplayId } from "@/controllers/projects/get";
+import { getLatestDisplayId } from "@/controllers/projects/get";
+import CreateProjectForm from "./_component/CreateProjectForm";
 
 const CreateProject = async () => {
-    const lastDisplayId = await getLastDisplayId();
-    return <CreateProjectForm lastDisplayId={lastDisplayId} />
+    const lastDisplayId = await getLatestDisplayId();
+    return (
+        <CreateProjectForm lastDisplayId={lastDisplayId} />
+    );
 }
 
 export default CreateProject;

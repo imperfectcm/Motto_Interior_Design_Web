@@ -3,9 +3,9 @@
 import { getProjectImages } from "@/controllers/images/get";
 import { getProjectByDisplayId, getProjectByName } from "@/controllers/projects/get";
 import React from "react";
-import HorizontalGallery from "./components/HorizontalGallery";
-import "./components/horizontalScroll.css"
-import NavItems from "@/app/components/NavItems";
+import HorizontalGallery from "./_component/HorizontalGallery";
+import "./_component/horizontalScroll.css"
+import NavItems from "@/app/_component/NavItems";
 import { authService } from "@/services/AuthService";
 import { cookies } from "next/headers";
 

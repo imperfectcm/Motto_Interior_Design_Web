@@ -5,7 +5,7 @@ export const pb = new PocketBase(process.env.POCKETBASE_URL);
 
 class AuthService {
 
-    constructor() { }
+    constructor() { } 
 
     // login
     async authenticate(email: string, password: string) {

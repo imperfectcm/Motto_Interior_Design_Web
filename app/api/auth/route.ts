@@ -2,7 +2,6 @@ import { authService, pb } from "@/services/AuthService";
 import { cookies } from "next/headers";
 import { NextResponse, type NextRequest } from "next/server";
 
-
 export async function POST(request: NextRequest) {
     try {
         const { email, password } = await request.json();

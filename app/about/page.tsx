@@ -1,5 +1,5 @@
 
-import Introduction from "./components/Introduction";
+import Introduction from "./_component/Introduction";
 
 export default function About() {
     return (

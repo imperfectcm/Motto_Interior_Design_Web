@@ -1,8 +1,8 @@
 
+export const dynamic = 'force-dynamic';
 import { cookies } from "next/headers";
 import { NextResponse, type NextRequest } from "next/server";
 import { projectService } from "@/services/ProjectService";
-export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
     try {

@@ -1,4 +1,5 @@
 import { uploadImagesToDBFailedToast } from "@/components/toastify/toast";
+export const dynamic = "force-dynamic";
 
 export const uploadImages = async (imageUrlList: string[], imageKeyList: string[], projectId: string, imageType: string = "image") => {
     if (!imageUrlList.length) return null;

@@ -1,7 +1,7 @@
 
-import HeadContainer from "@/app/components/HeadContainer";
-import AllProjectsContainer from "@/app/components/AllProjectsContainer";
-import FeatureProjectsContainer from "@/app/components/FeatureProjectsContainer";
+import HeadContainer from "@/app/_component/HeadContainer";
+import AllProjectsContainer from "@/app/_component/AllProjectsContainer";
+import FeatureProjectsContainer from "@/app/_component/FeatureProjectsContainer";
 import { serverGetProjectsWithCovers } from "@/controllers/projects/get";
 
 export default async function Home() {

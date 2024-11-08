@@ -5,7 +5,7 @@ import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { ToastContainer } from "react-toastify";
-import Navbar from "./components/Navbar";
+import Navbar from "./_component/Navbar";
 
 config.autoAddCss = false;
 

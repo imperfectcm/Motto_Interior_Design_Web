@@ -1,6 +1,7 @@
+
+export const dynamic = 'force-dynamic';
 import { projectService } from "@/services/ProjectService";
 import { NextResponse } from "next/server";
-
 
 export async function GET() {
 

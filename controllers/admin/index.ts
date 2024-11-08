@@ -1,5 +1,6 @@
 import { loginFailedToast, logoutFailedToast } from "@/components/toastify/toast";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+export const dynamic = "force-dynamic";
 
 export const adminLogin = async (email: string, password: string, router: AppRouterInstance) => {
     try {

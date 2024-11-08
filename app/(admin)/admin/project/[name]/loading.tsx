@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import styles from "../../app/_component/loading.module.css"
+import styles from "./../../../../_component/loading.module.css"
 
-const ActionLoading = () => {
+const loading = () => {
     return (
-        <main className={styles["action-loading-body"]}>
+        <main className={styles["loading-body"]}>
             <div className={styles["container"]}>
                 <div className={styles["circle"]}></div>
                 <div className={styles["circle"]}></div>
@@ -28,4 +28,4 @@ const ActionLoading = () => {
     )
 };
 
-export default ActionLoading;
+export default loading;

@@ -1,7 +1,8 @@
-import CoverImageDisplayer from "@/app/(admin)/admin/project/[name]/components/CoverImageDisplayer";
+
 import CoverImageUploader from "@/components/s3Actions/upload/CoverImageUploader";
 import { Dispatch, SetStateAction } from "react";
 import { ImageListType } from "react-images-uploading";
+import CoverImageDisplayer from "./CoverImageDisplayer";
 
 interface EditCoverContainerProps {
     isEditCovers: boolean;

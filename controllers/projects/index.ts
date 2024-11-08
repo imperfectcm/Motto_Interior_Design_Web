@@ -1,7 +1,8 @@
 
-import { projectFormData } from "@/app/(admin)/admin/create-project/components/CreateProjectForm";
+import { projectFormData } from "@/app/(admin)/admin/create-project/_component/CreateProjectForm";
 import { projectCreateFailedToast, projectUpdateFailedToast } from "@/components/toastify/toast";
 import 'react-toastify/dist/ReactToastify.css';
+export const dynamic = "force-dynamic";
 
 export const creatProjectToDB = async (data: projectFormData) => {
     try {

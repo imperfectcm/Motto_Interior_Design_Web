@@ -1,4 +1,3 @@
-import next from "next";
 
 export const serverGetProjectsWithCovers = async () => {
     try {
@@ -37,24 +36,9 @@ export const clientGetAllProjects = async () => {
     }
 }
 
-export const getLastDisplayId = async () => {
+export const getLatestDisplayId = async () => {
     try {
-        const res = await fetch(`${process.env.WEB_URL}/api/last-display-id`, { cache: 'no-cache' })
-        if (!res.ok) {
-            const response = await res.json();
-            return response.message;
-        }
-        const data = await res.json();
-        return data.data;
-    } catch (error: any) {
-        console.log(error.message);
-        return null;
-    }
-}
-
-export const clientGetLastDisplayId = async () => {
-    try {
-        const res = await fetch(`/api/last-display-id`, { cache: 'no-cache' })
+        const res = await fetch(`${process.env.WEB_URL}/api/latest-display-id`, { cache: 'no-cache' });
         if (!res.ok) {
             const response = await res.json();
             return response.message;

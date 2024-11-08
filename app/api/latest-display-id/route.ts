@@ -1,9 +1,9 @@
 
-import { cookies } from "next/headers";
+export const dynamic = 'force-dynamic';
 import { NextResponse, type NextRequest } from "next/server";
 import { projectService } from "@/services/ProjectService";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
     try {
         const res = await projectService.getLastDisplayId();
         if (!res) return NextResponse.json({ message: "Get latest project display id failed." }, { status: 404 });

@@ -11,7 +11,7 @@ class ProjectService {
             const resultList = await pb.collection('projects').getFullList({
                 sort: '-display_id',
                 // keepalive: false,
-                cache: 'no-store',
+                cache: 'no-cache',
             });
             return { data: resultList, success: true };
         } catch (error: any) {
@@ -21,13 +21,13 @@ class ProjectService {
 
     async getLastDisplayId() {
         try {
-            const resultList = await pb.collection('projects').getFullList({
-                sort: '-display_id',
-                keepalive: false,
-                cache: 'no-store',
+            const resultList = await pb.collection('projects').getList(1, 1, {
+                sort: '+display_id',
+                cache: 'no-cache',
             });
-            const lastDisplayId = resultList[0].display_id
-            return { data: lastDisplayId || 1, success: true };
+            const lastDisplayId = resultList.items[0].display_id;
+            return { data: lastDisplayId, success: true };
+            // return { data: 1, success: true };
         } catch (error: any) {
             throw new Error(error.message);
         }
@@ -39,7 +39,7 @@ class ProjectService {
                 filter: 'is_feature_project = false',
                 sort: '-created',
                 // keepalive: false,
-                cache: 'no-store',
+                cache: 'no-cache',
             });
 
             return resultList;
@@ -54,7 +54,7 @@ class ProjectService {
                 filter: 'is_feature_project = true',
                 sort: '+feature_id',
                 // keepalive: false,
-                cache: 'no-store',
+                cache: 'no-cache',
             });
             return { data: resultList, success: true };
         } catch (error: any) {
@@ -86,7 +86,7 @@ class ProjectService {
                 filter: `name = "${projectId}" && is_cover = true`,
                 sort: '+sequence',
                 // keepalive: false,
-                cache: 'no-store',
+                cache: 'no-cache',
             });
             return resultList;
         } catch (error: any) {
@@ -100,7 +100,7 @@ class ProjectService {
                 filter: `name = "${projectId}" && is_cover = false`,
                 sort: '+sequence',
                 // keepalive: false,
-                cache: 'no-store',
+                cache: 'no-cache',
             });
             return resultList;
         } catch (error: any) {

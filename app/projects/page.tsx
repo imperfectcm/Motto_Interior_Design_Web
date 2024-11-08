@@ -1,7 +1,7 @@
 
 import { serverGetProjectsWithCovers } from "@/controllers/projects/get";
-import { ProjectGallery } from "./components/ProjectGallery";
-import { HomepageBtn } from "./components/HomepageBtn";
+import { ProjectGallery } from "./_component/ProjectGallery";
+import { HomepageBtn } from "./_component/HomepageBtn";
 
 export default async function AllProjects() {
     const projectList = await serverGetProjectsWithCovers();

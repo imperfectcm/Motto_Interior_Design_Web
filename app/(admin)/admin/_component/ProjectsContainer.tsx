@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FeatureProjects from "./FeatureProjects";
 import AllProjects from "./AllProjects";
 import { updateFeatureProject } from "@/controllers/projects";
 import { setFeatureProjectFailedToast, setFeatureProjectSuccessfully } from "@/components/toastify/toast";
-import { clientGetLastDisplayId, clientGetProjectsWithCovers } from "@/controllers/projects/get";
 
 interface ProjectCoverContainerProps {
     projectList: any;

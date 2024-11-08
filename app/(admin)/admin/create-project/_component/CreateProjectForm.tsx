@@ -13,7 +13,6 @@ import { creatProjectToDB } from "@/controllers/projects";
 import uploadMultiImages from "@/components/s3Actions/upload/uploadMultiImages";
 import { projectCreateSuccessfully, projectCreateFailedToast } from "@/components/toastify/toast";
 import { uploadImages } from "@/controllers/images";
-import { revalidateTag } from "next/cache";
 
 interface CreateProjectFormProps {
     lastDisplayId: number;

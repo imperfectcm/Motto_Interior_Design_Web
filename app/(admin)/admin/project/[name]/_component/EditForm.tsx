@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { projectFormData } from "../../../create-project/components/CreateProjectForm";
+import { projectFormData } from "../../../create-project/_component/CreateProjectForm";
 import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import { ImageListType } from "react-images-uploading";
