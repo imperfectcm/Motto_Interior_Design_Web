@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-
+import LogoIcon from "@/public/icon/Motto_icon.webp";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { ToastContainer } from "react-toastify";
@@ -13,6 +13,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Motto Interior Design",
+  icons: [
+    {
+      url: LogoIcon.src,
+    },
+  ],
 };
 
 interface RootLayoutProps {
