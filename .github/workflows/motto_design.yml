@@ -1,0 +1,21 @@
+name: motto_design
+om: 
+  push:
+    branches:
+      - "product"
+    workflow_dispatch:
+
+env:
+  CLIENT_ID: 382651988187-j3mrfu9ugp4alkpkknops4r1uij1qecr.apps.googleusercontent.com
+  CLIENT_SECRET: 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
+  REDIRECT_URI: http://localhost:3000/auth/google/callback
+  MY_EMAIL: motto.intdesign@gmail.com
+  MY_PASSWORD: vnrf wzxc rsxq tddb
+  AWS_S3_BUCKET_NAME: motto-design-project-images
+  AWS_S3_REGION: ap-southeast-1
+  AWS_S3_ACCESS_KEY_ID: AKIAYHJANHVAPZRCYAOY
+  AWS_S3_SECRET_ACCESS_KEY: 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
+  WEB_URL: http://localhost:3000
+  POCKETBASE_URL: http://localhost:8090
+  AWS_AC: motto.intdesign@gmail.com
+  AWS_PW: Otis63730015
