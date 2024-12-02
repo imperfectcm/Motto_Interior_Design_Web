@@ -20,6 +20,7 @@ const Contact: FC = () => {
 
   const [submitting, setSubmitting] = React.useState(false)
   function onSubmit(data: FormData) {
+    console.log(data)
     setSubmitting(true)
     sendEmail(data);
   }
