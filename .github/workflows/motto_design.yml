@@ -32,6 +32,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Docker Build and Push
-        - run: |
+        run: |
           docker build -t imperfectcm/motto_design:latest .
           docker push imperfectcm/motto_design:latest
