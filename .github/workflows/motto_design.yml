@@ -35,3 +35,18 @@ jobs:
         run: |
           docker build -t imperfectcm/motto_design:latest .
           docker push imperfectcm/motto_design:latest
+
+  deploy-server:
+    needs: build-server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Executing remote ssh
+        uses: applyboy/ssh-action@master
+        with:
+          host: https://motto-intdesign.com
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ubuntu
+          script: |
+            docker compose pull
+            docker compose up -d
+            docker image prune -f
