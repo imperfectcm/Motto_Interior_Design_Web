@@ -1,0 +1,55 @@
+name: motto_design
+on: 
+  push:
+    branches:
+      - "production"
+    workflow_dispatch:
+
+env:
+  CLIENT_ID: 382651988187-j3mrfu9ugp4alkpkknops4r1uij1qecr.apps.googleusercontent.com
+  CLIENT_SECRET: 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
+  REDIRECT_URI: http://localhost:3000/auth/google/callback
+  MY_EMAIL: motto.intdesign@gmail.com
+  MY_PASSWORD: vnrf wzxc rsxq tddb
+  AWS_S3_BUCKET_NAME: motto-design-project-images
+  AWS_S3_REGION: ap-southeast-1
+  AWS_S3_ACCESS_KEY_ID: AKIAYHJANHVAPZRCYAOY
+  AWS_S3_SECRET_ACCESS_KEY: 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
+  WEB_URL: http://localhost:3000
+  POCKETBASE_URL: http://localhost:8090
+  AWS_AC: motto.intdesign@gmail.com
+  AWS_PW: Otis63730015
+
+jobs:
+  build-server:
+    runs-on: ubuntu-latest
+    container: docker:20.10.21-alpine3.16
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        env:
+          WEB_URL: http://localhost:3000
+          POCKETBASE_URL: http://localhost:8090
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Docker Build and Push
+        run: |
+          docker build -t imperfectcm/motto_design:latest .
+          docker push imperfectcm/motto_design:latest
+
+  deploy-server:
+    needs: build-server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Executing remote ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: motto-intdesign.com
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ubuntu
+          script: |
+            docker compose pull
+            docker compose up -d
+            docker image prune -f
