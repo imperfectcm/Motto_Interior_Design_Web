@@ -38,5 +38,3 @@ next-env.d.ts
 pocketbase.exe
 /pb_data
 /pb_migrations
-
-/.github
