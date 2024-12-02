@@ -2,7 +2,7 @@ name: motto_design
 on: 
   push:
     branches:
-      - "product"
+      - "production"
     workflow_dispatch:
 
 env:
