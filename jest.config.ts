@@ -10,6 +10,9 @@ const createJestConfig = nextJest({
 const config: Config = {
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
+  transform: {
+    '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
+  },
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
   }
