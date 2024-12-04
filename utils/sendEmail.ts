@@ -1,4 +1,4 @@
-import { FormData } from '@/app/contact/_components/ContactUsForm';
+import { FormData } from '@/app/contact/_component/ContactUsForm';
 
 
 export async function sendEmail(data: FormData) {

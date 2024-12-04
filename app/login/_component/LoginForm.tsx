@@ -1,9 +1,9 @@
 "use client";
 
-import { adminLogin } from "@/controllers/admin";
 import { ErrorMessage } from "@hookform/error-message";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { adminLogin } from "@/controllers/admin";
 
 const LoginForm = () => {
     const router = useRouter();
@@ -24,23 +24,23 @@ const LoginForm = () => {
     return (
         <main className="flex justify-center items-center h-screen">
             <form className="flex flex-col w-9/12 gap-y-5"
-                onSubmit={handleSubmit((data) => onSubmit(data))}>
+                onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col">
-                    <label>Email</label>
-                    <input className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
+                    <label htmlFor="email">Email</label>
+                    <input id="email" className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
                         {...register("email", { required: true })}
                     />
                     <ErrorMessage errors={errors} name="email" />
                     <ErrorMessage
                         errors={errors}
                         name="email"
-                        message="Required"
+                        message="Email required"
                         render={({ message }) => <p className="text-red-600">{message}</p>}
                     />
                 </div>
                 <div className="flex flex-col">
-                    <label>Password</label>
-                    <input className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
+                    <label htmlFor="password">Password</label>
+                    <input id="password" className="p-1 bg-inherit border-b-2 border-slate-500 outline-0"
                         type="password"
                         {...register("password", { required: true })}
                     />
@@ -48,7 +48,7 @@ const LoginForm = () => {
                     <ErrorMessage
                         errors={errors}
                         name="password"
-                        message="Required"
+                        message="Password required"
                         render={({ message }) => <p className="text-red-600">{message}</p>}
                     />
                 </div>

@@ -34,7 +34,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "components/s3Actions/upload/uploadAction.ts"
-  ],
+, "jest.config.js"  ],
   "exclude": [
     "node_modules"
   ],

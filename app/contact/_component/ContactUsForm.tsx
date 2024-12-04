@@ -20,7 +20,6 @@ const Contact: FC = () => {
 
   const [submitting, setSubmitting] = React.useState(false)
   function onSubmit(data: FormData) {
-    console.log(data)
     setSubmitting(true)
     sendEmail(data);
   }
@@ -49,13 +48,14 @@ const Contact: FC = () => {
 
         <div className='col-span-2'>
           <label
-            htmlFor='last-name'
+            htmlFor='lastName'
             className='block mb-2 text-sm font-medium'
           >
             Last Name
           </label>
           <input
             type='text'
+            id="lastName"
             placeholder='Last Name'
             className='w-full p-1 bg-inherit border-b-2 border-slate-500 outline-0'
             {...register('lastName', { required: true })}
@@ -72,6 +72,7 @@ const Contact: FC = () => {
         </label>
         <input
           type='text'
+          id='phone'
           placeholder='Phone'
           className='w-full p-1 bg-inherit border-b-2 border-slate-500 outline-0'
           {...register('phone', { required: true })}
@@ -87,6 +88,7 @@ const Contact: FC = () => {
         </label>
         <textarea
           rows={1}
+          id='address'
           placeholder='Address'
           className='w-full p-1 bg-inherit border-b-2 border-slate-500 outline-0'
           {...register('address')}
@@ -95,7 +97,7 @@ const Contact: FC = () => {
       </div>
       <div>
         <label
-          htmlFor='unit-scale'
+          htmlFor='unitScale'
           className='block mb-2 text-sm font-medium'
         >
           Unit Scale
