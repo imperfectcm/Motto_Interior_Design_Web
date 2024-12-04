@@ -8,12 +8,11 @@ on:
 jobs:
   testing:
     runs-on: ubuntu-latest
-    container: docker:20.10.21-alpine3.16
+    container: node:22
     steps:
       - uses: actions/checkout@v3
       - name: Run tests
         run: |
-          npm install --global yarn
           yarn install
           yarn test
 
